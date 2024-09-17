@@ -1,7 +1,13 @@
-export default function CrearPartida() {
+export default function CreateGame({ onCreateGame }) {
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const nuevoId = 42; // TODO id partida
+        onCreateGame(nuevoId)
+    }
     return (
         <div className="form-partida">
-            <form action="">
+            <form action="" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Usuario:</label>
                     <input type="text" name="submitted-username"/>
@@ -9,10 +15,6 @@ export default function CrearPartida() {
                 <div className="form-group">
                     <label>Nombre de la partida:</label>
                     <input type="text" name="submitted-gametitle"/>
-                </div>
-                <div className="form-group">
-                    <label>Cantidad de jugadores:</label>
-                    <input type="number" name="submitted-numberplayers"/>
                 </div>
                 <button type="submit">Crear Partida</button>
             </form>

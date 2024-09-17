@@ -3,13 +3,16 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  flex: 1
 }
 
 .form-partida {
   display: flex;
   flex-direction: column;
+  text-align: left;
   width: 100%;
-  max-width: 600px;
+  padding: 10px;
+  border: 10px
   margin: 0 auto;
   gap: 20px;
 }

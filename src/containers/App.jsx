@@ -1,19 +1,28 @@
 import { useState } from 'react'
-import CrearPartida from '../components/CrearPartida.jsx'
+import CreateGame from '../components/CreateGame.jsx'
+import GameList from '../components/GameList.jsx'
+import Lobby from '../components/Lobby.jsx'
 import '../styles/App.css'
 
 function App() {
-
+  const [fase, setFase] = useState('crear'); // 'crear', 'lobby', 'partida'
+  const [idPartida, setIdPartida] = useState(null);
+  
+  const handleCreateGame = (id) => {
+    setIdPartida(id);
+    setFase('lobby');
+  };
   return (
-    <>
-      <div>
-        <h1>Bienvenido a El Switcher</h1>
-      </div>
-      
-      <CrearPartida />
-      
-    </>
-  )
+    <div className="App">
+      {fase === 'crear' && (
+        <>
+          <GameList />
+          <CreateGame onCreateGame={handleCreateGame} />
+        </>
+      )}
+      {fase === 'lobby' && <Lobby />}
+    </div>
+  );
 }
 
 export default App
