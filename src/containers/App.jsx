@@ -1,28 +1,45 @@
-import { useState } from 'react'
-import CreateGame from '../components/CreateGame.jsx'
-import GameList from '../components/GameList.jsx'
-import Lobby from '../components/Lobby.jsx'
-import '../styles/App.css'
+import { useState } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import CreateGame from '../components/CreateGame.jsx';
+import GameList from '../components/GameList.jsx';
+import Lobby from '../components/Lobby.jsx';
 
 function App() {
   const [fase, setFase] = useState('crear'); // 'crear', 'lobby', 'partida'
   const [idPartida, setIdPartida] = useState(null);
-  
+
   const handleCreateGame = (id) => {
     setIdPartida(id);
     setFase('lobby');
   };
+
   return (
-    <div className="App">
+    <Container className="mt-5">
       {fase === 'crear' && (
-        <>
-          <GameList />
-          <CreateGame onCreateGame={handleCreateGame} />
-        </>
+        <Row>
+          <Col md={12} className="mb-4">
+            <div className="bg-light p-3 rounded">
+              <GameList />
+            </div>
+          </Col>
+          <Col md={12}>
+            <div className="bg-info p-3 rounded">
+              <CreateGame onCreateGame={handleCreateGame} />
+            </div>
+          </Col>
+        </Row>
       )}
-      {fase === 'lobby' && <Lobby />}
-    </div>
+      {fase === 'lobby' && (
+        <Row>
+          <Col>
+            <div className="bg-warning p-3 rounded">
+              <Lobby />
+            </div>
+          </Col>
+        </Row>
+      )}
+    </Container>
   );
 }
 
-export default App
+export default App;
