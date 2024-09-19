@@ -64,11 +64,3 @@ button:focus-visible {
     color: #747bff;
   }
 }
-
-.form-partida {
-  background-color: rgb(255, 218, 169);
-}
-
-.gamelist {
-  background-color: rgb(255, 189, 244);
-}
