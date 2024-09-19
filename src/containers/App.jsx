@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import CreateGame from '../components/CreateGame.jsx';
+import CreateGameContainer from './CreateGameContainer.jsx'
 import GameList from '../components/GameList.jsx';
 import Lobby from '../components/Lobby.jsx';
 
@@ -16,18 +17,18 @@ function App() {
   return (
     <Container className="mt-5">
       {fase === 'crear' && (
-        <Row>
-          <Col md={12} className="mb-4">
+        <Col>
+          <Row md={12} className="mb-4">
             <div className="bg-light p-3 rounded">
               <GameList />
             </div>
-          </Col>
-          <Col md={12}>
-            <div className="bg-info p-3 rounded">
-              <CreateGame onCreateGame={handleCreateGame} />
+          </Row>
+          <Row md={12}>
+            <div className="bg-dark text-white p-3 rounded">
+              <CreateGameContainer onCreateGame={handleCreateGame} />
             </div>
-          </Col>
-        </Row>
+          </Row>
+        </Col>
       )}
       {fase === 'lobby' && (
         <Row>
