@@ -11,7 +11,13 @@
   margin: 5px;
 }
 
-.cards-button{
-  width: 60px;
-  height: 60px;
+
+.carta{
+  display: flex;
+  align-items: center;
+}
+
+.tablero{
+  width:500px;
+  height:500px;
 }

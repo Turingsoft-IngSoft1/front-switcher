@@ -4,9 +4,9 @@ import { Card, Container, Button, Row, Col } from "react-bootstrap";
 function CardSet (){
     return (
         <>
-        <Col xs lg="2"><Card style={{ width: '60px', height: '90px' }}></Card></Col>
-        <Col xs lg = "2"><Card style={{ width: '60px', height: '90px' }}></Card></Col>
-        <Col xs lg = "2"><Card style={{ width: '60px', height: '90px' }}></Card></Col>
+        <Col xs="auto" className="carta"><Card style={{ width: '60px', height: '90px' }}></Card></Col>
+        <Col xs="auto" className="carta"><Card style={{ width: '60px', height: '90px' }}></Card></Col>
+        <Col xs ="auto" className="carta"><Card style={{ width: '60px', height: '90px' }}></Card></Col>
         </>
     );
 }
@@ -34,56 +34,58 @@ function Tablero(){
 
 
     return(
-        <Container xs="8">
-            <Row>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
+        <div className="tablero">
+        <Container>
+            <Row className="justify-content-md-center">
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
             </Row>
-            <Row>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
+            <Row className="justify-content-md-center">
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
             </Row>
-            <Row>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
+            <Row className="justify-content-md-center">
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
             </Row>
-            <Row>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
+            <Row className="justify-content-md-center">
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
             </Row>
-            <Row>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
+            <Row className="justify-content-md-center">
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
             </Row>
-            <Row>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
-                <Col><Ficha variant="dark" /></Col>
+            <Row className="justify-content-md-center">
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
+                <Col xs="auto"><Ficha variant="dark" /></Col>
             </Row>
         </Container>
+        </div>
     );
 }
 
@@ -96,31 +98,18 @@ export default function Lobby (){
         <Container>
         <Row>
             <Col xs="11">
-                {/*Cartas del jugador 2 */}
-                <Row className="justify-content-md-center">
-                    <CardSet/>
-                </Row>
-
                 {/* Cartas del jugador 1, tablero jugador 3 */}
-                <Row className="justify-content-md-center">
-                    <Col sm="2">
-                        <CardSet/>
-                    </Col>               
-                    <Col sm = "8">
+                <Row>          
                         <Tablero />
-                    </Col>
-                    <Col sm = "2">
-                        <CardSet/>
-                    </Col>
                 </Row >
 
                 {/* Cartas del jugador usuario (0) */}
                 <Row className="justify-content-md-center">
-                    <CardSet/>
+                    <CardSet className="card-set"/>
                 </Row>
                 {/* acciones del jugador */}
-                <Row>
-                    <Col><Button classnName="cards-button">Pedir cartas</Button></Col>
+                <Row xs={4} className='my-5'>
+                    <Col><Button className="cards-button">Pedir cartas</Button></Col>
                     <Col><Button className="confirm-button">Confirmar movimiento</Button></Col>
                     <Col><Button className="next-turn-button">Siguiente turno</Button></Col>
                     <Col><Button className="exit-button" variant="danger">Abandonar partida</Button></Col>
