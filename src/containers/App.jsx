@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import '../styles/App.css'
-import Match from './listMatches/containers/list.jsx'
+import Match from './MatchesListContainer.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
