@@ -11,7 +11,7 @@ function CardSet (){
     );
 }
 
-function ButtonSet ({stage}){
+function ButtonSet ({stage, onStartClick}){
     switch(stage){
         case "in-game":
             return (
@@ -25,10 +25,12 @@ function ButtonSet ({stage}){
         case "pre-game":
             return (
                 <Row xs={2} className='my-5'>
-                <Col><Button className="start-button">Iniciar Partida</Button></Col>
+                <Col><Button className="start-button" onClick = {onStartClick} >Iniciar Partida</Button></Col>
                 <Col><Button className="exit-button" variant="danger">Abandonar partida</Button></Col>
                 </Row>
             );
+        default:
+            return null;
     }
 
 }
@@ -113,7 +115,15 @@ function Tablero(){
 
 
 //CARTAS HARDCODEADAS, IMPLEMENTAR LUEGO
+/* Nota: por defecto, la interfaz se setea en pre-game, se deberia realizar un chequeo por si el jugador ya esta en una partida
+         para pasar directamente a in-game sin tener que apretar el boton de comenzar juego*/
 export default function Lobby (){
+    const [gameStage, setGameStage] = useState("pre-game");
+
+    function handleStart(){
+        setGameStage("in-game");
+        console.log("hola");
+    }
 
     return (
         <>
@@ -130,7 +140,7 @@ export default function Lobby (){
                     <CardSet className="card-set"/>
                 </Row>
                 {/* acciones del jugador */}
-                <ButtonSet stage = {"pre-game"}/>
+                <ButtonSet stage = {gameStage} onStartClick= {handleStart}/>
             </Col>
             <Col xs ="1"><Chat /></Col>
         </Row>
