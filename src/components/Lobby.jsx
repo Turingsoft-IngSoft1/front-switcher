@@ -11,6 +11,28 @@ function CardSet (){
     );
 }
 
+function ButtonSet ({stage}){
+    switch(stage){
+        case "in-game":
+            return (
+                <Row xs={4} className='my-5'>
+                <Col><Button className="cards-button">Pedir cartas</Button></Col>
+                <Col><Button className="confirm-button">Confirmar movimiento</Button></Col>
+                <Col><Button className="next-turn-button">Siguiente turno</Button></Col>
+                <Col><Button className="exit-button" variant="danger">Abandonar partida</Button></Col>
+                </Row>
+            );
+        case "pre-game":
+            return (
+                <Row xs={2} className='my-5'>
+                <Col><Button className="start-button">Iniciar Partida</Button></Col>
+                <Col><Button className="exit-button" variant="danger">Abandonar partida</Button></Col>
+                </Row>
+            );
+    }
+
+}
+
 function Chat () {
 
     return (
@@ -108,12 +130,7 @@ export default function Lobby (){
                     <CardSet className="card-set"/>
                 </Row>
                 {/* acciones del jugador */}
-                <Row xs={4} className='my-5'>
-                    <Col><Button className="cards-button">Pedir cartas</Button></Col>
-                    <Col><Button className="confirm-button">Confirmar movimiento</Button></Col>
-                    <Col><Button className="next-turn-button">Siguiente turno</Button></Col>
-                    <Col><Button className="exit-button" variant="danger">Abandonar partida</Button></Col>
-                </Row>
+                <ButtonSet stage = {"pre-game"}/>
             </Col>
             <Col xs ="1"><Chat /></Col>
         </Row>
