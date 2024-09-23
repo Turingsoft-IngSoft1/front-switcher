@@ -1,10 +1,10 @@
 
-function MatchItem({ name, quantPlayers, minmaxPlayers, onClick, isSelected }) {
+function MatchItem({name, quantPlayers, min_players, max_players, onClick, isSelected }) {
   return (
       <tr onClick={onClick} className={isSelected ? "selected" : ''}>
           <td className='match-name'>{name}</td>
           <td>{quantPlayers}</td>
-          <td>{minmaxPlayers}</td>
+          <td>{min_players} - {max_players}</td>
       </tr>
   );
 }

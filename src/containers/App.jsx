@@ -1,6 +1,5 @@
-import { useState } from 'react'
 import '../styles/App.css'
-import Match from './MatchesListContainer.jsx'
+import MatchesList from './MatchesListContainer.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
@@ -9,7 +8,7 @@ function App() {
     <>
       <div>
       <h1>List Dev</h1>
-      <Match />
+      <MatchesList />
       </div>
     </>
   )
