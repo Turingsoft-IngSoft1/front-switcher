@@ -1,17 +1,24 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen, fireEvent } from '@testing-library/react';
+import App from './App.jsx';
+import {describe, expect, it, vi } from 'vitest'
+import '../setupTests.js'
 
 describe('App Component', () => {
-  it('renders the heading and game development message', () => {
-    // Renderiza el componente App
+  it('renders the Join Button component', () => {
     render(<App />);
 
-    // Verifica que el título "Bienvenido a El Switcher" se renderiza
-    const headingElement = screen.getByText(/Bienvenido a El Switcher/i);
-    expect(headingElement).toBeInTheDocument();
+    const joinButtonElement = screen.getByText(/Join Button test/i);
+    expect(joinButtonElement).toBeInTheDocument();
+  });
 
-    // Verifica que el mensaje "Juego en desarrollo..." se renderiza
-    const paragraphElement = screen.getByText(/Juego en desarrollo/i);
-    expect(paragraphElement).toBeInTheDocument();
+  it('joins the match with id=12 when JoinButton is clicked', () => {
+    const mockSelected = vi.fn();
+    render(<App Match={{id:12}}/>);
+
+    const joinButton = screen.getByRole('button');
+    fireEvent.click(joinButton);
+
+    expect(mockSelected).toHaveBeenCalled();
+    expect(mockSelected).toHaveBeenCalledWith({id:12});
   });
 });
