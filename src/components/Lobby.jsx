@@ -122,7 +122,6 @@ export default function Lobby (){
 
     function handleStart(){
         setGameStage("in-game");
-        console.log("hola");
     }
 
     return (
