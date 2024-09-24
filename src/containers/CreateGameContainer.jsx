@@ -6,7 +6,7 @@ export default function CreateGameContainer({ onCreateGame }) {
   const createGame = async (gameData) => {
     try {
         //TODO: direccion de api
-      const response = await fetch('/crearpartida', {
+        const response = await fetch('http://127.0.0.1:8000/create_game', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,5 +30,5 @@ export default function CreateGameContainer({ onCreateGame }) {
     const idMock = 42;
     onCreateGame(idMock);
   }
-  return <CreateGame onCreateGame={createGameMock} />;
+  return <CreateGame onCreateGame={createGame} />;
 }

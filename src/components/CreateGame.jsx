@@ -13,13 +13,19 @@ export default function CreateGame({ onCreateGame }) {
     e.preventDefault();
 
     const gameData = {
-      username,
-      gameTitle,
-      minPlayers: parseInt(minPlayers, 10),
-      maxPlayers: parseInt(maxPlayers, 10),
+        game_name: username,
+        owner_name: gameTitle,
+        min_player: minPlayers,
+        max_player: maxPlayers
     };
+   const gameDatita = {
+         game_name: "Partidaaa",
+         owner_name: "Juan",
+         min_player: 2,
+         max_player: 4
+     };
 
-    onCreateGame(gameData);
+    onCreateGame(gameDatita);
   }
 
   return (
