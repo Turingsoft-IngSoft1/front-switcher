@@ -4,23 +4,30 @@ import MatchItem from './components/match.jsx';
 import '../styles/list.css';
 
 const ListMatches = () => {
-    const [data, setData] = useState(null);
+    const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     const [selectedMatch, setSelectedMatch] = useState(null);
 
     const fetchData = () => {
-        fetch('http://localhost:8000/list_games')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => setData(data))
-            .catch(error => {
-                console.error('There has been a problem with your fetch operation:', error);
-                setError(error);
-            });
+        fetch('http://127.0.0.1:8000/list_games', {
+            headers: {
+                'accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Assuming setData expects the games_list array
+            setData(data.games_list);
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+            setError(error);
+        });
     };
 
     useEffect(() => {
@@ -47,9 +54,9 @@ const ListMatches = () => {
                                     key={match.id}
                                     id={match.id}
                                     name={match.name}
-                                    quantPlayers={match.number_of_players}
-                                    min_players={match.min_players}
+                                    quantPlayers={match.players}
                                     max_players={match.max_players}
+                                    min_players={match.min_players}
                                     onClick={() => setSelectedMatch(match)}
                                     isSelected={selectedMatch && selectedMatch.id === match.id}
                                 />
