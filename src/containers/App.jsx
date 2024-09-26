@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <div>
-      <h3>Lista De Partidas</h3>
+      <h3>Lista De Partidas:</h3>
       <MatchesList />
       </div>
     </>
