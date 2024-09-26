@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import '../styles/App.css'
-import JoinButton from './components/JoinButton'
+import JoinButton from '../components/JoinButton'
 function App() {
   const [data, setData] = useState(null);
     const [error, setError] = useState(null);
