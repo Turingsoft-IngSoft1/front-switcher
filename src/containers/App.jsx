@@ -7,19 +7,26 @@ function App() {
     const [selectedMatch, setSelectedMatch] = useState(null);
 
     const fetchData = () => {
-        fetch('http://localhost:8000/list_games')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => setData(data))
-            .catch(error => {
-                console.error('There has been a problem with your fetch operation:', error);
-                setError(error);
-            });
-    };
+      fetch('http://127.0.0.1:8000/list_games', {
+          headers: {
+              'accept': 'application/json'
+          }
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(data => {
+          // Assuming setData expects the games_list array
+          setData(data.games_list);
+      })
+      .catch(error => {
+          console.error('There has been a problem with your fetch operation:', error);
+          setError(error);
+      });
+  };
 
   useEffect(() => {
     fetchData();
@@ -27,20 +34,18 @@ function App() {
 
   return (
     <>
-      <h1>Join Button test</h1>
+      <h1>Boton de unirse Test</h1>
       <div>
-        <p>
           {data ? (
             data.map((match, index) => (
               <div key={index}>
-                <span>{match}</span>
                 <JoinButton selectedMatch={match} />
+                <p/>
               </div>
             ))
           ) : (
-            <span>Loading...</span>
+            <span>Cargando...</span>
           )}
-        </p>
       </div>
     </>
   )
