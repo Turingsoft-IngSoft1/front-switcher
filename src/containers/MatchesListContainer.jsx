@@ -9,7 +9,7 @@ const ListMatches = () => {
     const [selectedMatch, setSelectedMatch] = useState(null);
 
     const fetchData = () => {
-        fetch('/test/matchList.json')
+        fetch('http://localhost:8000/list_games')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
