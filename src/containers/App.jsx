@@ -34,7 +34,7 @@ function App() {
 
   return (
     <>
-      <h1>Boton de unirse Test</h1>
+      <h1>Boton de unirse: Test</h1>
       <div>
           {data ? (
             data.map((match, index) => (
