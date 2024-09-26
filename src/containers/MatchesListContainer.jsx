@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
-import MatchItem from './components/match.jsx';
+import MatchItem from '../components/match.jsx';
 import '../styles/list.css';
 
 const ListMatches = () => {
