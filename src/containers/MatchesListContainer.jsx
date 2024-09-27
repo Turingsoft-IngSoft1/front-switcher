@@ -31,7 +31,21 @@ const ListMatches = () => {
     };
 
     useEffect(() => {
-        fetchData();
+        setData([
+            {
+                "id": 1,
+                "name": "Match 1ee",
+                "number_of_players": 2,
+                "min_players": 1,
+                "max_players": 3
+            },
+            {
+                "id": 2,
+                "name": "Match 2",
+                "number_of_players": 2,
+                "min_players": 1,
+                "max_players": 3
+            }]);
     }, []);
 
     return (
@@ -54,7 +68,7 @@ const ListMatches = () => {
                                     key={match.id}
                                     id={match.id}
                                     name={match.name}
-                                    quantPlayers={match.players}
+                                    quantPlayers={match.number_of_players}
                                     max_players={match.max_players}
                                     min_players={match.min_players}
                                     onClick={() => setSelectedMatch(match)}
