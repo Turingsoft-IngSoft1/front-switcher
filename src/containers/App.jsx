@@ -1,17 +1,45 @@
-import '../styles/App.css'
+import { useState } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
 import MatchesList from './MatchesListContainer.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import CreateGameContainer from './CreateGameContainer.jsx'
+import Lobby from '../components/Lobby.jsx';
 
 function App() {
+  const [fase, setFase] = useState('crear'); // 'crear', 'lobby', 'partida'
+  const [idPartida, setIdPartida] = useState(null);
+
+  const handleCreateGame = (id) => {
+    setIdPartida(id);
+    setFase('lobby');
+  };
 
   return (
-    <>
-      <div>
-      <h3>Lista De Partidas:</h3>
-      <MatchesList />
-      </div>
-    </>
-  )
+
+    <Container className="mt-5">
+      {fase === 'crear' && (
+        <Col>
+          <Row md={12} className="mb-4">
+            <div className="bg-light p-3 rounded">
+              <MatchesList />
+            </div>
+          </Row>
+          <Row md={12}>
+            <div className="bg-dark text-white p-3 rounded">
+              <CreateGameContainer onCreateGame={handleCreateGame} />
+            </div>
+          </Row>
+        </Col>
+      )}
+      {fase === 'lobby' && (
+        <Row>
+          <Col>
+              <Lobby />
+          </Col>
+        </Row>
+      )}
+    </Container>
+  );
 }
 
-export default App
+export default App;
