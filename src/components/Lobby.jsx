@@ -1,5 +1,6 @@
 import {useState} from "react";
 import { Card, Container, Button, Row, Col } from "react-bootstrap";
+import '../styles/Lobby.css'
 
 function CardSet (){
     return (
