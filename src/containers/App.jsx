@@ -33,9 +33,7 @@ function App() {
       {fase === 'lobby' && (
         <Row>
           <Col>
-            <div className="bg-warning p-3 rounded">
               <Lobby />
-            </div>
           </Col>
         </Row>
       )}
