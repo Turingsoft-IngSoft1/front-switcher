@@ -1,43 +1,37 @@
-import { useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import MatchesList from './MatchesListContainer.jsx'
+import MatchesList from './MatchesListContainer.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import CreateGameContainer from './CreateGameContainer.jsx'
+import CreateGameContainer from './CreateGameContainer.jsx';
 import Lobby from '../components/Lobby.jsx';
+import { GameContext, GameProvider } from '../contexts/GameContext.jsx';
 
 function App() {
-  const [fase, setFase] = useState('crear'); // 'crear', 'lobby', 'partida'
-  const [idPartida, setIdPartida] = useState(null);
+  return (
+    <GameProvider>
+      <Main />
+    </GameProvider>
+  );
+}
 
-  const handleCreateGame = (id) => {
-    setIdPartida(id);
-    setFase('lobby');
-  };
+const Main = () => {
+  const { fase, idGame, idPlayer, players} = useContext(GameContext);
 
   return (
-
     <Container className="mt-5">
       {fase === 'crear' && (
         <Col>
           <Row md={12} className="mb-4">
-            <div className="bg-light p-3 rounded">
-              <MatchesList />
-            </div>
+            <MatchesList />
           </Row>
           <Row md={12}>
             <div className="bg-dark text-white p-3 rounded">
-              <CreateGameContainer onCreateGame={handleCreateGame} />
+              <CreateGameContainer />
             </div>
           </Row>
         </Col>
       )}
-      {fase === 'lobby' && (
-        <Row>
-          <Col>
-              <Lobby />
-          </Col>
-        </Row>
-      )}
+      {fase === 'lobby' && <Lobby />}
     </Container>
   );
 }
