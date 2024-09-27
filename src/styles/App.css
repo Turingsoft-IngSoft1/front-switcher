@@ -4,3 +4,20 @@
   padding: 2rem;
   text-align: center;
 }
+
+.ficha{
+  height: 70px;
+  width: 70px;
+  margin: 5px;
+}
+
+
+.carta{
+  display: flex;
+  align-items: center;
+}
+
+.tablero{
+  width:500px;
+  height:500px;
+}
