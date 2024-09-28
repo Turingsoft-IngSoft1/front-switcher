@@ -59,7 +59,7 @@ const ListMatches = () => {
                                     key={match.id}
                                     id={match.id}
                                     name={match.name}
-                                    quantPlayers={match.players}
+                                    quantPlayers={match.number_of_players}
                                     max_players={match.max_players}
                                     min_players={match.min_players}
                                     onClick={() => setSelectedMatch(match)}
