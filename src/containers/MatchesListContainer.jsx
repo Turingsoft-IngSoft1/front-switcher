@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
 import MatchItem from '../components/match.jsx';
 import '../styles/list.css';
 
@@ -50,6 +50,11 @@ const ListMatches = () => {
 
     return (
         <div className='d-lg-flex flex-column'>
+            <div className='d-flex flex-row justify-content-start'>
+                <Button variant='dark' onClick={fetchData}>
+                    Refrescar
+                </Button>
+            </div>
             <div className='d-flex flex-row justify-content-center'>
                 <Table className="table table-fixed" borderless hover variant="dark">
                     <thead>
