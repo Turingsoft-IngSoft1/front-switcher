@@ -31,21 +31,7 @@ const ListMatches = () => {
     };
 
     useEffect(() => {
-        setData([
-            {
-                "id": 1,
-                "name": "Match 1ee",
-                "number_of_players": 2,
-                "min_players": 1,
-                "max_players": 3
-            },
-            {
-                "id": 2,
-                "name": "Match 2",
-                "number_of_players": 2,
-                "min_players": 1,
-                "max_players": 3
-            }]);
+        fetchData();
     }, []);
 
     return (
