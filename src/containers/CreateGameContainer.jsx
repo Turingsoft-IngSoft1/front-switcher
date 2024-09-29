@@ -3,7 +3,7 @@ import CreateGame from '../components/CreateGame.jsx';
 import { GameContext } from '../contexts/GameContext.jsx';
 
 export default function CreateGameContainer({ onCreateGame }) {
-  const { idGame, idPlayer, players, fase, setIdGame, setIdPlayer, setPlayers, setFase} = useContext(GameContext);
+  const { isOwner, setIsOwner, idGame, idPlayer, players, fase, setIdGame, setIdPlayer, setPlayers, setFase} = useContext(GameContext);
   const createGame = async (gameData) => {
     try {
         //TODO: direccion de api
@@ -26,6 +26,7 @@ export default function CreateGameContainer({ onCreateGame }) {
       setIdPlayer(newIdPlayer);
       setPlayers([newIdPlayer]);
       setFase('lobby');
+      setIsOwner(true);
       console.log('Partida creada con exito')
     } catch (error) {
       console.error('Error:', error);

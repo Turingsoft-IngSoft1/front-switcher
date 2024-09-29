@@ -16,12 +16,18 @@ function CardSet (){
 }
 
 function ButtonSet ({stage, onStartClick}){
+    
+    const {isOwner} = useContext(GameContext);
     switch(stage){
         case "pre-game":
             return (
                 <>
-                <Col xs="auto"><Button className="start-button" onClick = {onStartClick} >Iniciar Partida</Button></Col>
-                <Col xs="auto" ><Button className="exit-button" variant="danger">Abandonar partida</Button></Col>
+                {isOwner && 
+                    <>
+                        <Col xs="auto"><Button className="start-button" onClick = {onStartClick} >Iniciar Partida</Button></Col>
+                        <Col xs="auto" ><Button className="exit-button" variant="danger">Abandonar partida</Button></Col>
+                    </>
+                }
                 </>
             );
         default:
