@@ -1,6 +1,7 @@
 import {useState, useContext} from "react";
 import { Card, Container, Button, Row, Col } from "react-bootstrap";
 import '../styles/Lobby.css'
+import Board from './Board.jsx'
 import { GameContext } from '../contexts/GameContext.jsx';
 
 
@@ -18,15 +19,6 @@ function ButtonSet ({stage, onStartClick}){
     
     const {isOwner} = useContext(GameContext);
     switch(stage){
-        case "in-game":
-            return (
-                <>
-                <Col xs="auto"><Button className="cards-button">Pedir cartas</Button></Col>
-                <Col xs="auto"><Button className="confirm-button">Confirmar movimiento</Button></Col>
-                <Col xs="auto"><Button className="next-turn-button">Siguiente turno</Button></Col>
-                <Col xs="auto"><Button className="exit-button" variant="danger">Abandonar partida</Button></Col>
-                </>
-            );
         case "pre-game":
             return (
                 <>
@@ -52,71 +44,7 @@ function Chat () {
     );
 }
 
-function Ficha({variant, onFichaClick}){
-    return(
-        <Button className = "ficha" onClick={onFichaClick} variant = {variant}></Button>
-    );
-}
 
-function Tablero(){
-    const [fichas, setFichas] = useState(Array(36).fill("dark"));
-
-
-    return(
-        <div className="tablero">
-        <Container>
-            <Row className="justify-content-md-center">
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-            </Row>
-            <Row className="justify-content-md-center">
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-            </Row>
-            <Row className="justify-content-md-center">
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-            </Row>
-            <Row className="justify-content-md-center">
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-            </Row>
-            <Row className="justify-content-md-center">
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-            </Row>
-            <Row className="justify-content-md-center">
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-                <Col xs="auto"><Ficha variant="dark" /></Col>
-            </Row>
-        </Container>
-        </div>
-    );
-}
 
 
 //CARTAS HARDCODEADAS, IMPLEMENTAR LUEGO
@@ -124,7 +52,9 @@ function Tablero(){
          para pasar directamente a in-game sin tener que apretar el boton de comenzar juego*/
 export default function Lobby (){
     const [gameStage, setGameStage] = useState("pre-game");
+    const {setFase} = useContext(GameContext);
     function handleStart(){
+        setFase("in-game");
         setGameStage("in-game");
     }
 
@@ -133,7 +63,7 @@ export default function Lobby (){
             <Col xs="11">
                 {/* Cartas del jugador 1, tablero jugador 3 */}
                 <Row>          
-                        <Tablero />
+                        <Board />
                 </Row >
 
                 {/* Cartas del jugador usuario (0) */}

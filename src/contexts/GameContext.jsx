@@ -21,7 +21,7 @@ export const GameProvider = ({ children }) => {
     const [idGame, setIdGame] = useState(null); //id de la partida asignada
     const [players, setPlayers] = useState([]); // cantidad de jugadores en la partida
     const [currentTurn, setCurrentTurn] = useState(null); // turno actual
-    const [board, setBoard] = useState([]); // disposicion del tablero
+    const [board, setBoard] = useState(Array(36).fill("dark"));
     const [figureCards, setFigureCards] = useState([]); // cartas de movimiento actuales
     const [movCards, setMovCards] = useState([]); // cartas de figura actuales
 
