@@ -12,8 +12,8 @@ export default function CreateGame({ onCreateGame }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const gameData = {
-        "game_name": username,
-        "owner_name": gameTitle,
+        "game_name": gameTitle,
+        "owner_name": username,
         "min_player": minPlayers,
         "max_player": maxPlayers
     };
