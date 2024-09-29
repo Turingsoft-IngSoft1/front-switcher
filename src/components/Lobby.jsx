@@ -18,21 +18,16 @@ function CardSet (){
 function ButtonSet ({stage, onStartClick}){
     
     const {isOwner} = useContext(GameContext);
-    switch(stage){
-        case "pre-game":
-            return (
+    return (
+            <>
+            {isOwner && 
                 <>
-                {isOwner && 
-                    <>
-                        <Col xs="auto"><Button className="start-button" onClick = {onStartClick} >Iniciar Partida</Button></Col>
-                        <Col xs="auto" ><Button className="exit-button" variant="danger">Abandonar partida</Button></Col>
-                    </>
-                }
+                    <Col xs="auto"><Button className="start-button" onClick = {onStartClick} >Iniciar Partida</Button></Col>
+                    <Col xs="auto" ><Button className="exit-button" variant="danger">Abandonar partida</Button></Col>
                 </>
+                }
+            </>
             );
-        default:
-            return null;
-    }
 
 }
 
@@ -50,12 +45,15 @@ function Chat () {
 //CARTAS HARDCODEADAS, IMPLEMENTAR LUEGO
 /* Nota: por defecto, la interfaz se setea en pre-game, se deberia realizar un chequeo por si el jugador ya esta en una partida
          para pasar directamente a in-game sin tener que apretar el boton de comenzar juego*/
-export default function Lobby (){
-    const [gameStage, setGameStage] = useState("pre-game");
-    const {setFase} = useContext(GameContext);
-    function handleStart(){
-        setFase("in-game");
-        setGameStage("in-game");
+export default function Lobby ({onStartGame}){
+    const {idGame} = useContext(GameContext);
+
+    const handleStart = (e) =>{
+        e.preventDefault();
+        const gameData = {
+            "id_game" : idGame
+        };
+        onStartGame(gameData);
     }
 
     return (
@@ -72,7 +70,7 @@ export default function Lobby (){
                 </Row>
                 {/* acciones del jugador */}
                 <Row className="justify-content-md-around p-3">
-                    <ButtonSet stage = {gameStage} onStartClick= {handleStart}/>
+                    <ButtonSet onStartClick= {handleStart}/>
                 </Row>
             </Col>
             <Col xs ="1"><Chat /></Col>
