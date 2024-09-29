@@ -37,20 +37,20 @@ function JoinButton ({selectedMatch}) {
           });
     
           if (!response.ok) {
-            throw new Error('Error al crear la partida');
+            throw new Error('Error al unirse a la partida');
           }
-    
           const responseData = await response.json();
-          const newIdGame = responseData.id_game;
           const newIdPlayer = responseData.id_player;
-          setIdGame(newIdGame);
+          console.log('Response:', responseData);
+          setIdGame(selectedMatch.id);
           setIdPlayer(newIdPlayer);
           setFase('lobby');
+          console.log('GameContext:', { idGame, idPlayer, players, fase });
           console.log(`Joined: ${selectedMatch.id}`)
         } catch (error) {
           console.error('Error:', error);
         }
-      };þ
+      };
 
     return (
         <div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import MatchItem from '../components/match.jsx';
+import JoinButton from '../components/JoinButton.jsx';
 import '../styles/list.css';
 
 const ListMatches = () => {
@@ -54,23 +55,28 @@ const ListMatches = () => {
                         {error ? (
                             <tr><td colSpan="3">Error cargando partidas: {error.message}</td></tr>
                         ) : data ? (
-                            data.map((match) => (
-                                <MatchItem
-                                    key={match.id}
-                                    id={match.id}
-                                    name={match.name}
-                                    quantPlayers={match.number_of_players}
-                                    max_players={match.max_players}
-                                    min_players={match.min_players}
-                                    onClick={() => setSelectedMatch(match)}
-                                    isSelected={selectedMatch && selectedMatch.id === match.id}
-                                />
-                            ))
+                            data
+                                .filter(match => match.players < match.max_players)
+                                .map((match) => (
+                                    <MatchItem
+                                        key={match.id}
+                                        id={match.id}
+                                        name={match.name}
+                                        quantPlayers={match.players}
+                                        max_players={match.max_players}
+                                        min_players={match.min_players}
+                                        onClick={() => setSelectedMatch(match)}
+                                        isSelected={selectedMatch && selectedMatch.id === match.id}
+                                    />
+                                ))
                         ) : (
                             <tr><td colSpan="3">No hay partidas</td></tr>
                         )}
                     </tbody>
                 </Table>
+            </div>
+            <div className='d-flex flex-row justify-content-center'>
+                <JoinButton selectedMatch={selectedMatch} />
             </div>
         </div>
     );
