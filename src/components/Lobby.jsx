@@ -1,5 +1,6 @@
 import {useState} from "react";
 import { Card, Container, Button, Row, Col } from "react-bootstrap";
+import '../styles/Lobby.css'
 
 function CardSet (){
     return (
@@ -15,19 +16,19 @@ function ButtonSet ({stage, onStartClick}){
     switch(stage){
         case "in-game":
             return (
-                <Row xs={4} className='my-5'>
-                <Col><Button className="cards-button">Pedir cartas</Button></Col>
-                <Col><Button className="confirm-button">Confirmar movimiento</Button></Col>
-                <Col><Button className="next-turn-button">Siguiente turno</Button></Col>
-                <Col><Button className="exit-button" variant="danger">Abandonar partida</Button></Col>
-                </Row>
+                <>
+                <Col xs="auto"><Button className="cards-button">Pedir cartas</Button></Col>
+                <Col xs="auto"><Button className="confirm-button">Confirmar movimiento</Button></Col>
+                <Col xs="auto"><Button className="next-turn-button">Siguiente turno</Button></Col>
+                <Col xs="auto"><Button className="exit-button" variant="danger">Abandonar partida</Button></Col>
+                </>
             );
         case "pre-game":
             return (
-                <Row xs={2} className='my-5'>
-                <Col><Button className="start-button" onClick = {onStartClick} >Iniciar Partida</Button></Col>
-                <Col><Button className="exit-button" variant="danger">Abandonar partida</Button></Col>
-                </Row>
+                <>
+                <Col xs="auto"><Button className="start-button" onClick = {onStartClick} >Iniciar Partida</Button></Col>
+                <Col xs="auto" ><Button className="exit-button" variant="danger">Abandonar partida</Button></Col>
+                </>
             );
         default:
             return null;
@@ -121,8 +122,6 @@ export default function Lobby (){
     }
 
     return (
-        <>
-        <Container>
         <Row>
             <Col xs="11">
                 {/* Cartas del jugador 1, tablero jugador 3 */}
@@ -135,11 +134,11 @@ export default function Lobby (){
                     <CardSet className="card-set"/>
                 </Row>
                 {/* acciones del jugador */}
-                <ButtonSet stage = {gameStage} onStartClick= {handleStart}/>
+                <Row className="justify-content-md-around p-3">
+                    <ButtonSet stage = {gameStage} onStartClick= {handleStart}/>
+                </Row>
             </Col>
             <Col xs ="1"><Chat /></Col>
         </Row>
-        </Container>
-        </>
     );
 }

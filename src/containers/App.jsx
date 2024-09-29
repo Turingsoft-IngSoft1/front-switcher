@@ -1,54 +1,39 @@
-import { useState, useEffect, useContext } from 'react'
-import '../styles/App.css'
-import JoinButton from '../components/JoinButton'
+import { useContext, useEffect } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import MatchesList from './MatchesListContainer.jsx';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import CreateGameContainer from './CreateGameContainer.jsx';
+import Lobby from '../components/Lobby.jsx';
 import { GameContext, GameProvider } from '../contexts/GameContext.jsx';
 
 function App() {
-  const [data, setData] = useState(null);
-
-  const fetchData = () => {
-    fetch('http://127.0.0.1:8000/list_games', {
-        headers: {
-            'accept': 'application/json'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Assuming setData expects the games_list array
-        setData(data.games_list);
-    })
-    .catch(error => {
-        console.error('There has been a problem with your fetch operation:', error);
-    });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return (
-    <>
-      <h1>Boton de unirse: Test</h1>
-      <div>
-          {data ? (
-            data.map((match, index) => (
-              <div key={index}>
-                <JoinButton selectedMatch={match} />
-                <p/>
-              </div>
-            ))
-          ) : (
-            <span>Cargando...</span>
-          )}
-      </div>
-    </>
-  )
+    <GameProvider>
+      <Main />
+    </GameProvider>
+  );
 }
 
+const Main = () => {
+  const { fase, idGame, idPlayer, players} = useContext(GameContext);
 
-export default App
+  return (
+    <Container className="mt-5">
+      {fase === 'crear' && (
+        <Col>
+          <Row md={12} className="mb-4">
+            <MatchesList />
+          </Row>
+          <Row md={12}>
+            <div className="bg-dark text-white p-3 rounded">
+              <CreateGameContainer />
+            </div>
+          </Row>
+        </Col>
+      )}
+      {fase === 'lobby' && <Lobby />}
+    </Container>
+  );
+}
+
+export default App;
