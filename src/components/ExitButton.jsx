@@ -28,7 +28,7 @@ export default function ButtonSet({intext}) {
             setIdGame(null);
             setPlayers([]);
             setCurrentTurn(null);
-            setBoard([]);
+            setBoard(Array(36).fill("dark"));
             setFigureCards([]);
             setMovCards([]);
             //Websocket close
