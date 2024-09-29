@@ -3,6 +3,7 @@ import { Row, Col, Button } from "react-bootstrap";
 import '../styles/Lobby.css';
 import { GameContext } from '../contexts/GameContext.jsx';
 import Board from './Board.jsx';
+import ExitButton from './ExitButton.jsx';
 
 function ButtonSet(){
     return (
@@ -10,13 +11,14 @@ function ButtonSet(){
         <Col xs="auto"><Button className="cards-button">Pedir cartas</Button></Col>
         <Col xs="auto"><Button className="confirm-button">Confirmar movimiento</Button></Col>
         <Col xs="auto"><Button className="next-turn-button">Siguiente turno</Button></Col>
-        <Col xs="auto"><Button className="exit-button" variant="danger">Abandonar partida</Button></Col>
+        <Col xs="auto"><ExitButton intext='Abandonar partida'/></Col>
     </Row>     
     );
 }
 
 export default function Game() {
     const { setBoard } = useContext(GameContext);
+
 
     useEffect(() => {
         const initialBoard = Array(36).fill("dark"); 
