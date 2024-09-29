@@ -1,6 +1,8 @@
-import {useState} from "react";
+import {useState, useContext} from "react";
 import { Card, Container, Button, Row, Col } from "react-bootstrap";
 import '../styles/Lobby.css'
+import { GameContext } from '../contexts/GameContext.jsx';
+
 
 function CardSet (){
     return (
@@ -13,6 +15,8 @@ function CardSet (){
 }
 
 function ButtonSet ({stage, onStartClick}){
+    
+    const {isOwner} = useContext(GameContext);
     switch(stage){
         case "in-game":
             return (
@@ -120,7 +124,6 @@ function Tablero(){
          para pasar directamente a in-game sin tener que apretar el boton de comenzar juego*/
 export default function Lobby (){
     const [gameStage, setGameStage] = useState("pre-game");
-
     function handleStart(){
         setGameStage("in-game");
     }
