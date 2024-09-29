@@ -24,7 +24,7 @@ export const GameProvider = ({ children }) => {
     const [board, setBoard] = useState(Array(36).fill("dark"));
     const [figureCards, setFigureCards] = useState([]); // cartas de movimiento actuales
     const [movCards, setMovCards] = useState([]); // cartas de figura actuales
-
+    const [turnPlayer, setTurnPlayer] = useState(null); // id del jugador que posee el turno actual
 
     const value = {
         fase,
@@ -45,6 +45,8 @@ export const GameProvider = ({ children }) => {
         setFigureCards,
         movCards,
         setMovCards,
+        turnPlayer,
+        setTurnPlayer
     };
 
     return (
