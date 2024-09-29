@@ -4,6 +4,7 @@ import MatchesList from './MatchesListContainer.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CreateGameContainer from './CreateGameContainer.jsx';
 import Lobby from '../components/Lobby.jsx';
+import Game from '../components/Game.jsx';
 import { GameContext, GameProvider } from '../contexts/GameContext.jsx';
 
 function App() {
@@ -32,6 +33,7 @@ const Main = () => {
         </Col>
       )}
       {fase === 'lobby' && <Lobby />}
+      {fase === 'in-game' && <Game />}
     </Container>
   );
 }
