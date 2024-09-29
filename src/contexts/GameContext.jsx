@@ -16,6 +16,7 @@ import React, { createContext, useState} from 'react';
 export const GameContext = createContext();
 export const GameProvider = ({ children }) => {
     const [fase, setFase] = useState('crear')
+    const [isOwner, setIsOwner] = useState(null);
     const [idPlayer, setIdPlayer] = useState(null); // id del jugador
     const [idGame, setIdGame] = useState(null); //id de la partida asignada
     const [players, setPlayers] = useState([]); // cantidad de jugadores en la partida
@@ -28,6 +29,8 @@ export const GameProvider = ({ children }) => {
     const value = {
         fase,
         setFase,
+        isOwner,
+        setIsOwner,
         idPlayer,
         setIdPlayer,
         idGame,

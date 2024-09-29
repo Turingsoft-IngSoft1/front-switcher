@@ -26,6 +26,7 @@ export default function CreateGameContainer({ onCreateGame }) {
       setIdPlayer(newIdPlayer);
       setPlayers([newIdPlayer]);
       setFase('lobby');
+      setIsOwner(true);
       console.log('Partida creada con exito')
     } catch (error) {
       console.error('Error:', error);
