@@ -17,15 +17,6 @@ function CardSet (){
 
 function ButtonSet ({stage, onStartClick}){
     switch(stage){
-        case "in-game":
-            return (
-                <>
-                <Col xs="auto"><Button className="cards-button">Pedir cartas</Button></Col>
-                <Col xs="auto"><Button className="confirm-button">Confirmar movimiento</Button></Col>
-                <Col xs="auto"><Button className="next-turn-button">Siguiente turno</Button></Col>
-                <Col xs="auto"><Button className="exit-button" variant="danger">Abandonar partida</Button></Col>
-                </>
-            );
         case "pre-game":
             return (
                 <>

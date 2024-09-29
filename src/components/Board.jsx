@@ -14,7 +14,7 @@ export default function Board() {
     const { board } = useContext(GameContext);
 
     const getTileVariant = (index) => {
-        return board[index] || "dark";
+        return board[index];
     };
 
     return (
