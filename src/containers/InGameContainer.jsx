@@ -3,5 +3,12 @@ import Game from '../components/Game.jsx';
 
 export default function InGameContainer (){
 
-    return <Game />;
+    const passTurn = (e) => {
+
+    }
+
+    const passTurnMock = () => {
+
+    }
+    return <Game  onPassTurn = {passTurnMock}/>;
 }
