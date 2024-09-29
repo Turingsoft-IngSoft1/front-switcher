@@ -58,10 +58,10 @@ function JoinButton ({selectedMatch}) {
                 Unirse a la sala
             </Button>
             <Modal show={showModal} onHide={handleClose}>
-                <h2> Escriba un nickname para usar </h2>
-                <input type="text" value={nickname} onChange={(e) => setNickname(e.target.value)}/>
-                <Button onClick={handleClose}>Cerrar</Button>
-                <Button onClick={handleSubmit}>Aceptar</Button>
+                <h4> Escriba un nickname para usar </h4>
+                <input className='mb-3' type="text" value={nickname} onChange={(e) => setNickname(e.target.value)}/>
+                <Button className='mb-3' onClick={handleSubmit} variant='success'>Aceptar</Button>
+                <Button className='mb-1' onClick={handleClose} variant='danger'>Cerrar</Button>
             </Modal>
         </div>
     );

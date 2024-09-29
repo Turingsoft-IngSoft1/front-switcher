@@ -40,5 +40,5 @@ export default function CreateGameContainer({ onCreateGame }) {
     console.log('Partida (mockeada) creada con exito')
   }
 
-  return <CreateGame onCreateGame={createGameMock} />;
+  return <CreateGame onCreateGame={createGame} />;
 }
