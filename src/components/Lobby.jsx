@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useContext} from "react";
 import { Card, Container, Button, Row, Col } from "react-bootstrap";
 import '../styles/Lobby.css'
 import Board from './Board.jsx'
