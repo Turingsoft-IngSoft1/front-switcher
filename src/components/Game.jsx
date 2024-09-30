@@ -23,7 +23,7 @@ export default function Game({onPassTurn}) {
     return (
         <Row>
                 <Board />
-                <ButtonSet />
+                <ButtonSet onPassTurn={onPassTurn} />
         </Row>
     );
 }
