@@ -3,22 +3,10 @@ import { Row, Col, Button } from "react-bootstrap";
 import '../styles/Lobby.css';
 import { GameContext } from '../contexts/GameContext.jsx';
 import Board from './Board.jsx';
-import ExitButton from './ExitButton.jsx';
-import CardSet from './CardSet.jsx';
+import ButtonSet from  './ButtonSet.jsx'
 
 
-function ButtonSet(){
-    return (
-    <Row className="justify-content-md-around p-3">
-        <Col xs="auto"><Button className="cards-button">Pedir cartas</Button></Col>
-        <Col xs="auto"><Button className="confirm-button">Confirmar movimiento</Button></Col>
-        <Col xs="auto"><Button className="next-turn-button">Siguiente turno</Button></Col>
-        <ExitButton intext="Abandonar partida"/>
-    </Row>     
-    );
-}
-
-export default function Game() {
+export default function Game({onPassTurn}) {
     const { setBoard } = useContext(GameContext);
 
 
@@ -37,12 +25,7 @@ export default function Game() {
         <>
         <Row>
                 <Board />
-        </Row>
-        <Row>
-            <CardSet />           
-        </Row>
-        <Row>
-            <ButtonSet />
+                <ButtonSet onPassTurn={onPassTurn} />
         </Row>
         </>
     );
