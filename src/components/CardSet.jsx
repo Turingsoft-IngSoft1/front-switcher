@@ -1,12 +1,14 @@
 import '../styles/cards.css';
-import {Image, Container, Col, Card} from 'react-bootstrap';
-import imgtest from '../styles/cards/descarga.jpg'
+import {Image, Container, Col, Row} from 'react-bootstrap';
+import imgtest from '../styles/cards/fig01.svg'
 
 
-function CardSwitcher () {
+function CardSwitcher ({imgsource}) {
     return (
         <Container className="card-switcher">
-            <Image src={imgtest} />
+            <Row>
+                <Image src={imgsource} className="img-content"/>
+            </Row>
         </Container>
     );
 }
@@ -16,15 +18,15 @@ export default function CardSet () {
     return (
         <>
         <Col xs="auto" className="carta">
-        <CardSwitcher />
+        <CardSwitcher imgsource={imgtest}/>
         </Col>
 
         <Col xs="auto" className="carta">
-        <CardSwitcher />
+        <CardSwitcher imgsource={imgtest}/>
         </Col>
 
         <Col xs="auto" className="carta">
-        <CardSwitcher />
+        <CardSwitcher imgsource={imgtest}/>
         </Col>
         </>
     );
