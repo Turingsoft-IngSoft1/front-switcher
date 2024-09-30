@@ -4,10 +4,10 @@ import { GameContext } from '../contexts/GameContext.jsx';
 
 
 export default function LobbyContainer () {
-    const {fase, setFase} = useContext(GameContext);
+    const {idGame, fase, setFase} = useContext(GameContext);
     const startGame = async (gameData) => {
         const response = await fetch (
-            'http://127.0.0.1:8000/start_game',
+            'http://127.0.0.1:8000/start_game/' + idGame,
             {
                 method : 'POST',
                 headers : {'Content-Type' : 'application/JSON',},
@@ -19,12 +19,19 @@ export default function LobbyContainer () {
             throw new Error('Error al iniciar la partida');
         }
 
+        //
+        if (response.status == 409){
+            console.log("No se puede iniciar la partida, no se cumple la capacidad minima")
+        }
+
         setFase('in-game');
+        console.log('Partida iniciada con exito');
     }
 
     const startGameMock = () => {
         setFase('in-game');
+        console.log('Partida iniciada con exito by mock');
     }
 
-    return (<Lobby onStartGame = {startGameMock}/>);
+    return (<Lobby onStartGame = {startGame}/>);
 }
