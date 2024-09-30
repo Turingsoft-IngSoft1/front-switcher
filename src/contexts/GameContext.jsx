@@ -25,7 +25,8 @@ export const GameProvider = ({ children }) => {
     const [figureCards, setFigureCards] = useState([]); // cartas de movimiento actuales
     const [movCards, setMovCards] = useState([]); // cartas de figura actuales
     const [playersNames, setPlayersNames] = useState([]); // nombres de los jugadores
-    const [playersTurns, setPlayersTurns] = useState([]); // turnos de los jugadores
+    const [playersTurns, setPlayersTurns] = useState([]); // turnos de los jugadores    
+    const [turnPlayer, setTurnPlayer] = useState(null); // id del jugador que posee el turno actual
 
     const value = {
         fase,
@@ -49,7 +50,9 @@ export const GameProvider = ({ children }) => {
         playersNames,
         setPlayersNames,
         playersTurns,
-        setPlayersTurns
+        setPlayersTurns,
+        turnPlayer,
+        setTurnPlayer
     };
 
     return (

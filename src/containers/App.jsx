@@ -4,7 +4,7 @@ import MatchesList from './MatchesListContainer.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CreateGameContainer from './CreateGameContainer.jsx';
 import InGameContainer from './InGameContainer.jsx';
-import Lobby from '../components/Lobby.jsx';
+import LobbyContainer from './LobbyContainer.jsx';
 import Game from '../components/Game.jsx';
 import { GameContext, GameProvider } from '../contexts/GameContext.jsx';
 
@@ -33,7 +33,7 @@ const Main = () => {
           </Row>
         </Col>
       )}
-      {fase === 'lobby' && <Lobby />}
+      {fase === 'lobby' && <LobbyContainer />}
       {fase === 'in-game' && <InGameContainer />}
     </Container>
   );
