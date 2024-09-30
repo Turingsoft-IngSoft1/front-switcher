@@ -1,20 +1,11 @@
 import {useState, useContext} from "react";
-import { Card, Container, Button, Row, Col } from "react-bootstrap";
+import { Container, Button, Row, Col } from "react-bootstrap";
 import '../styles/Board.css'
 import Board from './Board.jsx'
 import { GameContext } from '../contexts/GameContext.jsx';
 import ExitButton from './ExitButton.jsx';
+import CardSet from './CardSet.jsx'
 
-
-function CardSet (){
-    return (
-        <>
-        <Col xs="auto" className="carta"><Card style={{ width: '60px', height: '90px' }}></Card></Col>
-        <Col xs="auto" className="carta"><Card style={{ width: '60px', height: '90px' }}></Card></Col>
-        <Col xs ="auto" className="carta"><Card style={{ width: '60px', height: '90px' }}></Card></Col>
-        </>
-    );
-}
 
 function ButtonSet ({onStartClick}){
     
@@ -40,8 +31,6 @@ function Chat () {
         </Container>
     );
 }
-
-
 
 
 //CARTAS HARDCODEADAS, IMPLEMENTAR LUEGO
