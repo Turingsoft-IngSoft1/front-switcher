@@ -5,16 +5,7 @@ import Board from './Board.jsx'
 import { GameContext } from '../contexts/GameContext.jsx';
 import ExitButton from './ExitButton.jsx';
 import PlayerBox from "./PlayerBox.jsx";
-
-function CardSet (){
-    return (
-        <>
-        <Col xs="auto" className="carta"><Card style={{ width: '60px', height: '90px' }}></Card></Col>
-        <Col xs="auto" className="carta"><Card style={{ width: '60px', height: '90px' }}></Card></Col>
-        <Col xs ="auto" className="carta"><Card style={{ width: '60px', height: '90px' }}></Card></Col>
-        </>
-    );
-}
+import CardSet from './CardSet.jsx';
 
 function ButtonSet ({onStartClick}){
     

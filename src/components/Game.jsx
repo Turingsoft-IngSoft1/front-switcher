@@ -23,6 +23,7 @@ export default function Game({onPassTurn}) {
     }, [setBoard]);
 
     return (
+        <>
         <Row>
             <Col xs="11">
                 {/* Cartas del jugador 1, tablero jugador 3 */}
@@ -47,5 +48,6 @@ export default function Game({onPassTurn}) {
                 </Row>
             </Col>
         </Row>
+        </>
     );
 }
