@@ -41,6 +41,26 @@ function Chat () {
     );
 }
 
+function PlayerBox({ boxNumber }) {
+    const { idPlayer, players, playersNames } = useContext(GameContext);
+    let firstPlayer = '';
+    if (players.length > boxNumber) {
+        const otherPlayers = players.filter(player => player !== idPlayer);
+        firstPlayer = otherPlayers[boxNumber - 1]; // Get the player in the list
+        console.log(firstPlayer);
+    }
+    return (
+        <Card className="player-box" style={{ width: '100px', height: '100px' }}>
+            <Card.Body>
+                <Card.Title style={{ fontSize: '12px' }}>
+                    {firstPlayer ? playersNames[players.indexOf(firstPlayer)] : 'Disconnected'}
+                </Card.Title>
+                {/* Otra info aca */}
+            </Card.Body>
+        </Card>
+    );
+}
+
 
 
 
@@ -104,39 +124,18 @@ export default function Lobby ({onStartGame}){
                 {/* Cartas del jugador 1, tablero jugador 3 */}
                 <Row>
                     <Col xs="12" className="justify-content-md-center">
-                    {players.length > 1 && (() => {
-                        const otherPlayers = players.filter(player => player !== idPlayer);
-                        const firstPlayer = otherPlayers[0]; // Get the second player in the list
-                        console.log(firstPlayer)
-                        return firstPlayer ? (
-                            <h1>{playersNames[players.indexOf(firstPlayer)]}</h1>
-                        ) : null;
-                    })()}
+                        <PlayerBox boxNumber={1}/>
                     </Col>
                 </Row>
                 <Row>
                     <Col xs="auto" className="justify-content-md-left">
-                        {players.length > 2 && (() => {
-                            const otherPlayers = players.filter(player => player !== idPlayer);
-                            const secondPlayer = otherPlayers[1]; // Get the second player in the list
-                            console.log(secondPlayer);
-                            return secondPlayer ? (
-                                <h1>{playersNames[players.indexOf(secondPlayer)]}</h1>
-                            ) : null;
-                        })()}
+                        <PlayerBox boxNumber={2}/>
                     </Col>
                     <Col xs="auto">
                         <Board />
                     </Col>
                     <Col xs="auto" className="justify-content-md-right">
-                        {players.length > 3 && (() => {
-                            const otherPlayers = players.filter(player => player !== idPlayer);
-                            const thirdPlayer = otherPlayers[2]; // Get the second player in the list
-                            console.log(thirdPlayer);
-                            return thirdPlayer ? (
-                                <h1>{playersNames[players.indexOf(thirdPlayer)]}</h1>
-                            ) : null;
-                        })()}
+                        <PlayerBox boxNumber={3}/>
                     </Col>
                 </Row>
 
