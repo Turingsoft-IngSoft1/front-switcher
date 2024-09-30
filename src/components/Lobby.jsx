@@ -49,8 +49,12 @@ function Chat () {
          para pasar directamente a in-game sin tener que apretar el boton de comenzar juego*/
 export default function Lobby ({onStartGame}){
     const { fase, idPlayer, players, playersTurns, playersNames, idGame, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
+    const [gameStage, setGameStage] = useState("pre-game");
+    const {setFase} = useContext(GameContext);
 
     const handleStart = (e) =>{
+        setFase("in-game");
+        setGameStage("in-game");
         e.preventDefault();
         const gameData = {
             "id_game" : idGame

@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { GameContext } from '../contexts/GameContext.jsx';
 
 
-export default function ButtonSet({intext}) {
+function ExitButton({intext}) {
     const { 
         idGame, idPlayer, setFase, setIsOwner, setIdPlayer, 
         setIdGame, setPlayers, setCurrentTurn, setBoard, 
@@ -43,3 +43,5 @@ export default function ButtonSet({intext}) {
         <Button onClick={exitGame} className="exit-button" variant="danger">{intext}</Button>
     );
 }
+
+export default ExitButton;

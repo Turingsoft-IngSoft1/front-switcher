@@ -7,6 +7,7 @@ import ButtonSet from  './ButtonSet.jsx'
 
 
 export default function Game({onPassTurn}) {
+    const { fase, idPlayer, players, playersTurns, playersNames, idGame, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
     const { setBoard } = useContext(GameContext);
 
 

@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import {GameContext} from '../contexts/GameContext';
+import {ExitButton} from './ExitButton.jsx';
 
 function PedirCartasButton ({status}){
     switch(status){
@@ -62,13 +63,6 @@ function NextTurnButton ({onPassTurnClick, status}){
 
 }
 
-function LeaveGameButton () {
-    return (
-        <Col>
-        <Button className="leave-game-button" variant="danger">Abandonar partida</Button>
-        </Col>
-    );
-}
 
 export default function ButtonSet ({onPassTurn}) {
     const {turnPlayer, idPlayer, idGame} = useContext(GameContext);
@@ -87,7 +81,7 @@ export default function ButtonSet ({onPassTurn}) {
                 <PedirCartasButton status={'enabled'}/>
                 <ConfirmMovementButton status={'enabled'}/>
                 <NextTurnButton onPassTurnClick = {handleNextTurnClick} status={'enabled'}/>
-                <LeaveGameButton />
+                <ExitButton intext="Abandonar Sala"/>
             </Row>     
         );
     }
@@ -97,7 +91,7 @@ export default function ButtonSet ({onPassTurn}) {
                 <PedirCartasButton status={'disabled'}/>
                 <ConfirmMovementButton status={'disabled'}/>
                 <NextTurnButton  status={'disabled'}/>
-                <LeaveGameButton />
+                <ExitButton intext="Abandonar Sala"/>
             </Row>      
         );
     }
