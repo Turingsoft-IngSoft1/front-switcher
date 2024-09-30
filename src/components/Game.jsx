@@ -1,7 +1,6 @@
 import { useEffect, useContext } from "react";
 import '../styles/Board.css';
 import { Card, Row, Col, Button, Modal } from "react-bootstrap";
-import '../styles/Lobby.css';
 import { GameContext } from '../contexts/GameContext.jsx';
 import Board from './Board.jsx';
 import CardSet from './CardSet.jsx'
