@@ -27,6 +27,7 @@ export const GameProvider = ({ children }) => {
     const [playersNames, setPlayersNames] = useState([]); // nombres de los jugadores
     const [playersTurns, setPlayersTurns] = useState([]); // turnos de los jugadores    
     const [turnPlayer, setTurnPlayer] = useState(null); // id del jugador que posee el turno actual
+    const [winner, setWinner] = useState(false); // indica si hay un ganador
 
     const value = {
         fase,
@@ -52,7 +53,9 @@ export const GameProvider = ({ children }) => {
         playersTurns,
         setPlayersTurns,
         turnPlayer,
-        setTurnPlayer
+        setTurnPlayer,
+        winner,
+        setWinner
     };
 
     return (

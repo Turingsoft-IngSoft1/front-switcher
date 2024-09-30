@@ -33,11 +33,13 @@ function Chat () {
 }
 
 
+
+
 //CARTAS HARDCODEADAS, IMPLEMENTAR LUEGO
 /* Nota: por defecto, la interfaz se setea en pre-game, se deberia realizar un chequeo por si el jugador ya esta en una partida
          para pasar directamente a in-game sin tener que apretar el boton de comenzar juego*/
 export default function Lobby ({onStartGame}){
-    const { fase, idPlayer, players, playersTurns, playersNames, idGame, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
+    const { winner, setWinner, fase, idPlayer, players, playersTurns, playersNames, idGame, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
     const [gameStage, setGameStage] = useState("pre-game");
     const {setFase} = useContext(GameContext);
 
@@ -46,6 +48,7 @@ export default function Lobby ({onStartGame}){
         setGameStage("in-game");
         onStartGame(idGame);
     }
+
     const getPlayersInfo = () => {
         fetch('http://127.0.0.1:8000/active_players/' + idGame, {
             method: 'GET',
