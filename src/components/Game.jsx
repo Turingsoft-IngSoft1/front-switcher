@@ -11,6 +11,7 @@ function ButtonSet(){
         <Col xs="auto"><Button className="cards-button">Pedir cartas</Button></Col>
         <Col xs="auto"><Button className="confirm-button">Confirmar movimiento</Button></Col>
         <Col xs="auto"><Button className="next-turn-button">Siguiente turno</Button></Col>
+        <ExitButton intext="Abandonar partida"/>
     </Row>     
     );
 }
