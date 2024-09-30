@@ -1,6 +1,6 @@
 import {useEffect, useState, useContext} from "react";
 import { Card, Container, Button, Row, Col } from "react-bootstrap";
-import '../styles/Lobby.css'
+import '../styles/Board.css'
 import { GameContext } from '../contexts/GameContext.jsx';
 
 
