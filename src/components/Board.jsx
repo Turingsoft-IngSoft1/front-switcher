@@ -1,6 +1,6 @@
 import {useEffect, useState, useContext} from "react";
 import { Card, Container, Button, Row, Col } from "react-bootstrap";
-import '../styles/Lobby.css'
+import '../styles/Board.css'
 import { GameContext } from '../contexts/GameContext.jsx';
 
 
@@ -25,7 +25,7 @@ export default function Board() {
                         {Array.from({ length: 6 }, (_, colIndex) => {
                             const index = rowIndex * 6 + colIndex; // Calcular el índice de la tile
                             return (
-                                <Col xs="auto" key={index}>
+                                <Col xs="auto" className="p-0" key={index}>
                                     <Tile variant={getTileVariant(index)} />
                                 </Col>
                             );

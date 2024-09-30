@@ -37,11 +37,6 @@ const ListMatches = () => {
 
     return (
         <div className='d-lg-flex flex-column'>
-            <div className='d-flex flex-row justify-content-start'>
-                <Button variant='dark' onClick={fetchData}>
-                    Refrescar
-                </Button>
-            </div>
             <div className='d-flex flex-row justify-content-center'>
                 <Table className="table table-fixed" borderless hover variant="dark">
                     <thead>
@@ -75,8 +70,13 @@ const ListMatches = () => {
                     </tbody>
                 </Table>
             </div>
-            <div className='d-flex flex-row justify-content-center'>
+            <div className='d-flex flex-row justify-content-around'>
                 <JoinButton selectedMatch={selectedMatch} />
+                <div className='d-flex flex-row justify-content-start'>
+                    <Button onClick={fetchData}>
+                        Refrescar
+                    </Button>
+                </div>
             </div>
         </div>
     );
