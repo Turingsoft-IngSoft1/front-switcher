@@ -4,7 +4,9 @@ import { Card, Row, Col, Button, Modal } from "react-bootstrap";
 import { GameContext } from '../contexts/GameContext.jsx';
 import Board from './Board.jsx';
 import CardSet from './CardSet.jsx'
-
+import PlayerBox from "./PlayerBox.jsx";
+import ExitButton from "./ExitButton.jsx";
+import ButtonSet from "./ButtonSet.jsx";
 
 export default function Game({onPassTurn}) {
     const { winner, namePlayer, fase, idPlayer, players, playersTurns, playersNames, idGame,setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
