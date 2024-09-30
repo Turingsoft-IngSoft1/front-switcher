@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import {GameContext} from '../contexts/GameContext';
+import ExitButton from './ExitButton.jsx';
 
 function PedirCartasButton ({status}){
     switch(status){
@@ -65,10 +66,11 @@ function NextTurnButton ({onPassTurnClick, status}){
 function LeaveGameButton () {
     return (
         <Col>
-        <Button className="leave-game-button" variant="danger">Abandonar partida</Button>
+        <ExitButton intext="Abandonar Sala"/>
         </Col>
     );
 }
+
 
 export default function ButtonSet ({onPassTurn}) {
     const {turnPlayer, idPlayer, idGame} = useContext(GameContext);

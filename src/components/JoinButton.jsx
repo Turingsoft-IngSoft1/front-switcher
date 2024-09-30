@@ -40,12 +40,11 @@ function JoinButton ({selectedMatch}) {
             throw new Error('Error al unirse a la partida');
           }
           const responseData = await response.json();
-          const newIdPlayer = responseData.id_player;
+          const newIdPlayer = responseData.new_player_id;
           console.log('Response:', responseData);
           setIdGame(selectedMatch.id);
           setIdPlayer(newIdPlayer);
           setFase('lobby');
-          console.log('GameContext:', { idGame, idPlayer, players, fase });
           console.log(`Joined: ${selectedMatch.id}`)
         } catch (error) {
           console.error('Error:', error);

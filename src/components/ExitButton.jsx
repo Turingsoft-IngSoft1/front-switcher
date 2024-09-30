@@ -3,20 +3,26 @@ import { Button } from "react-bootstrap";
 import { GameContext } from '../contexts/GameContext.jsx';
 
 
-export default function ButtonSet({intext}) {
+function ExitButton({intext}) {
     const { 
         idGame, idPlayer, setFase, setIsOwner, setIdPlayer, 
         setIdGame, setPlayers, setCurrentTurn, setBoard, 
-        setFigureCards, setMovCards
+        setFigureCards, setMovCards, setPlayersNames, setPlayersTurns
     } = useContext(GameContext);
 
     function exitGame() {
-        fetch(`http://127.0.0.1:8000/leave_game?id_player=${idPlayer}&id_game=${idGame}`, {
+        fetch(`http://127.0.0.1:8000/leave_game`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify(
+                {
+                    "id_player": idPlayer,
+                    "id_game": idGame
+                }
+            ),
         })
         .then(response => response.json())
         .then(data => {
@@ -31,6 +37,8 @@ export default function ButtonSet({intext}) {
             setBoard(Array(36).fill("dark"));
             setFigureCards([]);
             setMovCards([]);
+            setPlayersNames([]);
+            setPlayersTurns([]);
             //Websocket close
         })
         .catch((error) => {
@@ -41,3 +49,5 @@ export default function ButtonSet({intext}) {
         <Button onClick={exitGame} className="exit-button" variant="danger">{intext}</Button>
     );
 }
+
+export default ExitButton;
