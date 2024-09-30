@@ -3,6 +3,7 @@ import { Card, Container, Button, Row, Col } from "react-bootstrap";
 import '../styles/Lobby.css'
 import Board from './Board.jsx'
 import { GameContext } from '../contexts/GameContext.jsx';
+import ExitButton from './ExitButton.jsx';
 
 
 function CardSet (){
@@ -18,13 +19,15 @@ function CardSet (){
 function ButtonSet ({stage, onStartClick}){
     
     const {isOwner} = useContext(GameContext);
-    return (
-            <>
-            {isOwner && 
+    switch(stage){
+        case "pre-game":
+            return (
                 <>
-                    <Col xs="auto"><Button className="start-button" onClick = {onStartClick} >Iniciar Partida</Button></Col>
-                    <Col xs="auto" ><Button className="exit-button" variant="danger">Abandonar partida</Button></Col>
-                </>
+                {isOwner && 
+                    <>
+                        <Col xs="auto"><Button className="start-button" onClick = {onStartClick} >Iniciar Partida</Button></Col>
+                        <Col xs="auto" ><ExitButton intext="Abandonar Sala"/></Col>
+                    </>
                 }
             </>
             );
