@@ -1,16 +1,31 @@
 import { useEffect, useContext } from "react";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Modal } from "react-bootstrap";
 import '../styles/Lobby.css';
 import { GameContext } from '../contexts/GameContext.jsx';
 import Board from './Board.jsx';
 import ButtonSet from  './ButtonSet.jsx'
 import PlayerBox from "./PlayerBox.jsx";
+import ExitButton from "./ExitButton.jsx";
+
 
 export default function Game({onPassTurn}) {
-    const { fase, idPlayer, players, playersTurns, playersNames, idGame, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
+    const { winner, fase, idPlayer, players, playersTurns, playersNames, idGame, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
     const { setBoard } = useContext(GameContext);
-
-
+    
+    const handleHide = () => {
+        setFase('crear');
+        setIsOwner(false);
+        setIdPlayer(null);
+        setIdGame(null);
+        setPlayers([]);
+        setCurrentTurn(null);
+        setBoard(Array(36).fill("dark"));
+        setFigureCards([]);
+        setMovCards([]);
+        setPlayersNames([]);
+        setPlayersTurns([]);
+        setWinner(false);
+    }
     useEffect(() => {
         const initialBoard = Array(36).fill("dark"); 
 
@@ -42,6 +57,14 @@ export default function Game({onPassTurn}) {
                     <Row>
                         <Board />
                         <ButtonSet onPassTurn={onPassTurn} />
+                        <Modal show={winner} onHide={handleHide}>
+                            <Modal.Header>
+                                    <h4> GANASTE!!! </h4>
+                            </Modal.Header>
+                            <Modal.Footer>
+                                <ExitButton intext='Aceptar' variant="success" />
+                            </Modal.Footer>
+                        </Modal>
                     </Row>
                     </Col>
                 </Row>

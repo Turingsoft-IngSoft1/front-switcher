@@ -7,7 +7,7 @@ function ExitButton({intext}) {
     const { 
         idGame, idPlayer, setFase, setIsOwner, setIdPlayer, 
         setIdGame, setPlayers, setCurrentTurn, setBoard, 
-        setFigureCards, setMovCards, setPlayersNames, setPlayersTurns
+        setFigureCards, setMovCards, setPlayersNames, setPlayersTurns, setWinner
     } = useContext(GameContext);
 
     function exitGame() {
@@ -39,6 +39,7 @@ function ExitButton({intext}) {
             setMovCards([]);
             setPlayersNames([]);
             setPlayersTurns([]);
+            setWinner(false);
             //Websocket close
         })
         .catch((error) => {

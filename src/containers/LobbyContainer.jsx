@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import Lobby from '../components/Lobby.jsx';
 import { GameContext } from '../contexts/GameContext.jsx';
-
+import { WebSocketProvider } from '../contexts/WebSocketContext.jsx';
 
 export default function LobbyContainer () {
-    const {idGame, fase, setFase} = useContext(GameContext);
+    const {idPlayer, idGame, fase, setFase} = useContext(GameContext);
     const startGame = async (gameData) => {
         const response = await fetch (
             'http://127.0.0.1:8000/start_game/' + idGame,
@@ -33,5 +33,9 @@ export default function LobbyContainer () {
         console.log('Partida iniciada con exito by mock');
     }
 
-    return (<Lobby onStartGame = {startGame}/>);
+    return (
+        <WebSocketProvider>
+            <Lobby onStartGame = {startGame}/>
+        </WebSocketProvider>
+    );
 }
