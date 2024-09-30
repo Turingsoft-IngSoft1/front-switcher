@@ -4,6 +4,8 @@ import '../styles/Lobby.css';
 import { GameContext } from '../contexts/GameContext.jsx';
 import Board from './Board.jsx';
 import ExitButton from './ExitButton.jsx';
+import CardSet from './CardSet.jsx';
+
 
 function ButtonSet(){
     return (
@@ -32,9 +34,16 @@ export default function Game() {
     }, [setBoard]);
 
     return (
+        <>
         <Row>
                 <Board />
-                <ButtonSet />
         </Row>
+        <Row>
+            <CardSet />           
+        </Row>
+        <Row>
+            <ButtonSet />
+        </Row>
+        </>
     );
 }
