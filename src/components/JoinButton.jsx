@@ -54,7 +54,7 @@ function JoinButton ({selectedMatch}) {
 
     return (
         <div>
-            <Button variant='dark' onClick={handleJoinRequest} disabled={!selectedMatch}>
+            <Button variant='success' onClick={handleJoinRequest} disabled={!selectedMatch}>
                 Unirse a la sala
             </Button>
             <Modal show={showModal} onHide={handleClose}>
