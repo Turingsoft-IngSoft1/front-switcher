@@ -55,11 +55,7 @@ export default function Lobby ({onStartGame}){
     const handleStart = (e) =>{
         setFase("in-game");
         setGameStage("in-game");
-        e.preventDefault();
-        const gameData = {
-            "id_game" : idGame
-        };
-        onStartGame(gameData);
+        onStartGame(idGame);
     }
     const getPlayersInfo = () => {
         fetch('http://127.0.0.1:8000/active_players/' + idGame, {

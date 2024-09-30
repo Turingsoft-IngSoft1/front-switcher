@@ -11,12 +11,18 @@ function ExitButton({intext}) {
     } = useContext(GameContext);
 
     function exitGame() {
-        fetch(`http://127.0.0.1:8000/leave_game?id_player=${idPlayer}&id_game=${idGame}`, {
+        fetch(`http://127.0.0.1:8000/leave_game`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify(
+                {
+                    "id_player": idPlayer,
+                    "id_game": idGame
+                }
+            ),
         })
         .then(response => response.json())
         .then(data => {

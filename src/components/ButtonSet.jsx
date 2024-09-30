@@ -63,6 +63,14 @@ function NextTurnButton ({onPassTurnClick, status}){
 
 }
 
+function LeaveGameButton () {
+    return (
+        <Col>
+        <ExitButton intext="Abandonar Sala"/>
+        </Col>
+    );
+}
+
 
 export default function ButtonSet ({onPassTurn}) {
     const {turnPlayer, idPlayer, idGame} = useContext(GameContext);
@@ -81,7 +89,7 @@ export default function ButtonSet ({onPassTurn}) {
                 <PedirCartasButton status={'enabled'}/>
                 <ConfirmMovementButton status={'enabled'}/>
                 <NextTurnButton onPassTurnClick = {handleNextTurnClick} status={'enabled'}/>
-                <ExitButton intext="Abandonar Sala"/>
+                <LeaveGameButton />
             </Row>     
         );
     }
@@ -91,7 +99,7 @@ export default function ButtonSet ({onPassTurn}) {
                 <PedirCartasButton status={'disabled'}/>
                 <ConfirmMovementButton status={'disabled'}/>
                 <NextTurnButton  status={'disabled'}/>
-                <ExitButton intext="Abandonar Sala"/>
+                <LeaveGameButton />
             </Row>      
         );
     }
