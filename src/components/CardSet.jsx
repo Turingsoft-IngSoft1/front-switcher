@@ -1,9 +1,13 @@
-import {Col, Card} from 'react-bootstrap';
+import '../styles/cards.css';
+import {Image, Container, Col, Card} from 'react-bootstrap';
+import imgtest from '../styles/cards/descarga.jpg'
+
 
 function CardSwitcher () {
     return (
-        <div className='card-switcher'>
-        </div>
+        <Container className="card-switcher">
+            <Image src={imgtest} />
+        </Container>
     );
 }
 
