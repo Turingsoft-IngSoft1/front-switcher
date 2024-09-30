@@ -42,18 +42,18 @@ function ConfirmMovementButton ({status}){
 
 }
 
-function NextTurnButton ({onNextTurnClick, status}){
+function NextTurnButton ({onPassTurnClick, status}){
     switch(status){
         case 'disabled':
             return (
                 <Col>
-                <Button className="next-turn-button" onClick={onNextTurnClick} disabled>Siguiente turno</Button>
+                <Button className="next-turn-button" onClick={onPassTurnClick} disabled>Siguiente turno</Button>
                 </Col>
             );
         case 'enabled':
             return (
                 <Col>
-                <Button className="next-turn-button" onClick={onNextTurnClick}>Siguiente turno</Button>
+                <Button className="next-turn-button" onClick={onPassTurnClick}>Siguiente turno</Button>
                 </Col>
             );
         default:
@@ -70,14 +70,23 @@ function LeaveGameButton () {
     );
 }
 
-export default function ButtonSet ({handleNextTurnClick}) {
-    const {turnPlayer, idPlayer} = useContext(GameContext);
-    if (turnPlayer == idPlayer){
+export default function ButtonSet ({onPassTurn}) {
+    const {turnPlayer, idPlayer, idGame} = useContext(GameContext);
+
+    const handleNextTurnClick = (e) => {
+        e.preventDefault();
+        const turnData = {
+            "id_player" : idPlayer,
+            "id_game" : idGame
+        };
+        onPassTurn(turnData);
+    }
+    if (true){
         return (
             <Row className="justify-content-md-around p-3">
                 <PedirCartasButton status={'enabled'}/>
                 <ConfirmMovementButton status={'enabled'}/>
-                <NextTurnButton onClick = {handleNextTurnClick} status={'enabled'}/>
+                <NextTurnButton onPassTurnClick = {handleNextTurnClick} status={'enabled'}/>
                 <LeaveGameButton />
             </Row>     
         );
@@ -87,7 +96,7 @@ export default function ButtonSet ({handleNextTurnClick}) {
             <Row className="justify-content-md-around p-3">
                 <PedirCartasButton status={'disabled'}/>
                 <ConfirmMovementButton status={'disabled'}/>
-                <NextTurnButton onClick = {handleNextTurnClick} status={'disabled'}/>
+                <NextTurnButton  status={'disabled'}/>
                 <LeaveGameButton />
             </Row>      
         );
