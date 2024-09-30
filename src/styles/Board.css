@@ -6,14 +6,18 @@
 }
 
 .tile{
-  height: 70px;
-  width: 70px;
-  margin: 5px;
+  height: 50px;
+  width: 50px;
+  margin: 1px;
 }
 
 
-.carta{
+.cardset{
   display: flex;
   align-items: center;
+}
+
+.card{
+  background-color: rgb(221, 170, 102);
 }
  

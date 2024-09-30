@@ -1,6 +1,6 @@
 import {useState, useContext, useEffect} from "react";
-import { Card, Container, Button, Row, Col } from "react-bootstrap";
-import '../styles/Lobby.css'
+import { Container, Button, Row, Col } from "react-bootstrap";
+import '../styles/Board.css'
 import Board from './Board.jsx'
 import { GameContext } from '../contexts/GameContext.jsx';
 import ExitButton from './ExitButton.jsx';
@@ -88,36 +88,48 @@ export default function Lobby ({onStartGame}){
     }, [gameStage, fase]);
 
     return (
-        <Row>
-            <Col xs="11">
-                {/* Cartas del jugador 1, tablero jugador 3 */}
-                <Row>
-                    <Col xs="12" className="justify-content-md-center">
-                        <PlayerBox boxNumber={1}/>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col xs="auto" className="justify-content-md-left">
-                        <PlayerBox boxNumber={2}/>
-                    </Col>
-                    <Col xs="auto">
-                        <Board />
-                    </Col>
-                    <Col xs="auto" className="justify-content-md-right">
-                        <PlayerBox boxNumber={3}/>
-                    </Col>
-                </Row>
-
-                                {/* Cartas del jugador usuario (0) */}
-                <Row className="justify-content-md-center">
-                    <CardSet className="card-set"/>
-                </Row>
-                {/* acciones del jugador */}
-                <Row className="justify-content-md-around p-3">
-                    <ButtonSet onStartClick= {handleStart}/>
-                </Row>
-            </Col>
-            <Col xs ="1"><Chat /></Col>
-        </Row>
+        <>
+             {/* Cartas del jugador 1, tablero jugador 3 */}
+            <Row>
+                <Col xs={4} md={3} className="d-flex align-items-center">
+                </Col>
+                <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
+                    <PlayerBox boxNumber={1}/>
+                </Col>
+                <Col xs={4} md={3} className="d-flex align-items-center" >
+                    
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={4} md={3} className="d-flex align-items-center">
+                    <PlayerBox boxNumber={2}/>
+                </Col>
+                <Col xs={4} md={6}>
+                    <Board />
+                </Col>
+                <Col xs={4} md={3} className="d-flex align-items-center">
+                    <PlayerBox boxNumber={3}/>
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={4} md={3} className="d-flex align-items-center">
+                </Col>
+                <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
+                    PLAYER_BOX_JUGADOR
+                </Col>
+                <Col xs={4} md={3} className="d-flex align-items-center" >
+                    
+                </Col>
+            </Row>
+                            {/* Cartas del jugador usuario (0) */}
+            
+            <Row className="justify-content-md-center">
+                <CardSet className="card-set"/>
+            </Row>
+            {/* acciones del jugador */}
+            <Row className="justify-content-md-around p-3">
+                <ButtonSet onStartClick= {handleStart}/>
+            </Row>
+        </>
     );
 }
