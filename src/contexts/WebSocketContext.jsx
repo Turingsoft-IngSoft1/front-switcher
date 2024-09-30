@@ -44,7 +44,7 @@ export const WebSocketProvider = ({ children }) => {
                 break;
         }
     }, [readyState]);
-
+    WebSocketProvider
     useEffect(() => {
         if (lastMessage !== null) {
             console.log('Mensaje recibido');

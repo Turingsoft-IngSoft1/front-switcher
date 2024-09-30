@@ -7,6 +7,7 @@ import InGameContainer from './InGameContainer.jsx';
 import LobbyContainer from './LobbyContainer.jsx';
 import Game from '../components/Game.jsx';
 import { GameContext, GameProvider } from '../contexts/GameContext.jsx';
+import { WebSocketProvider } from '../contexts/WebSocketContext.jsx';
 
 function App() {
   return (
