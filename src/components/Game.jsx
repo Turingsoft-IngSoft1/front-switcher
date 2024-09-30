@@ -71,7 +71,7 @@ export default function Game({onPassTurn}) {
                             <h4> GANASTE!!! </h4>
                     </Modal.Header>
                     <Modal.Footer>
-                        <ExitButton intext='Aceptar' variant="success" />
+                        <ExitButton intext='Cerrar' variant="success" />
                     </Modal.Footer>
                 </Modal>
                 <CardSet />
