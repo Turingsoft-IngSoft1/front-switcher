@@ -40,6 +40,7 @@ function Chat () {
          para pasar directamente a in-game sin tener que apretar el boton de comenzar juego*/
 export default function Lobby ({onStartGame}){
     const { winner, setWinner, fase, idPlayer, namePlayer, players, playersTurns, playersNames, idGame, setBoard, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
+    
     const handleStart = (e) =>{
         e.preventDefault();
         const gameData = {
@@ -47,7 +48,6 @@ export default function Lobby ({onStartGame}){
         };
         onStartGame(gameData);
     }
-
     return (
         <>
              {/* Cartas del jugador 1, tablero jugador 3 */}

@@ -1,11 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import Lobby from '../components/Lobby.jsx';
 import { GameContext } from '../contexts/GameContext.jsx';
-import { WebSocketProvider } from '../contexts/WebSocketContext.jsx';
 
 export default function LobbyContainer () {
     const {idPlayer, idGame, fase, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
-
     //traete los jugadores
     const getPlayersInfo = () => {
         console.log(idGame);
@@ -77,9 +75,8 @@ export default function LobbyContainer () {
         console.log('Partida iniciada con exito by mock');
     }
 
-    return (
-        <WebSocketProvider>
+    return (       
             <Lobby onStartGame = {startGame}/>
-        </WebSocketProvider>
+        
     );
 }

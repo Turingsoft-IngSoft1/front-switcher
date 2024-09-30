@@ -9,7 +9,7 @@ import ExitButton from "./ExitButton.jsx";
 import ButtonSet from "./ButtonSet.jsx";
 
 export default function Game({onPassTurn}) {
-    const { winner, namePlayer, fase, idPlayer, players, playersTurns, playersNames, idGame,setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
+    const { winner, namePlayer, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
     
     const handleHide = () => {
         setFase('crear');
@@ -44,8 +44,6 @@ export default function Game({onPassTurn}) {
                 <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
                     <PlayerBox boxNumber={1}/>
                 </Col>
-                <Col xs={4} md={3} className="d-flex align-items-center" >
-                </Col>
             </Row>
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
@@ -68,15 +66,15 @@ export default function Game({onPassTurn}) {
                 </Col>
             </Row>
             <Row className="justify-content-md-center">
-                <CardSet />
                 <Modal show={winner} onHide={handleHide}>
-                            <Modal.Header>
-                                    <h4> GANASTE!!! </h4>
-                            </Modal.Header>
-                            <Modal.Footer>
-                                <ExitButton intext='Aceptar' variant="success" />
-                            </Modal.Footer>
+                    <Modal.Header>
+                            <h4> GANASTE!!! </h4>
+                    </Modal.Header>
+                    <Modal.Footer>
+                        <ExitButton intext='Aceptar' variant="success" />
+                    </Modal.Footer>
                 </Modal>
+                <CardSet />
             </Row>
             <Row>
                 <ButtonSet onPassTurn={onPassTurn} />

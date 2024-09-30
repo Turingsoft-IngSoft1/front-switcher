@@ -7,6 +7,7 @@ import InGameContainer from './InGameContainer.jsx';
 import LobbyContainer from './LobbyContainer.jsx';
 import Game from '../components/Game.jsx';
 import { GameContext, GameProvider } from '../contexts/GameContext.jsx';
+import { WebSocketProvider } from '../contexts/WebSocketContext.jsx';
 
 function App() {
   return (
@@ -20,22 +21,24 @@ const Main = () => {
   const { fase, idGame, idPlayer, players} = useContext(GameContext);
 
   return (
-    <Container className="mt-5">
-      {fase === 'crear' && (
-        <Col>
-          <Row md={12} className="mb-4">
-            <MatchesList />
-          </Row>
-          <Row md={12}>
-            <div className="bg-dark text-white p-3 rounded">
-              <CreateGameContainer />
-            </div>
-          </Row>
-        </Col>
-      )}
-      {fase === 'lobby' && <LobbyContainer />}
-      {fase === 'in-game' && <InGameContainer />}
-    </Container>
+    <WebSocketProvider>
+      <Container className="mt-5">
+        {fase === 'crear' && (
+          <Col>
+            <Row md={12} className="mb-4">
+              <MatchesList />
+            </Row>
+            <Row md={12}>
+              <div className="bg-dark text-white p-3 rounded">
+                <CreateGameContainer />
+              </div>
+            </Row>
+          </Col>
+        )}
+        {fase === 'lobby' && <LobbyContainer />}
+        {fase === 'in-game' && <InGameContainer />}
+      </Container>
+    </WebSocketProvider>
   );
 }
 

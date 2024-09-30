@@ -2,25 +2,31 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { GameContext } from '../contexts/GameContext.jsx';
 
-const WebSocketContext = createContext(null);
+export const WebSocketContext = createContext(null);
 
 export const WebSocketProvider = ({ children }) => {
     const [players, setPlayers] = useState([]);
-    const { idPlayer, idGame, setWinner, fase, playerId } = useContext(GameContext);
-    const { lastMessage, readyState, sendMessage, getWebSocket, closeWebSocket } = useWebSocket(`ws://localhost:8000/ws/${idGame}/${idPlayer}`);
+    const [shouldConnect, setShouldConnect] = useState(false);
+    const { idPlayer, idGame, setWinner, fase, setFase } = useContext(GameContext);
+    const { lastMessage, readyState, sendMessage, getWebSocket } = useWebSocket(`ws://localhost:8000/ws/${idGame}/${idPlayer}`, {
+    });
 
     useEffect(() => {
-        if (readyState === ReadyState.OPEN && idGame === 'crear' && fase === 'crear') {
+        if (readyState === ReadyState.OPEN && fase === 'crear') {
             console.log('Fase cambiada a crear, desconectando WebSocket...');
-            closeWebSocket();
+            //TODO: Close websocket
         }
-    }, [fase, idGame, readyState, closeWebSocket]);
+    }, [fase, readyState]);
 
     useEffect(() => {
         switch (readyState) {
             case ReadyState.CONNECTING:
                 console.log('Conectando...');
-                break;
+                break;const [WinnerId, action] = lastMessage.data.split(' ');
+                if (action === 'WIN') {
+                    console.log(`Existe Ganador y es unico`);
+                    setWinner(true);
+                }
             case ReadyState.OPEN:
                 console.log('Conexión establecida');
                 break;
@@ -38,7 +44,7 @@ export const WebSocketProvider = ({ children }) => {
                 break;
         }
     }, [readyState]);
-
+    WebSocketProvider
     useEffect(() => {
         if (lastMessage !== null) {
             console.log('Mensaje recibido');
@@ -57,14 +63,16 @@ export const WebSocketProvider = ({ children }) => {
                     setWinner(true);
                 }
             }
+            if (lastMessage.data.includes('GAME_STARTED')) {
+                console.log(`Existe Ganador y es unico`);
+                setFase('in-game');
+            }
         }
     }, [lastMessage, setPlayers, setWinner]);
 
     return (
-        <WebSocketContext.Provider value={{ lastMessage, readyState, players, setPlayers, sendMessage, getWebSocket, closeWebSocket }}>
+        <WebSocketContext.Provider value={{ }}>
             {children}
         </WebSocketContext.Provider>
     );
 };
-
-export const useWebSocketContext = () => useContext(WebSocketContext);
