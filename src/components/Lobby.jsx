@@ -37,55 +37,14 @@ function Chat () {
 /* Nota: por defecto, la interfaz se setea en pre-game, se deberia realizar un chequeo por si el jugador ya esta en una partida
          para pasar directamente a in-game sin tener que apretar el boton de comenzar juego*/
 export default function Lobby ({onStartGame}){
-    const { fase, idPlayer, players, playersTurns, playersNames, idGame, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
-    const [gameStage, setGameStage] = useState("pre-game");
-    const {setFase} = useContext(GameContext);
-
+    const { fase, idPlayer, namePlayer, players, playersTurns, playersNames, idGame, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
     const handleStart = (e) =>{
-        setFase("in-game");
-        setGameStage("in-game");
-        onStartGame(idGame);
+        e.preventDefault();
+        const gameData = {
+            "id_game" : idGame
+        };
+        onStartGame(gameData);
     }
-    const getPlayersInfo = () => {
-        fetch('http://127.0.0.1:8000/active_players/' + idGame, {
-            method: 'GET',
-            headers: {
-                'accept': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            const usersList = data.users_list.map(user => user.id);
-            const playersTurns = data.users_list.map(user => user.turn);
-            const playersNames = data.users_list.map(user => user.name);
-            setPlayers(usersList);
-            setPlayersTurns(playersTurns);
-            setPlayersNames(playersNames);
-        })
-        .catch(error => {
-            console.error("Error fetching data:", error);
-        });
-    };
-    
-    useEffect(() => {
-        getPlayersInfo();
-    
-        const interval = setInterval(() => {
-            getPlayersInfo(); 
-            console.log("test");
-        }, 5000);
-    
-        return () => clearInterval(interval); // Cleanup on unmount
-    }, []);
-
-    useEffect(() => {
-        if (gameStage === "in-game") {
-            clearInterval(interval);
-        }
-        else if (fase === 'crear') {
-            clearInterval(interval);
-        }
-    }, [gameStage, fase]);
 
     return (
         <>
@@ -115,7 +74,7 @@ export default function Lobby ({onStartGame}){
                 <Col xs={4} md={3} className="d-flex align-items-center">
                 </Col>
                 <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
-                    PLAYER_BOX_JUGADOR
+                    {namePlayer}
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center" >
                     

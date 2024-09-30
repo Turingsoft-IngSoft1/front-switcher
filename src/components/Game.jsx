@@ -5,10 +5,10 @@ import { GameContext } from '../contexts/GameContext.jsx';
 import Board from './Board.jsx';
 import ButtonSet from './ButtonSet.jsx'
 import CardSet from './CardSet.jsx'
-
+import PlayerBox from './PlayerBox.jsx'
 
 export default function Game({ onPassTurn }) {
-    const { setBoard } = useContext(GameContext);
+    const {namePlayer, setBoard } = useContext(GameContext);
 
 
     useEffect(() => {
@@ -26,31 +26,29 @@ export default function Game({ onPassTurn }) {
         <>
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    <h4>Vacio</h4>
                 </Col>
                 <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
-                    <h4>Nombre Turno3</h4>
+                    <PlayerBox boxNumber={1}/>
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center" >
-                    <h4>Vacio</h4>
                 </Col>
             </Row>
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    <h4>NombreTurno4</h4>
+                    <PlayerBox boxNumber={2}/>
                 </Col>
                 <Col xs={4} md={6}>
                     <Board />
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center" >
-                    <h4>NombreTurno2</h4>
+                    <PlayerBox boxNumber={3}/>
                 </Col>
             </Row>
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
                 </Col>
                 <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
-                    <h4>MiNombre</h4>
+                    <h4>{namePlayer}</h4>
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center" >
                 </Col>

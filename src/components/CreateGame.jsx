@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import {GameContext} from '../contexts/GameContext.jsx';
 
 export default function CreateGame({ onCreateGame }) {
-
+  const {namePlayer, setNamePlayer} = useContext(GameContext);
   const [username, setUsername] = useState('');
   const [gameTitle, setGameTitle] = useState('');
   const [minPlayers, setMinPlayers] = useState('');
@@ -17,6 +18,7 @@ export default function CreateGame({ onCreateGame }) {
         "min_player": minPlayers,
         "max_player": maxPlayers
     };
+    setNamePlayer(username);
     onCreateGame(gameData);
     
   }
