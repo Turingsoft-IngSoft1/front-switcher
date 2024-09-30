@@ -53,8 +53,7 @@ export const WebSocketProvider = ({ children }) => {
             if (lastMessage.data.includes('WIN')) {
                 const [WinnerId, action] = lastMessage.data.split(' ');
                 if (action === 'WIN') {
-                    console.log(`Player ${WinnerId} has won the game`);
-                    console.log(`Player ${playerId} has won the game`);
+                    console.log(`Existe Ganador y es unico`);
                     setWinner(true);
                 }
             }
