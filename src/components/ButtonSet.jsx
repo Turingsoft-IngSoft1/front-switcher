@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import {GameContext} from '../contexts/GameContext';
-import {ExitButton} from './ExitButton.jsx';
+import ExitButton from './ExitButton.jsx';
 
 function PedirCartasButton ({status}){
     switch(status){
