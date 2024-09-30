@@ -7,7 +7,7 @@ export const WebSocketContext = createContext(null);
 export const WebSocketProvider = ({ children }) => {
     const [players, setPlayers] = useState([]);
     const [shouldConnect, setShouldConnect] = useState(false);
-    const { idPlayer, idGame, setWinner, fase, setFase } = useContext(GameContext);
+    const { idPlayer, idGame, setWinner, fase, setFase, setTurnPlayer} = useContext(GameContext);
     const { lastMessage, readyState, sendMessage, getWebSocket } = useWebSocket(`ws://localhost:8000/ws/${idGame}/${idPlayer}`, {
     });
 
@@ -64,8 +64,17 @@ export const WebSocketProvider = ({ children }) => {
                 }
             }
             if (lastMessage.data.includes('GAME_STARTED')) {
-                console.log(`Existe Ganador y es unico`);
+                const[action, turnId] = lastMessage.data.split(' ');
+                console.log(action);
+                console.log("turnId" + turnId); 
                 setFase('in-game');
+                setTurnPlayer(turnId);
+            }
+            if (lastMessage.data.includes('TURN')){
+                const [action, turnPlayerId] = lastMessage.data.split(' ');
+                console.log("TurnId BY SKIp" + turnPlayerId);
+                console.log('Se actualizan los turnos');
+                setTurnPlayer(turnPlayerId);
             }
         }
     }, [lastMessage, setPlayers, setWinner]);
