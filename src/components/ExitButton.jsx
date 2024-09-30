@@ -7,7 +7,7 @@ export default function ButtonSet({intext}) {
     const { 
         idGame, idPlayer, setFase, setIsOwner, setIdPlayer, 
         setIdGame, setPlayers, setCurrentTurn, setBoard, 
-        setFigureCards, setMovCards
+        setFigureCards, setMovCards, setPlayersNames, setPlayersTurns
     } = useContext(GameContext);
 
     function exitGame() {
@@ -31,6 +31,8 @@ export default function ButtonSet({intext}) {
             setBoard(Array(36).fill("dark"));
             setFigureCards([]);
             setMovCards([]);
+            setPlayersNames([]);
+            setPlayersTurns([]);
             //Websocket close
         })
         .catch((error) => {
