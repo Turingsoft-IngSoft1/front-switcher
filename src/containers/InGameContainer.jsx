@@ -28,9 +28,11 @@ export default function InGameContainer (){
         }
 
         //nos aseguramos que este siempre en el array con el modulo
+        console.log("antes de apretar: "+ turnPlayer);
         currentPlayer = (currentPlayer + 1) % players.length;
         setTurnPlayer(players[currentPlayer]);
-
+        console.log("index del jugador que tiene el turno:" + currentPlayer);
+        console.log("id del jugador: " + players[currentPlayer]);
     }
 
     //esta wea no se puede mockear tan facil, siempre se debe pasar el turno a un ID valido
@@ -41,5 +43,5 @@ export default function InGameContainer (){
         console.log("index del jugador que tiene el turno:" + currentPlayer);
         console.log("id del jugador: " + players[currentPlayer]);
     }
-    return <Game  onPassTurn = {passTurnMock}/>;
+    return <Game  onPassTurn = {passTurn}/>;
 }

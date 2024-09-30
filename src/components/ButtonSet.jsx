@@ -83,7 +83,7 @@ export default function ButtonSet ({onPassTurn}) {
         };
         onPassTurn(turnData);
     }
-    if (true){
+    if (turnPlayer == idPlayer){
         return (
             <Row className="justify-content-md-around p-3">
                 <PedirCartasButton status={'enabled'}/>

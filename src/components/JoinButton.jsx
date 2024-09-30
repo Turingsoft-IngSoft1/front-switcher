@@ -4,7 +4,7 @@ import { GameContext, GameProvider } from '../contexts/GameContext.jsx';
 import { useState, useContext } from 'react';
 
 function JoinButton ({selectedMatch}) {
-    const { idGame, idPlayer, players, fase, setIdGame, setIdPlayer, setPlayers, setFase} = useContext(GameContext);
+    const { idGame, namePlayer, idPlayer, players, fase, setIdGame, setIdPlayer, setNamePlayer, setPlayers, setFase} = useContext(GameContext);
     const [showModal, setShowModal] = useState(false);
     const [nickname, setNickname] = useState('');
 
@@ -44,6 +44,7 @@ function JoinButton ({selectedMatch}) {
           console.log('Response:', responseData);
           setIdGame(selectedMatch.id);
           setIdPlayer(newIdPlayer);
+          setNamePlayer(nickname);
           setFase('lobby');
           console.log(`Joined: ${selectedMatch.id}`)
         } catch (error) {

@@ -18,6 +18,7 @@ export const GameProvider = ({ children }) => {
     const [fase, setFase] = useState('crear')
     const [isOwner, setIsOwner] = useState(false);
     const [idPlayer, setIdPlayer] = useState(null); // id del jugador
+    const [namePlayer, setNamePlayer] = useState(null); //nombre del jugador
     const [idGame, setIdGame] = useState(null); //id de la partida asignada
     const [players, setPlayers] = useState([]); // cantidad de jugadores en la partida
     const [currentTurn, setCurrentTurn] = useState(null); // turno actual
@@ -35,6 +36,8 @@ export const GameProvider = ({ children }) => {
         isOwner,
         setIsOwner,
         idPlayer,
+        namePlayer,
+        setNamePlayer,
         setIdPlayer,
         idGame,
         setIdGame,
