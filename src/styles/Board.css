@@ -12,8 +12,12 @@
 }
 
 
-.carta{
+.cardset{
   display: flex;
   align-items: center;
+}
+
+.card{
+  background-color: rgb(221, 170, 102);
 }
  
