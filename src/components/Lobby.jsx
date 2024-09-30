@@ -16,11 +16,9 @@ function CardSet (){
     );
 }
 
-function ButtonSet ({stage, onStartClick}){
+function ButtonSet ({onStartClick}){
     
     const {isOwner} = useContext(GameContext);
-    switch(stage){
-        case "pre-game":
             return (
                 <>
                 {isOwner && 
@@ -33,6 +31,7 @@ function ButtonSet ({stage, onStartClick}){
             );
 
 }
+
 
 function Chat () {
 
