@@ -1,0 +1,23 @@
+.tablero {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.tile{
+  height: 50px;
+  width: 50px;
+  margin: 1px;
+}
+
+
+.cardset{
+  display: flex;
+  align-items: center;
+}
+
+.card{
+  background-color: rgb(221, 170, 102);
+}
+ 
