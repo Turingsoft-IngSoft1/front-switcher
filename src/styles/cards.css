@@ -8,3 +8,8 @@
     width: 90px;
     height: 90px;
 }
+
+.img-content-mov {
+    width: 100px; /* Ajusta el tamaño según lo necesites */
+    height: auto; /* Mantiene la proporción del SVG */
+}
