@@ -25,7 +25,7 @@ export function CardSetHorizontal ({turn}) {
             <Row className= "justify-content-md-center">
                 {desiredPlayer.name || "falta"}
             </Row>
-            <Row className= "justify-content-md-center">
+            <Row className= "bg-cardset justify-content-md-center">
                 <Col xs="auto" className="carta">
                     <CardSwitcher imgsource={imgtest}/>
                 </Col>
@@ -51,16 +51,20 @@ export function CardSetVertical ({turn}) {
             <Row xs="auto">
                 <h4> {desiredPlayer.name || "falta implementar"}</h4>
             </Row>
-            <Row xs="auto" className="carta">
-                <CardSwitcher imgsource={imgtest}/>
-            </Row>
+            <Row className="bg-cardset">
+                <Col >
+                    <Row xs="auto" className="carta">
+                        <CardSwitcher imgsource={imgtest}/>
+                    </Row>
 
-            <Row xs="auto" className="carta">
-                <CardSwitcher imgsource={imgtest}/>
-            </Row>
+                    <Row xs="auto" className="carta">
+                        <CardSwitcher imgsource={imgtest}/>
+                    </Row>
 
-            <Row xs="auto" className="carta">
-                <CardSwitcher imgsource={imgtest}/>
+                    <Row xs="auto" className="carta">
+                        <CardSwitcher imgsource={imgtest}/>
+                    </Row>
+                </Col>
             </Row>
         </Col>
     );
