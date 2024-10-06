@@ -12,7 +12,7 @@ import { WebSocketProvider } from '../contexts/WebSocketContext.jsx';
 function App() {
   return (
     <GameProvider>
-      <Main />
+      <Main/>
     </GameProvider>
   );
 }
@@ -21,8 +21,8 @@ const Main = () => {
   const { fase, idGame, idPlayer, players} = useContext(GameContext);
 
   return (
-    <WebSocketProvider>
-      <Container className="mt-5">
+<WebSocketProvider>
+      <Container className="pt-5">
         {fase === 'crear' && (
           <Col>
             <Row md={12} className="mb-4">
