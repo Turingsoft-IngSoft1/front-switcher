@@ -5,7 +5,7 @@ import Board from './Board.jsx'
 import { GameContext } from '../contexts/GameContext.jsx';
 import ExitButton from './ExitButton.jsx';
 import PlayerBox from "./PlayerBox.jsx";
-import CardSet from './CardSet.jsx';
+import {CardSetHorizontal, CardSetVertical} from './CardSet.jsx';
 
 function ButtonSet ({onStartClick}){
     
@@ -69,7 +69,7 @@ export default function Lobby ({onStartGame}){
                     <Board />
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    <PlayerBox boxNumber={3}/>
+                    <CardSetVertical />
                 </Col>
             </Row>
             <Row>
@@ -85,7 +85,7 @@ export default function Lobby ({onStartGame}){
                             {/* Cartas del jugador usuario (0) */}
             
             <Row className="justify-content-md-center">
-                <CardSet className="card-set"/>
+                <CardSetHorizontal className="card-set"/>
             </Row>
             {/* acciones del jugador */}
             <Row className="justify-content-md-around p-3">
