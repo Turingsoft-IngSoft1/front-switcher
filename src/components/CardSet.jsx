@@ -32,7 +32,7 @@ import Fige07 from '../styles/cards/fige07.svg';
 
 function CardSwitcher ({imgsource, selected}) {
     return (
-        <Container onClick=className="card-switcher">
+        <Container className="card-switcher">
             <Row>
                 <Image src={imgsource} className="img-content"/>
             </Row>
