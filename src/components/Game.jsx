@@ -7,8 +7,8 @@ import {CardSetHorizontal, CardSetVertical} from './CardSet.jsx';
 import PlayerBox from "./PlayerBox.jsx";
 import ExitButton from "./ExitButton.jsx";
 import ButtonSet from "./ButtonSet.jsx";
-import CardSetMov from "./CardSetMov.jsx";
 import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
+import CardMovContainer from "../containers/CardMovContainer.jsx";
 
 export default function Game({onPassTurn}) {
     const { winner, namePlayer, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
@@ -78,7 +78,7 @@ export default function Game({onPassTurn}) {
                 </Modal>
 
                 <Col xs={6} md={3} className="d-flex justify-items-center" >
-                    <CardSetMov />
+                    <CardMovContainer />
                 </Col>
                 <Col xs={4}>
                     <CardSetHorizontal turn={0} />
