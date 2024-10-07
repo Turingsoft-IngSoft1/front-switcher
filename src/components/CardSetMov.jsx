@@ -27,11 +27,21 @@ function MovementCard ({imgsource, selected, played}) {
 
 export default function CardSetMov ({requestNewCards}) {
     
+    const { idGame, idPlayer, turnPlayer, movCards, fase} = useContext(GameContext);
 
+    const dictImg = {
+        'bigdiagonal': bigdiagonal,
+        'bigline': bigline,
+        'simpleline': simpleline,
+        'simplediagonal': simplediagonal,
+        'mirrorL': mirrorL,
+        'rightL': rightL,
+        'lateral': lateral
+    }
 
-    const imgCard1 = bigdiagonal;
-    const imgCard2 = simplediagonal;
-    const imgCard3 = simpleline;
+    const imgCard1 = dictImg[movCards[1]];
+    const imgCard2 = dictImg[movCards[2]];
+    const imgCard3 = dictImg[movCards[3]];
     return (
     <Row>
         <Col>

@@ -10,7 +10,7 @@ export default function CardMovContainer () {
             const newCards = getMovementCards(idGame, idPlayer);
             setMovCards(newCards);
         }
-    }, turnPlayer);
+    }, [turnPlayer]);
     
 
     return <CardSetMov getMovementCards={getMovementCards} />;
