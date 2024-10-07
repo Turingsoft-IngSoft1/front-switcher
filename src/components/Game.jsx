@@ -39,10 +39,8 @@ export default function Game({onPassTurn}) {
 
     return (
         <>
-            <Row>
-                <Col xs={4} md={3} className="d-flex align-items-center">
-                </Col>
-                <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
+            <Row className="justify-content-center">
+                <Col xs="auto" className="d-flex align-items-center justify-content-center">
                     <CardSetHorizontal />
                 </Col>
             </Row>
@@ -66,7 +64,7 @@ export default function Game({onPassTurn}) {
                 <Col xs={4} md={3} className="d-flex align-items-center" >
                 </Col>
             </Row>
-            <Row className="justify-content-md-center">
+            <Row className="justify-content-between">
                 <Modal show={winner} onHide={handleHide}>
                     <Modal.Header>
                             <h4> GANASTE!!! </h4>
@@ -76,7 +74,7 @@ export default function Game({onPassTurn}) {
                     </Modal.Footer>
                 </Modal>
 
-                <Col xs={6} md={3} className="d-flex align-items-center" >
+                <Col xs={6} md={3} className="d-flex justify-items-center" >
                     <CardSetMov />
                 </Col>
                 <Col xs={4}>

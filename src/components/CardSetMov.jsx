@@ -19,15 +19,15 @@ export default function CardSetMov () {
     <Row>
         <Col>
             <Row className= "justify-content-md-center">
-                <Col xs="auto" className="p-0" >
+                <Col xs="auto" className="p-1" >
                     <MovementCard imgsource={imgMovTest}/>
                 </Col>
 
-                <Col xs="auto" className="p-0">
+                <Col xs="auto" className="p-1">
                     <MovementCard imgsource={imgMovTest}/>
                 </Col>
 
-                <Col xs="auto" className="p-0">
+                <Col xs="auto" className="p-1">
                     <MovementCard imgsource={imgMovTest}/>
                 </Col>
             </Row>

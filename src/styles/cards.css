@@ -10,10 +10,18 @@
 }
 
 .img-content-mov {
-    width: 100px; /* Ajusta el tamaño según lo necesites */
-    height: auto; /* Mantiene la proporción del SVG */
+    width: 100px; 
+    height: auto;
 }
 
 .bg-cardset {
     background-color: silver;
+}
+
+.cardset-vertical {
+    margin: 10% 35%;
+}
+
+.cardset-horizontal {
+    
 }
