@@ -3,7 +3,6 @@
 import puppeteer from 'puppeteer';
 
 (async () => {
-    // Lanzar el navegador en modo normal
     const browser = await puppeteer.launch({
         headless: false,
         defaultViewport: null,
@@ -11,21 +10,19 @@ import puppeteer from 'puppeteer';
     });
     const ownerPage = await browser.newPage();
     
-    // Navegar a la página
     await ownerPage.goto('http://localhost:5173/');
 
-    // Rellenar un formulario
+    // Rellenado del form e inicio
     await ownerPage.type('#formUsername', 'ElOwner');
     await ownerPage.type('#formGameTitle', 'PartidaAuto');
     await ownerPage.type('#formMinPlayers', '2');
     await ownerPage.type('#formMaxPlayer', '3');
-
-    // Hacer clic en el botón de crear partida
     await ownerPage.click('#crear-partida-btn');
 
+    // Entrada a la partida recién creada
     const player1Page = await browser.newPage();
     await player1Page.goto('http://localhost:5173/');
-    const rows = await player1Page.$$('table tbody tr'); // Selecciona todas las filas
+    const rows = await player1Page.$$('table tbody tr');
     for (const row of rows) {
         const text = await row.evaluate(el => el.innerText);
         if (text.includes('PartidaAuto')) {
@@ -51,10 +48,4 @@ import puppeteer from 'puppeteer';
 
     */
     
-
-
-
-
-    // No cierres el navegador
-    // await browser.close(); // Comentar o eliminar esta línea para mantener el navegador abierto
 })();
