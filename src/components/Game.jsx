@@ -8,12 +8,15 @@ import PlayerBox from "./PlayerBox.jsx";
 import ExitButton from "./ExitButton.jsx";
 import ButtonSet from "./ButtonSet.jsx";
 import CardSetMov from "./CardSetMov.jsx";
+import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
 
 export default function Game({onPassTurn}) {
     const { winner, namePlayer, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
+    const { setShouldConnect } = useContext(WebSocketContext);
     
     const handleHide = () => {
         setFase('crear');
+        setShouldConnect(false);
         setIsOwner(false);
         setIdPlayer(null);
         setIdGame(null);

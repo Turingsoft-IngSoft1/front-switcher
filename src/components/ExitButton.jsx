@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Button } from "react-bootstrap";
 import { GameContext } from '../contexts/GameContext.jsx';
-
+import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
 
 function ExitButton({intext}) {
     const { 
@@ -9,6 +9,7 @@ function ExitButton({intext}) {
         setIdGame, setPlayers, setCurrentTurn, setBoard, 
         setFigureCards, setMovCards, setPlayersNames, setPlayersTurns, setWinner
     } = useContext(GameContext);
+    const { setShouldConnect } = useContext(WebSocketContext);
 
     function exitGame() {
         fetch(`http://127.0.0.1:8000/leave_game`, {
@@ -29,6 +30,7 @@ function ExitButton({intext}) {
             console.log('Success ExitGame:',data);
             // Reset GameContext
             setFase('crear');
+            setShouldConnect(false);
             setIsOwner(false);
             setIdPlayer(null);
             setIdGame(null);

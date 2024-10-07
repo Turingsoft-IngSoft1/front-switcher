@@ -8,20 +8,30 @@ import LobbyContainer from './LobbyContainer.jsx';
 import Game from '../components/Game.jsx';
 import { GameContext, GameProvider } from '../contexts/GameContext.jsx';
 import { WebSocketProvider } from '../contexts/WebSocketContext.jsx';
+import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
 
 function App() {
   return (
     <GameProvider>
-      <Main/>
+      <WebSocketProvider>
+        <Main />
+      </WebSocketProvider>
     </GameProvider>
   );
 }
 
 const Main = () => {
   const { fase, idGame, idPlayer, players} = useContext(GameContext);
+  const { setShouldConnect } = useContext(WebSocketContext);
+
+  useEffect(() => {
+    if (fase === 'lobby') {
+      // Activar la conexion del WebSocket
+      setShouldConnect(true);
+    }
+  }, [fase]);
 
   return (
-<WebSocketProvider>
       <Container className="pt-5">
         {fase === 'crear' && (
           <Col>
@@ -38,7 +48,6 @@ const Main = () => {
         {fase === 'lobby' && <LobbyContainer />}
         {fase === 'in-game' && <InGameContainer />}
       </Container>
-    </WebSocketProvider>
   );
 }
 
