@@ -9,7 +9,8 @@ export const WebSocketProvider = ({ children }) => {
     const [shouldConnect, setShouldConnect] = useState(false);
     const { idPlayer, idGame, setWinner, fase, setFase, setTurnPlayer} = useContext(GameContext);
     const { lastMessage, readyState, sendMessage, getWebSocket } = useWebSocket(`ws://localhost:8000/ws/${idGame}/${idPlayer}`, {
-    });
+    },
+    shouldConnect);
 
     useEffect(() => {
         if (readyState === ReadyState.OPEN && fase === 'crear') {
@@ -80,7 +81,7 @@ export const WebSocketProvider = ({ children }) => {
     }, [lastMessage, setPlayers, setWinner]);
 
     return (
-        <WebSocketContext.Provider value={{ }}>
+        <WebSocketContext.Provider value={{ shouldConnect, setShouldConnect }}>
             {children}
         </WebSocketContext.Provider>
     );
