@@ -71,9 +71,9 @@ const ListMatches = () => {
                 </Table>
             </div>
             <div className='d-flex flex-row justify-content-around'>
-                <JoinButton selectedMatch={selectedMatch} />
+                <JoinButton  selectedMatch={selectedMatch} />
                 <div className='d-flex flex-row justify-content-start'>
-                    <Button onClick={fetchData}>
+                    <Button id="refresh-btn" onClick={fetchData}>
                         Refrescar
                     </Button>
                 </div>
