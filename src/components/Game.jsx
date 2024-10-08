@@ -9,8 +9,8 @@ import ExitButton from "./ExitButton.jsx";
 import ButtonSet from "./ButtonSet.jsx";
 import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
 
-export default function Game({onPassTurn}) {
-    const { winner, namePlayer, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
+export default function Game({onPassTurn, onUpdateBoard}) {
+    const { idGame, turnPlayer, winner, namePlayer, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
     
     const handleHide = () => {
@@ -28,16 +28,10 @@ export default function Game({onPassTurn}) {
         setPlayersTurns([]);
         setWinner(false);
     }
-    useEffect(() => {
-        const initialBoard = Array(36).fill("dark");
 
-        // alternacion entre "danger" y "success" en el tablero
-        for (let i = 0; i < 36; i++) {
-            initialBoard[i] = (i % 2 === 0) ? "danger" : "success";
-        }
-
-        setBoard(initialBoard);
-    }, [setBoard]);
+    useEffect(() => {        
+        onUpdateBoard()     
+    }, [setBoard, turnPlayer]);
 
     return (
         <>
