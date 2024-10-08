@@ -1,5 +1,6 @@
 import '../styles/cards.css';
 import {Image, Container, Col, Row} from 'react-bootstrap';
+import {onMouseEnter, useState} from 'react';
 import imgtest from '../styles/cards/fig01.svg'
 import { useContext } from "react";
 import { GameContext } from '../contexts/GameContext.jsx';
@@ -7,6 +8,7 @@ import React from 'react';
 import Fig01 from '../styles/cards/fig01.svg';
 import Fig02 from '../styles/cards/fig02.svg';
 import Fig03 from '../styles/cards/fig03.svg';
+
 import Fig04 from '../styles/cards/fig04.svg';
 import Fig05 from '../styles/cards/fig05.svg';
 import Fig06 from '../styles/cards/fig06.svg';
@@ -31,8 +33,24 @@ import Fige06 from '../styles/cards/fige06.svg';
 import Fige07 from '../styles/cards/fige07.svg';
 
 function CardSwitcher ({imgsource, selected}) {
+    const [isHovered, setIsHovered] = useState(false);
+    const [isSelected, setIsSelected] = useState(false);
+    const handleClick = () => {
+        setIsSelected(!isSelected);
+    }
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+    };
+    const textColor = isSelected ? 'red' : '';
+
     return (
-        <Container className="card-switcher">
+        <Container  onClick={handleClick}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                    style={{ backgroundColor: textColor }} className="card-switcher">
             <Row>
                 <Image src={imgsource} className="img-content"/>
             </Row>
@@ -43,6 +61,7 @@ function CardSwitcher ({imgsource, selected}) {
 // ADVERTENCIA: Duplicacion de codigo
 // si se cambia Horizontal, se cambia Vertical
 export function CardSetHorizontal ({turn}) {
+    const [poolFigureCards, setPoolFigureCards] = useState([Fig04, Fig05, Fig06]);
     const { playersTurns} = useContext(GameContext);
     const desiredPlayer = playersTurns.filter(player => player.turn === turn);
     return (
@@ -53,15 +72,15 @@ export function CardSetHorizontal ({turn}) {
             </Row>
             <Row className= "justify-content-md-center bg-cardset" >
                 <Col xs="auto" className="carta">
-                    <CardSwitcher imgsource={Fig01} />
+                    <CardSwitcher imgsource={poolFigureCards[0]} />
                 </Col>
 
                 <Col xs="auto" className="carta">
-                    <CardSwitcher imgsource={Fig02}/>
+                    <CardSwitcher imgsource={poolFigureCards[1]}/>
                 </Col>
 
                 <Col xs="auto" className="carta">
-                    <CardSwitcher imgsource={Fig03}/>
+                    <CardSwitcher imgsource={poolFigureCards[2]}/>
                 </Col>
             </Row>
         </Col>
