@@ -32,8 +32,7 @@ const Main = () => {
   }, [fase]);
 
   return (
-    
-      <Container className="mt-5">
+      <Container className="pt-5">
         {fase === 'crear' && (
           <Col>
             <Row md={12} className="mb-4">
