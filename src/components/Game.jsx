@@ -1,39 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Row, Col, Modal } from 'react-bootstrap';
 import { GameContext } from '../contexts/GameContext.jsx';
-import PlayerBox from './PlayerBox';
-import Board from './Board';
-import CardSet from './CardSet';
-import ButtonSet from './ButtonSet';
-import ExitButton from './ExitButton';
+import Board from './Board.jsx';
+import {CardSetHorizontal, CardSetVertical} from './CardSet.jsx';
+import PlayerBox from "./PlayerBox.jsx";
+import ExitButton from "./ExitButton.jsx";
+import ButtonSet from "./ButtonSet.jsx";
+import CardSetMov from "./CardSetMov.jsx";
+import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
 
-export default function Game({ onPassTurn }) {
-    const { idPlayer, players, turnPlayer, winner, namePlayer, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner } = useContext(GameContext);
-    const [style, setStyle] = useState({});
-    const [isPlayerTurn, setIsPlayerTurn] = useState(false);
-
-    useEffect(() => {
-        if (turnPlayer == idPlayer) {
-            setIsPlayerTurn(true);
-            setStyle({
-                color: '#000000', // Black color
-                animation: 'vibrate 0.5s 1',
-                textShadow: '0 0 2px #000000', // Add glow effect
-                fontWeight: 'bold' // Make the text bold
-            });
-        } else {
-            setIsPlayerTurn(false);
-            setStyle({
-                color: 'inherit',
-                animation: 'none',
-                textShadow: 'none',
-                fontWeight: 'normal'
-            });
-        }
-    }, [turnPlayer]);
-
+export default function Game({onPassTurn, onUpdateBoard}) {
+    const { idGame, turnPlayer, winner, namePlayer, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
+    const { setShouldConnect } = useContext(WebSocketContext);
+    
     const handleHide = () => {
         setFase('crear');
+        setShouldConnect(false);
         setIsOwner(false);
         setIdPlayer(null);
         setIdGame(null);
@@ -46,47 +28,27 @@ export default function Game({ onPassTurn }) {
         setPlayersTurns([]);
         setWinner(false);
     }
-    
-    useEffect(() => {
-        const initialBoard = Array(36).fill("dark");
 
-        // alternacion entre "danger" y "success" en el tablero
-        for (let i = 0; i < 36; i++) {
-            initialBoard[i] = (i % 2 === 0) ? "danger" : "success";
-        }
-
-        setBoard(initialBoard);
-    }, [setBoard]);
-
-    const vibrationAnimation = `
-        @keyframes vibrate {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
-        }
-    `;
+    useEffect(() => {        
+        onUpdateBoard()     
+    }, [setBoard, turnPlayer]);
 
     return (
         <>
-            <Row>
-                <Col xs={4} md={3} className="d-flex align-items-center">
-                </Col>
-                <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
-                    <PlayerBox boxNumber={1} />
+            <Row className="justify-content-center">
+                <Col xs="auto" className="d-flex align-items-center justify-content-center">
+                    <CardSetHorizontal />
                 </Col>
             </Row>
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    <PlayerBox boxNumber={2} />
+                    <CardSetVertical turn={3}/>
                 </Col>
                 <Col xs={4} md={6}>
                     <Board />
                 </Col>
-                <Col xs={4} md={3} className="d-flex align-items-center">
-                    <PlayerBox boxNumber={3} />
+                <Col xs={4} md={3} className="d-flex align-items-center" >
+                    <CardSetVertical turn={1} />
                 </Col>
             </Row>
             <Row>
@@ -100,7 +62,7 @@ export default function Game({ onPassTurn }) {
                 <Col xs={4} md={3} className="d-flex align-items-center">
                 </Col>
             </Row>
-            <Row className="justify-content-md-center">
+            <Row className="justify-content-between">
                 <Modal show={winner} onHide={handleHide}>
                     <Modal.Header>
                         <h4> GANASTE!!! </h4>
@@ -109,7 +71,15 @@ export default function Game({ onPassTurn }) {
                         <ExitButton intext='Cerrar' variant="success" />
                     </Modal.Footer>
                 </Modal>
-                <CardSet />
+
+                <Col xs={6} md={3} className="d-flex justify-items-center" >
+                    <CardSetMov />
+                </Col>
+                <Col xs={4}>
+                    <CardSetHorizontal turn={0} />
+                </Col>
+                
+                <Col xs={2} md={2} className="d-flex align-items-center" ></Col>
             </Row>
             <Row>
                 <ButtonSet onPassTurn={onPassTurn} />
