@@ -5,13 +5,7 @@ import { GameContext } from '../contexts/GameContext.jsx';
 export default function InGameContainer (){
     let currentPlayer = 0;
 
-    const {idGame, setIdGame,
-           players, setPlayers,
-           currentTurn,setCurrentTurn,
-           board, setBoard,
-           figureCards, setFigureCards, 
-           movCards, setMovCards, 
-           turnPlayer, setTurnPlayer} = useContext(GameContext);
+    const {players, setTurnPlayer} = useContext(GameContext);
 
     const passTurn = async (turnData) => {
         const response = await fetch (
