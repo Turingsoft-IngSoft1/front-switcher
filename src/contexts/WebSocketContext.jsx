@@ -69,6 +69,7 @@ export const WebSocketProvider = ({ children }) => {
             }
             if (lastMessage.data.includes('TURN')){
                 const [action, turnPlayerId] = lastMessage.data.split(' ');
+                setTurnPlayer(turnPlayerId);
             }
             if (lastMessage.data.includes('JOIN')) {
                 getPlayersInfo(idGame).then(data => {
