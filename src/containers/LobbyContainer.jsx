@@ -5,46 +5,6 @@ import { GameContext } from '../contexts/GameContext.jsx';
 export default function LobbyContainer () {
     const {idPlayer, idGame, fase, playerTurns, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
     //traete los jugadores
-    const getPlayersInfo = () => {
-        console.log(idGame);
-        fetch('http://127.0.0.1:8000/active_players/' + idGame, {
-            method: 'GET',
-            headers: {
-                'accept': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            const usersList = data.users_list.map(user => user.id);
-            const playersTurns = data.users_list.map(user => user.turn);
-            const playersNames = data.users_list.map(user => user.name);
-            setPlayers(usersList);
-            setPlayersTurns(playersTurns);
-            setPlayersNames(playersNames);
-
-        })
-        .catch(error => {
-            console.error("Error fetching data:", error);
-        });
-    };
-    
-    useEffect(() => {
-        getPlayersInfo();
-    
-        const interval = setInterval(() => {
-            getPlayersInfo(); 
-            console.log("test");
-        }, 5000);
-    
-        return () => clearInterval(interval); // Cleanup on unmount
-    }, []);
-
-    useEffect(() => {
-        if (fase === 'in-game') {
-            clearInterval(interval);
-        }
-    },  [fase]);
-
 
     const startGame = async (gameData) => {
         const response = await fetch (

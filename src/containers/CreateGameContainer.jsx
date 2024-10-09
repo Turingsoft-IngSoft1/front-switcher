@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import CreateGame from '../components/CreateGame.jsx';
 import { GameContext } from '../contexts/GameContext.jsx';
+import {usePlayersInfo} from '../utils/fetches.jsx';
 const isMock = import.meta.env.USE_MOCK;
 
 

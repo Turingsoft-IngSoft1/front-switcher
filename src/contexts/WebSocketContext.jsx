@@ -1,22 +1,25 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { GameContext } from '../contexts/GameContext.jsx';
+import {getPlayersInfo} from '../utils/fetches.jsx';
 
 export const WebSocketContext = createContext(null);
 
 export const WebSocketProvider = ({ children }) => {
-    const [players, setPlayers] = useState([]);
     const [shouldConnect, setShouldConnect] = useState(false);
-    const { idPlayer, idGame, setWinner, fase, setFase, setTurnPlayer} = useContext(GameContext);
+    const { idPlayer, idGame, setWinner, fase, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
     const { lastMessage, readyState, sendMessage, getWebSocket } = useWebSocket(`ws://localhost:8000/ws/${idGame}/${idPlayer}`, {
-    });
+    },
+    shouldConnect);
 
     useEffect(() => {
         if (readyState === ReadyState.OPEN && fase === 'crear') {
             console.log('Fase cambiada a crear, desconectando WebSocket...');
-            //TODO: Close websocket
+            //TODO: Se puede usar para desconectar todo de golpe
         }
     }, [fase, readyState]);
+
+    
 
     useEffect(() => {
         switch (readyState) {
@@ -69,12 +72,16 @@ export const WebSocketProvider = ({ children }) => {
                 console.log("turnId" + turnId); 
                 setFase('in-game');
                 setTurnPlayer(turnId);
+                getPlayersInfo();
             }
             if (lastMessage.data.includes('TURN')){
                 const [action, turnPlayerId] = lastMessage.data.split(' ');
                 console.log("TurnId BY SKIp" + turnPlayerId);
                 console.log('Se actualizan los turnos');
                 setTurnPlayer(turnPlayerId);
+            }
+            if (lastMessage.data.includes('JOIN')) {
+                getPlayersInfo();
             }
         }
     }, [lastMessage, setPlayers, setWinner]);
