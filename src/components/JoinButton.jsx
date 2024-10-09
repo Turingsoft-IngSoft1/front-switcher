@@ -2,7 +2,6 @@ import React from 'react'
 import { Button, Modal} from 'react-bootstrap';
 import { GameContext, GameProvider } from '../contexts/GameContext.jsx';
 import { useState, useContext } from 'react';
-import {usePlayersInfo} from '../utils/fetches.jsx';
 
 function JoinButton ({selectedMatch}) {
     const { idGame, namePlayer, idPlayer, players, fase, setIdGame, setIdPlayer, setNamePlayer, setPlayers, setFase} = useContext(GameContext);
@@ -47,7 +46,6 @@ function JoinButton ({selectedMatch}) {
           setIdPlayer(newIdPlayer);
           setNamePlayer(nickname);
           setFase('lobby');
-          usePlayersInfo();
           console.log(`Joined: ${selectedMatch.id}`)
         } catch (error) {
           console.error('Error:', error);

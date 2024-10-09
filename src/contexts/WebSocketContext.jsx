@@ -1,14 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { GameContext } from '../contexts/GameContext.jsx';
-import {getPlayersInfo} from '../utils/fetches.jsx';
 
 export const WebSocketContext = createContext(null);
 
 export const WebSocketProvider = ({ children }) => {
     const [shouldConnect, setShouldConnect] = useState(false);
     const { idPlayer, idGame, setWinner, fase, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
-    const { lastMessage, readyState, sendMessage, getWebSocket } = useWebSocket(`ws://localhost:8000/ws/${idGame}/${idPlayer}`, {
+    const { lastMessage, readyState } = useWebSocket(`ws://localhost:8000/ws/${idGame}/${idPlayer}`, {
     },
     shouldConnect);
 
@@ -19,17 +18,35 @@ export const WebSocketProvider = ({ children }) => {
         }
     }, [fase, readyState]);
 
-    
+    const getPlayersInfo = () => {
+        console.log(idGame);
+        fetch('http://127.0.0.1:8000/active_players/' + idGame, {
+            method: 'GET',
+            headers: {
+                'accept': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const usersList = data.users_list.map(user => user.id);
+            const playersTurns = data.users_list.map(user => user.turn);
+            const playersNames = data.users_list.map(user => user.name);
+            setPlayers(usersList);
+            setPlayersTurns(playersTurns);
+            setPlayersNames(playersNames);
+
+        })
+        .catch(error => {
+            console.error("Error fetching data:", error);
+        });
+    };
+
 
     useEffect(() => {
         switch (readyState) {
             case ReadyState.CONNECTING:
                 console.log('Conectando...');
-                break;const [WinnerId, action] = lastMessage.data.split(' ');
-                if (action === 'WIN') {
-                    console.log(`Existe Ganador y es unico`);
-                    setWinner(true);
-                }
+                break;
             case ReadyState.OPEN:
                 console.log('Conexión establecida');
                 break;
@@ -67,11 +84,12 @@ export const WebSocketProvider = ({ children }) => {
                 }
             }
             if (lastMessage.data.includes('GAME_STARTED')) {
-                const[action, turnId] = lastMessage.data.split(' ');
+                const [action, turnId] = lastMessage.data.split(' ');
                 console.log(action);
                 console.log("turnId" + turnId); 
                 setFase('in-game');
                 setTurnPlayer(turnId);
+
                 getPlayersInfo();
             }
             if (lastMessage.data.includes('TURN')){
