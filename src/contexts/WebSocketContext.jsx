@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { GameContext } from '../contexts/GameContext.jsx';
-import {getPlayersInfo} from '../utils/fetch.jsx'
+import {getPlayersInfo} from '../utils/fetch.js'
 
 export const WebSocketContext = createContext(null);
 
@@ -45,7 +45,6 @@ export const WebSocketProvider = ({ children }) => {
     WebSocketProvider
     useEffect(() => {
         if (lastMessage !== null) {
-            console.log('Mensaje recibido');
             // Detecta si un jugador se fue de la partida
             if (lastMessage.data.includes('LEAVE')) {
                 const [playerLeftId, action] = lastMessage.data.split(' ');
@@ -63,8 +62,6 @@ export const WebSocketProvider = ({ children }) => {
             }
             if (lastMessage.data.includes('GAME_STARTED')) {
                 const [action, turnId] = lastMessage.data.split(' ');
-                console.log(action);
-                console.log("turnId" + turnId); 
                 setFase('in-game');
                 setTurnPlayer(turnId);
 
@@ -72,8 +69,6 @@ export const WebSocketProvider = ({ children }) => {
             }
             if (lastMessage.data.includes('TURN')){
                 const [action, turnPlayerId] = lastMessage.data.split(' ');
-                console.log("TurnId BY SKIp" + turnPlayerId);
-                console.log('Se actualizan los turnos');
             }
             if (lastMessage.data.includes('JOIN')) {
                 getPlayersInfo(idGame).then(data => {

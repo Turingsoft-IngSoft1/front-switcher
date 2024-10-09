@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import Lobby from '../components/Lobby.jsx';
 import { GameContext } from '../contexts/GameContext.jsx';
-import {getPlayersInfo} from '../utils/fetch.jsx'
+import {getPlayersInfo} from '../utils/fetch.js'
 
 export default function LobbyContainer () {
     const {idPlayer, idGame, fase, playerTurns, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);

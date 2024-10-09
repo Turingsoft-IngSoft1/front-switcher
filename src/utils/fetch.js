@@ -1,7 +1,6 @@
 import React from 'react'
 
 const getPlayersInfo = (idOfGame) => {
-    console.log(idOfGame);
     return fetch('http://127.0.0.1:8000/active_players/' + idOfGame, {
         method: 'GET',
         headers: {
