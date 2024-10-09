@@ -8,3 +8,20 @@
     width: 90px;
     height: 90px;
 }
+
+.img-content-mov {
+    width: 100px; 
+    height: auto;
+}
+
+.bg-cardset {
+    background-color: silver;
+}
+
+.cardset-vertical {
+    margin: 10% 35%;
+}
+
+.cardset-horizontal {
+    
+}

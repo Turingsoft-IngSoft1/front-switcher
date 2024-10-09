@@ -87,7 +87,7 @@ export const WebSocketProvider = ({ children }) => {
     }, [lastMessage, setPlayers, setWinner]);
 
     return (
-        <WebSocketContext.Provider value={{ }}>
+        <WebSocketContext.Provider value={{ shouldConnect, setShouldConnect }}>
             {children}
         </WebSocketContext.Provider>
     );
