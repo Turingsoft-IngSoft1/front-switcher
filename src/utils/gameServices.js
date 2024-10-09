@@ -16,7 +16,7 @@ async function getPlayersInfo(idGame) {
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error("Error fetching movement cards:", error);
+        console.error("Error fetching players info:", error);
         return null;
     }
 }
