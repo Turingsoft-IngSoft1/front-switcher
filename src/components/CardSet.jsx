@@ -17,10 +17,15 @@ function CardSwitcher({ imgsource }) {
 export function CardSetHorizontal({ position }) {
     const { idPlayer, players, playersTurns, turnPlayer, playersNames } = useContext(GameContext);
     const [style, setStyle] = useState({});
+    const [currentPlayers, setCurrentPlayers] = useState(players);
     let firstPlayer = '';
 
-    if (players.length > position && position != 0) {
-        const otherPlayers = players.filter(player => player != idPlayer);
+    useEffect(() => {
+        setCurrentPlayers(players);
+    }, [players]);
+
+    if (currentPlayers.length > position && position != 0) {
+        const otherPlayers = currentPlayers.filter(player => player != idPlayer);
         firstPlayer = otherPlayers[position-1]; // Get the player in the list
     }
 
@@ -57,7 +62,7 @@ export function CardSetHorizontal({ position }) {
         <Row>
             <Col className="cardset-horizontal">
                 <Row className="justify-content-md-center">
-                    <h4 style={style}>{position != 0 ? (firstPlayer ? playersNames[players.indexOf(firstPlayer)] : 'Disconnected') : ''} </h4>
+                    <h4 style={style}>{position != 0 ? (firstPlayer ? playersNames[currentPlayers.indexOf(firstPlayer)] : 'Disconnected') : ''} </h4>
                 </Row>
                 <Row className="justify-content-md-center bg-cardset">
                     <Col xs="auto" className="carta">
@@ -79,12 +84,17 @@ export function CardSetHorizontal({ position }) {
 }
 
 export function CardSetVertical({ position }) {
-    const { idPlayer, playersTurns, turnPlayer, players, playersNames } = useContext(GameContext);
+    const { idPlayer, players, playersTurns, turnPlayer, playersNames } = useContext(GameContext);
     const [style, setStyle] = useState({});
+    const [currentPlayers, setCurrentPlayers] = useState(players);
     let firstPlayer = '';
 
-    if (players.length > position && position != 0) {
-        const otherPlayers = players.filter(player => player != idPlayer);
+    useEffect(() => {
+        setCurrentPlayers(players);
+    }, [players]);
+ 
+    if (currentPlayers.length > position && position != 0) {
+        const otherPlayers = currentPlayers.filter(player => player != idPlayer);
         firstPlayer = otherPlayers[position-1]; // Get the player in the list
     }
 
