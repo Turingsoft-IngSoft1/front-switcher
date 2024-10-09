@@ -74,20 +74,6 @@ export const WebSocketProvider = ({ children }) => {
                 const [action, turnPlayerId] = lastMessage.data.split(' ');
                 console.log("TurnId BY SKIp" + turnPlayerId);
                 console.log('Se actualizan los turnos');
-                getPlayersInfo(idGame).then(data => {
-                    if (data && data.users_list) {
-                        const usersList = data.users_list.map(user => user.id);
-                        const playersTurns = data.users_list.map(user => user.turn);
-                        const playersNames = data.users_list.map(user => user.name);
-                        setPlayers(usersList);
-                        setPlayersTurns(playersTurns);
-                        setPlayersNames(playersNames);
-                    } else {
-                        console.error('users_list is undefined');
-                    }
-                }).catch(error => {
-                    console.error('Error fetching players info:', error);
-                });
             }
             if (lastMessage.data.includes('JOIN')) {
                 getPlayersInfo(idGame).then(data => {
