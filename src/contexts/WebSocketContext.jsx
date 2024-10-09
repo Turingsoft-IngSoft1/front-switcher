@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { GameContext } from '../contexts/GameContext.jsx';
-import {getPlayersInfo} from '../utils/fetch.js'
+import {getPlayersInfo} from '../utils/gameServices.js'
 
 export const WebSocketContext = createContext(null);
 
