@@ -10,10 +10,26 @@ import ButtonSet from "./ButtonSet.jsx";
 import CardSetMov from "./CardSetMov.jsx";
 import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
 
+
+function NotifyWinner ({winner, handleHide}) {
+    return (
+        <Modal show={winner} onHide={handleHide}>
+        <Modal.Header>
+                <h4> GANASTE!!! </h4>
+        </Modal.Header>
+        <Modal.Footer>
+            <ExitButton intext='Cerrar' variant="success" />
+        </Modal.Footer>
+        </Modal>
+    );
+}
+
 export default function Game({onPassTurn, onUpdateBoard}) {
     const { idGame, turnPlayer, winner, namePlayer, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
     
+
+
     const handleHide = () => {
         setFase('crear');
         setShouldConnect(false);
@@ -45,7 +61,7 @@ export default function Game({onPassTurn, onUpdateBoard}) {
                 <Col xs={4} md={3} className="d-flex align-items-center">
                     <CardSetVertical turn={3}/>
                 </Col>
-                <Col xs={4} md={6}>
+                <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
                     <Board />
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center" >
@@ -62,15 +78,6 @@ export default function Game({onPassTurn, onUpdateBoard}) {
                 </Col>
             </Row>
             <Row className="justify-content-between">
-                <Modal show={winner} onHide={handleHide}>
-                    <Modal.Header>
-                            <h4> GANASTE!!! </h4>
-                    </Modal.Header>
-                    <Modal.Footer>
-                        <ExitButton intext='Cerrar' variant="success" />
-                    </Modal.Footer>
-                </Modal>
-
                 <Col xs={6} md={3} className="d-flex justify-items-center" >
                     <CardSetMov />
                 </Col>
@@ -83,6 +90,7 @@ export default function Game({onPassTurn, onUpdateBoard}) {
             <Row>
                 <ButtonSet onPassTurn={onPassTurn} />
             </Row>
+            <NotifyWinner winner = {winner} handleHide={handleHide}/>
         </>
 
     );
