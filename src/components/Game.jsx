@@ -10,9 +10,29 @@ import CardSetMov from "./CardSetMov.jsx";
 import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
 
 export default function Game({onPassTurn, onUpdateBoard}) {
-    const { idGame, turnPlayer, winner, namePlayer, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
+    const { idPlayer, idGame, turnPlayer, winner, namePlayer, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
-    
+    const [style, setStyle] = useState({});
+
+    useEffect(() => {
+        if (turnPlayer == idPlayer) {
+            setStyle({
+                color: '#000000', // Black color
+                animation: 'vibrate 0.5s 1',
+                textShadow: '0 0 2px #000000', // Add glow effect
+                fontWeight: 'bold' // Make the text bold
+            });
+        } else {
+            setStyle({
+                color: 'inherit',
+                animation: 'none',
+                textShadow: 'none',
+                fontWeight: 'normal'
+            });
+        }
+    }, [turnPlayer]);
+
+
     const handleHide = () => {
         setFase('crear');
         setShouldConnect(false);
@@ -33,31 +53,42 @@ export default function Game({onPassTurn, onUpdateBoard}) {
         onUpdateBoard()     
     }, [setBoard, turnPlayer]);
 
+    const vibrationAnimation = `
+        @keyframes vibrate {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+    `;
+
     return (
         <>
             <Row className="justify-content-center">
                 <Col xs="auto" className="d-flex align-items-center justify-content-center">
-                    <CardSetHorizontal />
+                    <CardSetHorizontal position={1}/>
                 </Col>
             </Row>
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    <CardSetVertical turn={3}/>
+                    <CardSetVertical position={2}/>
                 </Col>
                 <Col xs={4} md={6}>
                     <Board />
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center" >
-                    <CardSetVertical turn={1} />
+                    <CardSetVertical position={3} />
                 </Col>
             </Row>
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
                 </Col>
                 <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
-            <h4 style={style}>
-                {namePlayer}
-            </h4>
+                    <h4 style={style}>
+                        {namePlayer}
+                    </h4>
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center">
                 </Col>
@@ -76,7 +107,7 @@ export default function Game({onPassTurn, onUpdateBoard}) {
                     <CardSetMov />
                 </Col>
                 <Col xs={4}>
-                    <CardSetHorizontal turn={0} />
+                    <CardSetHorizontal position={0} />
                 </Col>
                 
                 <Col xs={2} md={2} className="d-flex align-items-center" ></Col>

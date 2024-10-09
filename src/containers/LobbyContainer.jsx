@@ -3,7 +3,7 @@ import Lobby from '../components/Lobby.jsx';
 import { GameContext } from '../contexts/GameContext.jsx';
 
 export default function LobbyContainer () {
-    const {idPlayer, idGame, fase, playerTurns, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
+    const {idPlayer, idGame, fase, playerTurns, setFase, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
     //traete los jugadores
     const getPlayersInfo = () => {
         console.log(idGame);
