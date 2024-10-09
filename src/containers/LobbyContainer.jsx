@@ -1,35 +1,26 @@
 import React, { useContext, useEffect } from 'react';
 import Lobby from '../components/Lobby.jsx';
 import { GameContext } from '../contexts/GameContext.jsx';
+import {getPlayersInfo} from '../utils/fetch.jsx'
 
 export default function LobbyContainer () {
     const {idPlayer, idGame, fase, playerTurns, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
     //traete los jugadores
-    const getPlayersInfo = () => {
-        console.log(idGame);
-        fetch('http://127.0.0.1:8000/active_players/' + idGame, {
-            method: 'GET',
-            headers: {
-                'accept': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            const usersList = data.users_list.map(user => user.id);
-            const playersTurns = data.users_list.map(user => user.turn);
-            const playersNames = data.users_list.map(user => user.name);
-            setPlayers(usersList);
-            setPlayersTurns(playersTurns);
-            setPlayersNames(playersNames);
-
-        })
-        .catch(error => {
-            console.error("Error fetching data:", error);
-        });
-    };
-
     useEffect(() => {
-        getPlayersInfo();
+        getPlayersInfo(idGame).then(data => {
+            if (data && data.users_list) {
+                const usersList = data.users_list.map(user => user.id);
+                const playersTurns = data.users_list.map(user => user.turn);
+                const playersNames = data.users_list.map(user => user.name);
+                setPlayers(usersList);
+                setPlayersTurns(playersTurns);
+                setPlayersNames(playersNames);
+            } else {
+                console.error('users_list is undefined');
+            }
+        }).catch(error => {
+            console.error('Error fetching players info:', error);
+        });
     }, []);
 
     const startGame = async (gameData) => {

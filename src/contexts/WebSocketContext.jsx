@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { GameContext } from '../contexts/GameContext.jsx';
+import {getPlayersInfo} from '../utils/fetch.jsx'
 
 export const WebSocketContext = createContext(null);
 
@@ -17,29 +18,6 @@ export const WebSocketProvider = ({ children }) => {
             //TODO: Se puede usar para desconectar todo de golpe
         }
     }, [fase, readyState]);
-
-    const getPlayersInfo = () => {
-        console.log(idGame);
-        fetch('http://127.0.0.1:8000/active_players/' + idGame, {
-            method: 'GET',
-            headers: {
-                'accept': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            const usersList = data.users_list.map(user => user.id);
-            const playersTurns = data.users_list.map(user => user.turn);
-            const playersNames = data.users_list.map(user => user.name);
-            setPlayers(usersList);
-            setPlayersTurns(playersTurns);
-            setPlayersNames(playersNames);
-
-        })
-        .catch(error => {
-            console.error("Error fetching data:", error);
-        });
-    };
 
 
     useEffect(() => {
@@ -90,16 +68,42 @@ export const WebSocketProvider = ({ children }) => {
                 setFase('in-game');
                 setTurnPlayer(turnId);
 
-                getPlayersInfo();
+                getPlayersInfo(idGame);
             }
             if (lastMessage.data.includes('TURN')){
                 const [action, turnPlayerId] = lastMessage.data.split(' ');
                 console.log("TurnId BY SKIp" + turnPlayerId);
                 console.log('Se actualizan los turnos');
-                setTurnPlayer(turnPlayerId);
+                getPlayersInfo(idGame).then(data => {
+                    if (data && data.users_list) {
+                        const usersList = data.users_list.map(user => user.id);
+                        const playersTurns = data.users_list.map(user => user.turn);
+                        const playersNames = data.users_list.map(user => user.name);
+                        setPlayers(usersList);
+                        setPlayersTurns(playersTurns);
+                        setPlayersNames(playersNames);
+                    } else {
+                        console.error('users_list is undefined');
+                    }
+                }).catch(error => {
+                    console.error('Error fetching players info:', error);
+                });
             }
             if (lastMessage.data.includes('JOIN')) {
-                getPlayersInfo();
+                getPlayersInfo(idGame).then(data => {
+                    if (data && data.users_list) {
+                        const usersList = data.users_list.map(user => user.id);
+                        const playersTurns = data.users_list.map(user => user.turn);
+                        const playersNames = data.users_list.map(user => user.name);
+                        setPlayers(usersList);
+                        setPlayersTurns(playersTurns);
+                        setPlayersNames(playersNames);
+                    } else {
+                        console.error('users_list is undefined');
+                    }
+                }).catch(error => {
+                    console.error('Error fetching players info:', error);
+                });
             }
         }
     }, [lastMessage, setPlayers, setWinner]);
