@@ -2,7 +2,7 @@
 async function getMovementCards(idGame, idPlayer) {
     try {
         const response = await fetch(`http://127.0.0.1:8000/get_moves/${idGame}/${idPlayer}`, {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'accept': 'application/json'
             },

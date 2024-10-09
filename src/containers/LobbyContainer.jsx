@@ -1,9 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import Lobby from '../components/Lobby.jsx';
+import getMovementCards from '../services/cardServices.js';
 import { GameContext } from '../contexts/GameContext.jsx';
 
 export default function LobbyContainer () {
-    const {idPlayer, idGame, fase, playerTurns, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
+    const {idPlayer, idGame, fase, playerTurns, setFase, setMovCards, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
     //traete los jugadores
     const getPlayersInfo = () => {
         console.log(idGame);
@@ -68,6 +69,11 @@ export default function LobbyContainer () {
         setFase('in-game');
         console.log(playerTurns);
         console.log('Partida iniciada con exito');
+        const result = await getMovementCards(idGame, idPlayer);
+
+        if (result && result.moves) {
+            setMovCards(result.moves);
+        }
     }
 
     const startGameMock = () => {
