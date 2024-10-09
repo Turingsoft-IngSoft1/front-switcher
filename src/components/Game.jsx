@@ -17,10 +17,10 @@ export default function Game({onPassTurn, onUpdateBoard}) {
     useEffect(() => {
         if (turnPlayer == idPlayer) {
             setStyle({
-                color: '#000000', // Black color
+                color: '#000000', // Color Negro
                 animation: 'vibrate 0.5s 1',
-                textShadow: '0 0 2px #000000', // Add glow effect
-                fontWeight: 'bold' // Make the text bold
+                textShadow: '0 0 2px #000000', // Efecto de glow
+                fontWeight: 'bold' // Bold
             });
         } else {
             setStyle({

@@ -22,16 +22,15 @@ export function CardSetHorizontal({ position }) {
     if (players.length > position && position != 0) {
         const otherPlayers = players.filter(player => player != idPlayer);
         firstPlayer = otherPlayers[position-1]; // Get the player in the list
-
     }
 
     useEffect(() => {
         if (turnPlayer == firstPlayer) {
             setStyle({
-                color: '#000000', // Black color
+                color: '#000000', // Color Negro
                 animation: 'vibrate 0.5s 1',
-                textShadow: '0 0 2px #000000', // Add glow effect
-                fontWeight: 'bold' // Make the text bold
+                textShadow: '0 0 2px #000000', // Efecto de glow
+                fontWeight: 'bold' // Bold
             });
         } else {
             setStyle({
@@ -92,10 +91,10 @@ export function CardSetVertical({ position }) {
     useEffect(() => {
         if (turnPlayer == firstPlayer) {
             setStyle({
-                color: '#000000', // Black color
+                color: '#000000', // Color Negro
                 animation: 'vibrate 0.5s 1',
-                textShadow: '0 0 2px #000000', // Add glow effect
-                fontWeight: 'bold' // Make the text bold
+                textShadow: '0 0 2px #000000', // Efecto de glow
+                fontWeight: 'bold' // Bold
             });
         } else {
             setStyle({
