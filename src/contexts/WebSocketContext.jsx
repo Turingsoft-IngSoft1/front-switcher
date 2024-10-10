@@ -55,7 +55,7 @@ export const WebSocketProvider = ({ children }) => {
                     const newPlayers = players.filter(player => player != playerLeftId);
                     setPlayersTurns(newTurns);
                     setPlayersNames(newNames);
-                    setPlayers(newPlayers, newTurns, newNames);
+                    setPlayers(newPlayers);
                 }
             }
             if (lastMessage.data.includes('WIN')) {
