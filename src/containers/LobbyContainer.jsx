@@ -46,11 +46,6 @@ export default function LobbyContainer () {
         setFase('in-game');
         console.log(playerTurns);
         console.log('Partida iniciada con exito');
-        const result = await getMovementCards(idGame, idPlayer);
-
-        if (result && result.moves) {
-            setMovCards(result.moves);
-        }
     }
 
     const startGameMock = () => {
