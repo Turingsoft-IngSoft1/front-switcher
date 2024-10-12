@@ -70,13 +70,10 @@ export default function Game({onPassTurn, onUpdateBoard}) {
                 </Col>
             </Row>
             <Row>
-                <Col xs={4} md={3} className="d-flex align-items-center">
-                </Col>
                 <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
                     <h4>{namePlayer}</h4>
                 </Col>
-                <Col xs={4} md={3} className="d-flex align-items-center" >
-                </Col>
+
             </Row>
             <Row className="justify-content-between">
                 <Col xs={6} md={3} className="d-flex justify-items-center" >
