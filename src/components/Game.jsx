@@ -25,10 +25,10 @@ function NotifyWinner ({winner, handleHide}) {
 }
 
 export default function Game({onPassTurn, onUpdateBoard}) {
-    const { idGame, turnPlayer, winner, namePlayer, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
+    const { players, idGame, turnPlayer, winner, namePlayer,playerTurns, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
     
-
+    const numberOfPlayers = players.length - 1; //
 
     const handleHide = () => {
         setFase('crear');
@@ -47,25 +47,26 @@ export default function Game({onPassTurn, onUpdateBoard}) {
     }
 
     useEffect(() => {        
-        onUpdateBoard()     
+        onUpdateBoard()
+        console.log(playerTurns)     
     }, [setBoard, turnPlayer]);
 
     return (
         <>
-            <Row className="justify-content-center">
+            <Row className="justify-content-center" >
                 <Col xs="auto" className="d-flex align-items-center justify-content-center">
-                    <CardSetHorizontal />
+                    {numberOfPlayers > 0 ? <CardSetHorizontal/> : <div className="empty-player"></div>}
                 </Col>
             </Row>
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    <CardSetVertical turn={3}/>
+                    {numberOfPlayers > 1 ? <CardSetVertical turn={3}/> : <div className="empty-player"></div>}
                 </Col>
                 <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
                     <Board />
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center" >
-                    <CardSetVertical turn={1} />
+                    {numberOfPlayers > 2 ? <CardSetVertical turn={1}/> : <div className="empty-player"></div>}
                 </Col>
             </Row>
             <Row>

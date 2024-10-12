@@ -48,46 +48,42 @@ export default function Lobby ({onStartGame}){
         };
         onStartGame(gameData);
     }
+
+    const numberOfPlayers = players.length;
+
     return (
         <>
-             {/* Cartas del jugador 1, tablero jugador 3 */}
+             {/* Jugador 1 */}
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                </Col>
-                <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
-                    <PlayerBox boxNumber={1}/>
-                </Col>
-                <Col xs={4} md={3} className="d-flex align-items-center" >
-                    
+                    {numberOfPlayers > 1 ? <CardSetHorizontal/> : <div className="empty-player"></div>}
                 </Col>
             </Row>
+            {/*Jugador 2 , tablero, jugador 3 */}
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    <PlayerBox boxNumber={2}/>
+                    {numberOfPlayers > 1 ? <CardSetVertical turn={3}/> : <div className="empty-player"></div>}
                 </Col>
                 <Col xs={4} md={6}>
                     <Board />
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    <CardSetVertical />
+                    {numberOfPlayers > 2 ? <CardSetVertical turn={1}/> : <div className="empty-player"></div>}
                 </Col>
             </Row>
+
+            {/*Nombre del jugador 0 (usuario)*/}
             <Row>
-                <Col xs={4} md={3} className="d-flex align-items-center">
-                </Col>
                 <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
-                    {namePlayer}
-                </Col>
-                <Col xs={4} md={3} className="d-flex align-items-center" >
-                    
+                    <h4>{namePlayer}</h4>
                 </Col>
             </Row>
-                            {/* Cartas del jugador usuario (0) */}
-            
+
+            {/* Cartas del jugador 0*/} 
             <Row className="justify-content-md-center">
                 <CardSetHorizontal className="card-set"/>
             </Row>
-            {/* acciones del jugador */}
+            {/* acciones del jugador 0*/}
             <Row className="justify-content-md-around p-3">
                 <ButtonSet onStartClick= {handleStart}/>
             </Row>
