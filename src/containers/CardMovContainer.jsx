@@ -19,7 +19,7 @@ export default function CardMovContainer () {
      }, [fase, turnPlayer]);
     
 
-    return <CardSetMov getMovementCards={getMovementCards} />;
+    return <CardSetMov />;
 
 }
 
