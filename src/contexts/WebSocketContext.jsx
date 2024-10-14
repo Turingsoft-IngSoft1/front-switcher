@@ -60,7 +60,6 @@ export const WebSocketProvider = ({ children }) => {
                     
                     const newInfoPlayers = infoPlayers.filter((p) => p.id != playerLeftId );
                     setInfoPlayers(newInfoPlayers)
-                    console.log(newInfoPlayers);
                 }
             }
             if (lastMessage.data.includes('WIN')) {
@@ -92,7 +91,6 @@ export const WebSocketProvider = ({ children }) => {
                         setPlayersNames(playersNames);
 
                         setInfoPlayers(data.users_list);
-                        console.log(data.users_list);
                     } else {
                         console.error('users_list is undefined');
                     }
