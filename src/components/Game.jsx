@@ -25,7 +25,7 @@ function NotifyWinner ({winner, handleHide}) {
 }
 
 export default function Game({onPassTurn, onUpdateBoard}) {
-    const { players, idGame, turnPlayer, winner, namePlayer,playerTurns, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
+    const { idPlayer, players, idGame, turnPlayer, winner, namePlayer,playerTurns, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
     const [style, setStyle] = useState({});
 
