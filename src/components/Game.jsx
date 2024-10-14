@@ -1,6 +1,5 @@
-import { useEffect, useContext } from "react";
-import '../styles/Board.css';
-import { Card, Row, Col, Button, Modal } from "react-bootstrap";
+import React, { useContext, useEffect, useState } from 'react';
+import { Row, Col, Modal } from 'react-bootstrap';
 import { GameContext } from '../contexts/GameContext.jsx';
 import Board from './Board.jsx';
 import {CardSetHorizontal, CardSetVertical} from './CardSet.jsx';
@@ -11,9 +10,10 @@ import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
 import CardMovContainer from "../containers/CardMovContainer.jsx";
 
 export default function Game({onPassTurn, onUpdateBoard}) {
-    const { idGame, turnPlayer, winner, namePlayer, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
+    const { idPlayer, idGame, turnPlayer, winner, namePlayer, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
-    
+
+
     const handleHide = () => {
         setFase('crear');
         setShouldConnect(false);
@@ -38,33 +38,35 @@ export default function Game({onPassTurn, onUpdateBoard}) {
         <>
             <Row className="justify-content-center">
                 <Col xs="auto" className="d-flex align-items-center justify-content-center">
-                    <CardSetHorizontal />
+                    <CardSetHorizontal position={1}/>
                 </Col>
             </Row>
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    <CardSetVertical turn={3}/>
+                    <CardSetVertical position={2}/>
                 </Col>
                 <Col xs={4} md={6}>
                     <Board />
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center" >
-                    <CardSetVertical turn={1} />
+                    <CardSetVertical position={3} />
                 </Col>
             </Row>
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
                 </Col>
                 <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
-                    <h4>{namePlayer}</h4>
+                    <h4>
+                        {namePlayer}
+                    </h4>
                 </Col>
-                <Col xs={4} md={3} className="d-flex align-items-center" >
+                <Col xs={4} md={3} className="d-flex align-items-center">
                 </Col>
             </Row>
             <Row className="justify-content-between">
                 <Modal show={winner} onHide={handleHide}>
                     <Modal.Header>
-                            <h4> GANASTE!!! </h4>
+                        <h4> GANASTE!!! </h4>
                     </Modal.Header>
                     <Modal.Footer>
                         <ExitButton intext='Cerrar' variant="success" />
@@ -75,7 +77,7 @@ export default function Game({onPassTurn, onUpdateBoard}) {
                     <CardMovContainer />
                 </Col>
                 <Col xs={4}>
-                    <CardSetHorizontal turn={0} />
+                    <CardSetHorizontal position={0} />
                 </Col>
                 
                 <Col xs={2} md={2} className="d-flex align-items-center" ></Col>
@@ -84,6 +86,5 @@ export default function Game({onPassTurn, onUpdateBoard}) {
                 <ButtonSet onPassTurn={onPassTurn} />
             </Row>
         </>
-
     );
 }
