@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Row, Col, Modal } from 'react-bootstrap';
 import { GameContext } from '../contexts/GameContext.jsx';
 import Board from './Board.jsx';
-import {CardSetHorizontal, CardSetVertical} from './CardSet.jsx';
+import {CardSetFig} from './CardSet.jsx';
 import PlayerBox from "./PlayerBox.jsx";
 import ExitButton from "./ExitButton.jsx";
 import ButtonSet from "./ButtonSet.jsx";
@@ -38,18 +38,18 @@ export default function Game({onPassTurn, onUpdateBoard}) {
         <>
             <Row className="justify-content-center">
                 <Col xs="auto" className="d-flex align-items-center justify-content-center">
-                    <CardSetHorizontal position={1}/>
+                    <CardSetFig position={1} isHorizontal={true}/>
                 </Col>
             </Row>
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    <CardSetVertical position={2}/>
+                    <CardSetFig position={2} isHorizontal={false}/>
                 </Col>
                 <Col xs={4} md={6}>
                     <Board />
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center" >
-                    <CardSetVertical position={3} />
+                    <CardSetFig position={3} isHorizontal={false} />
                 </Col>
             </Row>
             <Row>
@@ -64,20 +64,12 @@ export default function Game({onPassTurn, onUpdateBoard}) {
                 </Col>
             </Row>
             <Row className="justify-content-between">
-                <Modal show={winner} onHide={handleHide}>
-                    <Modal.Header>
-                        <h4> GANASTE!!! </h4>
-                    </Modal.Header>
-                    <Modal.Footer>
-                        <ExitButton intext='Cerrar' variant="success" />
-                    </Modal.Footer>
-                </Modal>
 
                 <Col xs={6} md={3} className="d-flex justify-items-center" >
                     <CardMovContainer />
                 </Col>
                 <Col xs={4}>
-                    <CardSetHorizontal position={0} />
+                    <CardSetFig position={0} isHorizontal={true}/>
                 </Col>
                 
                 <Col xs={2} md={2} className="d-flex align-items-center" ></Col>
@@ -85,6 +77,14 @@ export default function Game({onPassTurn, onUpdateBoard}) {
             <Row>
                 <ButtonSet onPassTurn={onPassTurn} />
             </Row>
+            <Modal show={winner} onHide={handleHide}>
+                <Modal.Header>
+                    <h4> GANASTE!!! </h4>
+                </Modal.Header>
+                <Modal.Footer>
+                    <ExitButton intext='Cerrar' variant="success" />
+                </Modal.Footer>
+            </Modal>
         </>
     );
 }

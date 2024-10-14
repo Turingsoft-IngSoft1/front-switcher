@@ -58,9 +58,8 @@ function CardSwitcher ({imgsource, selected}) {
     );
 }
 
-// ADVERTENCIA: Duplicacion de codigo
-// si se cambia Horizontal, se cambia Vertical
-export function CardSetHorizontal({ position }) {
+
+export function CardSetFig({ position, isHorizontal }) {
     const [poolFigureCards, setPoolFigureCards] = useState([Fig04, Fig05, Fig06]);
 
     const { idPlayer, players, playersTurns, turnPlayer, playersNames } = useContext(GameContext);
@@ -78,7 +77,7 @@ export function CardSetHorizontal({ position }) {
 
     return (
         <Row>
-            <Col className="cardset-horizontal">
+            <Col className= {isHorizontal? "cardset-horizontal" : "cardset-vertical"}>
                 <Row className="justify-content-md-center">
                     <h4>{position != 0 ? (firstPlayer ? playersNames[currentPlayers.indexOf(firstPlayer)] : 'Disconnected') : ''} </h4>
                 </Row>
@@ -95,44 +94,5 @@ export function CardSetHorizontal({ position }) {
                 </Row>
             </Col>
         </Row>
-    );
-}
-
-// ADVERTENCIA: Duplicacion de codigo
-// si se cambia Horizontal, se cambia Vertical
-
-export function CardSetVertical({ position }) {
-    const { idPlayer, players, playersTurns, turnPlayer, playersNames } = useContext(GameContext);
-    const [currentPlayers, setCurrentPlayers] = useState(players);
-    let firstPlayer = '';
-
-    useEffect(() => {
-        setCurrentPlayers(players);
-    }, [players]);
-
-    if (currentPlayers.length > position && position != 0) {
-        const otherPlayers = currentPlayers.filter(player => player != idPlayer);
-        firstPlayer = otherPlayers[position-1];
-    }
-
-    return (
-        <Col>
-            <Row xs="auto">
-                <h4>{firstPlayer ? playersNames[currentPlayers.indexOf(firstPlayer)] : 'Disconnected'} </h4>
-            </Row>
-            <Row>
-                <Col className="cardset-vertical align-items-center bg-cardset">
-                    <Row xs="auto" className="carta">
-                        <CardSwitcher imgsource={imgtest} />
-                    </Row>
-                    <Row xs="auto" className="carta">
-                        <CardSwitcher imgsource={imgtest} />
-                    </Row>
-                    <Row xs="auto" className="carta">
-                        <CardSwitcher imgsource={imgtest} />
-                    </Row>
-                </Col>
-            </Row>
-        </Col>
     );
 }
