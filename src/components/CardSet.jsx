@@ -136,11 +136,14 @@ export function CardSetVertical({ position }) {
                 <Col className="cardset-vertical align-items-center bg-cardset">
                     <Row xs="auto" className="carta">
                         <CardSwitcher imgsource={imgtest} />
-                    </Row>
-                    <Row xs="auto" className="carta">
                         <CardSwitcher imgsource={imgtest} />
                     </Row>
                     <Row xs="auto" className="carta">
+                        <CardSwitcher imgsource={imgtest} />
+                        <CardSwitcher imgsource={imgtest} />
+                    </Row>
+                    <Row xs="auto" className="carta">
+                        <CardSwitcher imgsource={imgtest} />
                         <CardSwitcher imgsource={imgtest} />
                     </Row>
                 </Col>

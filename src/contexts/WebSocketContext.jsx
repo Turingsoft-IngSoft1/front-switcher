@@ -7,7 +7,7 @@ export const WebSocketContext = createContext(null);
 
 export const WebSocketProvider = ({ children }) => {
     const [shouldConnect, setShouldConnect] = useState(false);
-    const { idPlayer, idGame, setWinner, fase, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames, players, playersTurns, playersNames} = useContext(GameContext);
+    const { players, playersTurns, playersNames, idPlayer, idGame, setWinner, fase, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
     const { lastMessage, readyState } = useWebSocket(`ws://localhost:8000/ws/${idGame}/${idPlayer}`, {
     },
     shouldConnect);
@@ -46,6 +46,7 @@ export const WebSocketProvider = ({ children }) => {
     useEffect(() => {
         console.log('Received a new WebSocket message:', lastMessage);
         if (lastMessage !== null) {
+            console.log('Received a new WebSocket message:', lastMessage);
             // Detecta si un jugador se fue de la partida
             if (lastMessage.data.includes('LEAVE')) {
                 const [playerLeftId, action] = lastMessage.data.split(' ');
@@ -56,6 +57,7 @@ export const WebSocketProvider = ({ children }) => {
                     setPlayersTurns(newTurns);
                     setPlayersNames(newNames);
                     setPlayers(newPlayers);
+                    console.log(newPlayers, newNames, newTurns);
                 }
             }
             if (lastMessage.data.includes('WIN')) {
