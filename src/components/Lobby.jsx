@@ -53,26 +53,22 @@ export default function Lobby ({onStartGame}){
 
     return (
         <>
-             {/* Jugador 1 */}
-            <Row>
-                <Col xs={4} md={3} className="d-flex align-items-center">
-                    {numberOfPlayers > 1 ? <CardSetHorizontal/> : <div className="empty-player"></div>}
+            <Row className="justify-content-center">
+                <Col xs="auto" className="d-flex align-items-center justify-content-center">
+                    {numberOfPlayers > 1 ? <CardSetHorizontal position={1}/> : <div className="empty-player"></div>}
                 </Col>
             </Row>
-            {/*Jugador 2 , tablero, jugador 3 */}
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    {numberOfPlayers > 1 ? <CardSetVertical turn={3}/> : <div className="empty-player"></div>}
+                    {numberOfPlayers > 2 ? <CardSetVertical position={2}/> : <div className="empty-player"></div>}
                 </Col>
-                <Col xs={4} md={6}>
+                <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
                     <Board />
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    {numberOfPlayers > 2 ? <CardSetVertical turn={1}/> : <div className="empty-player"></div>}
+                    {numberOfPlayers > 3 ? <CardSetVertical position={3}/> : <div className="empty-player"></div>}
                 </Col>
             </Row>
-
-            {/*Nombre del jugador 0 (usuario)*/}
             <Row>
                 <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
                     <h4>{namePlayer}</h4>
@@ -81,7 +77,7 @@ export default function Lobby ({onStartGame}){
 
             {/* Cartas del jugador 0*/} 
             <Row className="justify-content-md-center">
-                <CardSetHorizontal className="card-set"/>
+                <CardSetHorizontal position={0}/>
             </Row>
             {/* acciones del jugador 0*/}
             <Row className="justify-content-md-around p-3">

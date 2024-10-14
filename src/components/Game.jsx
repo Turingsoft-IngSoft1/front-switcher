@@ -27,7 +27,7 @@ export default function Game({onPassTurn, onUpdateBoard}) {
     const { players, idGame, turnPlayer, winner, namePlayer,playerTurns, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
     
-    const numberOfPlayers = players.length - 1; //
+    const numberOfPlayers = players.length;
 
     const handleHide = () => {
         setFase('crear');
@@ -59,13 +59,13 @@ export default function Game({onPassTurn, onUpdateBoard}) {
             </Row>
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                {numberOfPlayers > 1 ? <CardSetHorizontal position={2}/> : <div className="empty-player"></div>}
+                    {numberOfPlayers > 2 ? <CardSetHorizontal position={2}/> : <div className="empty-player"></div>}
                 </Col>
                 <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
                     <Board />
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center" >
-                    {numberOfPlayers > 1 ? <CardSetHorizontal position={3}/> : <div className="empty-player"></div>}
+                    {numberOfPlayers > 3 ? <CardSetHorizontal position={3}/> : <div className="empty-player"></div>}
                 </Col>
             </Row>
             <Row>
