@@ -59,7 +59,7 @@ function CardSwitcher ({imgsource, selected}) {
 }
 
 
-export function CardSetFig({ position, isHorizontal }) {
+export default function CardSetFig({ position, isHorizontal }) {
     const [poolFigureCards, setPoolFigureCards] = useState([Fig04, Fig05, Fig06]);
 
     const { idPlayer, players, playersTurns, turnPlayer, playersNames } = useContext(GameContext);

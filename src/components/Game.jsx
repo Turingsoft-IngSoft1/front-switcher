@@ -8,6 +8,8 @@ import ExitButton from "./ExitButton.jsx";
 import ButtonSet from "./ButtonSet.jsx";
 import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
 import CardMovContainer from "../containers/CardMovContainer.jsx";
+import CardFigContainer from "../containers/CardSetContainer.jsx";
+
 
 export default function Game({onPassTurn, onUpdateBoard}) {
     const { idPlayer, idGame, turnPlayer, winner, namePlayer, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
@@ -38,18 +40,18 @@ export default function Game({onPassTurn, onUpdateBoard}) {
         <>
             <Row className="justify-content-center">
                 <Col xs="auto" className="d-flex align-items-center justify-content-center">
-                    <CardSetFig position={1} isHorizontal={true}/>
+                    <CardFigContainer position={1} isHorizontal={true}/>
                 </Col>
             </Row>
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    <CardSetFig position={2} isHorizontal={false}/>
+                    <CardFigContainer position={2} isHorizontal={false}/>
                 </Col>
                 <Col xs={4} md={6}>
                     <Board />
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center" >
-                    <CardSetFig position={3} isHorizontal={false} />
+                    <CardFigContainer position={3} isHorizontal={false} />
                 </Col>
             </Row>
             <Row>
@@ -69,7 +71,7 @@ export default function Game({onPassTurn, onUpdateBoard}) {
                     <CardMovContainer />
                 </Col>
                 <Col xs={4}>
-                    <CardSetFig position={0} isHorizontal={true}/>
+                    <CardFigContainer position={0} isHorizontal={true}/>
                 </Col>
                 
                 <Col xs={2} md={2} className="d-flex align-items-center" ></Col>
