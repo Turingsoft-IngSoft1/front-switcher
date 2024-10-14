@@ -8,9 +8,24 @@ import ExitButton from "./ExitButton.jsx";
 import ButtonSet from "./ButtonSet.jsx";
 import CardSetMov from "./CardSetMov.jsx";
 import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
+import CardMovContainer from "../containers/CardMovContainer.jsx";
+
+
+function NotifyWinner ({winner, handleHide}) {
+    return (
+        <Modal show={winner} onHide={handleHide}>
+        <Modal.Header>
+                <h4> GANASTE!!! </h4>
+        </Modal.Header>
+        <Modal.Footer>
+            <ExitButton intext='Cerrar' variant="success" />
+        </Modal.Footer>
+        </Modal>
+    );
+}
 
 export default function Game({onPassTurn, onUpdateBoard}) {
-    const { idPlayer, idGame, turnPlayer, winner, namePlayer, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
+    const { players, idGame, turnPlayer, winner, namePlayer,playerTurns, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
     const [style, setStyle] = useState({});
 
@@ -31,7 +46,8 @@ export default function Game({onPassTurn, onUpdateBoard}) {
             });
         }
     }, [turnPlayer]);
-
+    
+    const numberOfPlayers = players.length;
 
     const handleHide = () => {
         setFase('crear');
@@ -50,7 +66,8 @@ export default function Game({onPassTurn, onUpdateBoard}) {
     }
 
     useEffect(() => {        
-        onUpdateBoard()     
+        onUpdateBoard()
+        console.log(playerTurns)     
     }, [setBoard, turnPlayer]);
 
     const vibrationAnimation = `
@@ -66,43 +83,31 @@ export default function Game({onPassTurn, onUpdateBoard}) {
 
     return (
         <>
-            <Row className="justify-content-center">
+            <Row className="justify-content-center" >
                 <Col xs="auto" className="d-flex align-items-center justify-content-center">
-                    <CardSetHorizontal position={1}/>
+                    {numberOfPlayers > 1 ? <CardSetHorizontal position={1}/> : <div className="empty-player"></div>}
                 </Col>
             </Row>
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    <CardSetVertical position={2}/>
+                    {numberOfPlayers > 2 ? <CardSetHorizontal position={2}/> : <div className="empty-player"></div>}
                 </Col>
-                <Col xs={4} md={6}>
+                <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
                     <Board />
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center" >
-                    <CardSetVertical position={3} />
+                    {numberOfPlayers > 3 ? <CardSetHorizontal position={3}/> : <div className="empty-player"></div>}
                 </Col>
             </Row>
             <Row>
-                <Col xs={4} md={3} className="d-flex align-items-center">
-                </Col>
                 <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
                     <h4 style={style}>
                         {namePlayer}
                     </h4>
                 </Col>
-                <Col xs={4} md={3} className="d-flex align-items-center">
-                </Col>
+
             </Row>
             <Row className="justify-content-between">
-                <Modal show={winner} onHide={handleHide}>
-                    <Modal.Header>
-                        <h4> GANASTE!!! </h4>
-                    </Modal.Header>
-                    <Modal.Footer>
-                        <ExitButton intext='Cerrar' variant="success" />
-                    </Modal.Footer>
-                </Modal>
-
                 <Col xs={6} md={3} className="d-flex justify-items-center" >
                     <CardSetMov />
                 </Col>
@@ -118,6 +123,7 @@ export default function Game({onPassTurn, onUpdateBoard}) {
             <style>
                 {vibrationAnimation}
             </style>
+            <NotifyWinner winner = {winner} handleHide={handleHide}/>
         </>
     );
 }
