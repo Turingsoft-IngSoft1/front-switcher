@@ -529,9 +529,11 @@ shapes_to_check = [
     "fig11", "fig12", "fig13", "fig14", "fig15", "fig16", "fig17", "fig18", "fige01", "fige02", 
     "fige03", "fige04", "fige05", "fige06", "fige07"
 ]
-for shape in shapes_to_check:
-    for color, group in groups:
+for color, group in groups:
+    for shape in shapes_to_check:
         if (len(group) == 4 and is_shapeeasy(group, shape)):
             print(f"Color {color} forms a {shape} with positions: {group}")
+            break
         elif (len(group) == 5 and is_shapedif(group, shape)):
             print(f"Color {color} forms a {shape} with positions: {group}")
+            break
