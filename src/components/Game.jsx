@@ -11,10 +11,25 @@ import CardMovContainer from "../containers/CardMovContainer.jsx";
 import CardFigContainer from "../containers/CardSetContainer.jsx";
 
 
-export default function Game({onPassTurn, onUpdateBoard}) {
-    const { idPlayer, idGame, turnPlayer, winner, namePlayer, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
-    const { setShouldConnect } = useContext(WebSocketContext);
 
+function NotifyWinner ({winner, handleHide}) {
+    return (
+        <Modal show={winner} onHide={handleHide}>
+        <Modal.Header>
+                <h4> GANASTE!!! </h4>
+        </Modal.Header>
+        <Modal.Footer>
+            <ExitButton intext='Cerrar' variant="success" />
+        </Modal.Footer>
+        </Modal>
+    );
+}
+
+export default function Game({onPassTurn, onUpdateBoard}) {
+    const { players, idGame, turnPlayer, winner, namePlayer,playerTurns, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
+    const { setShouldConnect } = useContext(WebSocketContext);
+    
+    const numberOfPlayers = players.length;
 
     const handleHide = () => {
         setFase('crear');
@@ -33,39 +48,46 @@ export default function Game({onPassTurn, onUpdateBoard}) {
     }
 
     useEffect(() => {        
-        onUpdateBoard()     
+        onUpdateBoard()
+        console.log(playerTurns)     
     }, [setBoard, turnPlayer]);
 
     return (
         <>
-            <Row className="justify-content-center">
+            <Row className="justify-content-center" >
                 <Col xs="auto" className="d-flex align-items-center justify-content-center">
-                    <CardFigContainer position={1} isHorizontal={true}/>
+                    {numberOfPlayers > 1 ? <CardFigContainer position={1} isHorizontal={true}/> : <div className="empty-player"></div>}
                 </Col>
             </Row>
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    <CardFigContainer position={2} isHorizontal={false}/>
+                    {numberOfPlayers > 2 ? <CardFigContainer position={2} isHorizontal={false}/> : <div className="empty-player"></div>}
                 </Col>
-                <Col xs={4} md={6}>
+                <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
                     <Board />
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center" >
-                    <CardFigContainer position={3} isHorizontal={false} />
+                    {numberOfPlayers > 3 ? <CardFigContainer position={3} isHorizontal={false} /> : <div className="empty-player"></div>}
+                    
                 </Col>
             </Row>
             <Row>
-                <Col xs={4} md={3} className="d-flex align-items-center">
-                </Col>
                 <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
                     <h4>
                         {namePlayer}
                     </h4>
                 </Col>
-                <Col xs={4} md={3} className="d-flex align-items-center">
-                </Col>
+
             </Row>
             <Row className="justify-content-between">
+                <Modal show={winner} onHide={handleHide}>
+                    <Modal.Header>
+                        <h4> GANASTE!!! </h4>
+                    </Modal.Header>
+                    <Modal.Footer>
+                        <ExitButton intext='Cerrar' variant="success" />
+                    </Modal.Footer>
+                </Modal>
 
                 <Col xs={6} md={3} className="d-flex justify-items-center" >
                     <CardMovContainer />
@@ -79,14 +101,7 @@ export default function Game({onPassTurn, onUpdateBoard}) {
             <Row>
                 <ButtonSet onPassTurn={onPassTurn} />
             </Row>
-            <Modal show={winner} onHide={handleHide}>
-                <Modal.Header>
-                    <h4> GANASTE!!! </h4>
-                </Modal.Header>
-                <Modal.Footer>
-                    <ExitButton intext='Cerrar' variant="success" />
-                </Modal.Footer>
-            </Modal>
+            <NotifyWinner winner = {winner} handleHide={handleHide}/>
         </>
     );
 }
