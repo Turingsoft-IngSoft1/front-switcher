@@ -3,7 +3,7 @@ import CardSetFig from '../components/CardSet.jsx';
 import {getFigureCards} from '../services/cardServices.js';
 import { GameContext } from '../contexts/GameContext.jsx';
 
-export default function CardFigContainer ({position, isHorizontal}) {
+export default function CardFigContainer ({idOwnsSet, position, isHorizontal}) {
     const { idGame, idPlayer, turnPlayer, figureCards, setFigureCards, fase} = useContext(GameContext);
     useEffect(() => {
         const fetchFigureCards = async () => {
@@ -17,7 +17,7 @@ export default function CardFigContainer ({position, isHorizontal}) {
      }, [fase, turnPlayer]);
     
 
-    return <CardSetFig position={position} isHorizontal={isHorizontal}  />;
+    return <CardSetFig idOwnsSet={idOwnsSet} position={position} isHorizontal={isHorizontal}  />;
 
 }
 

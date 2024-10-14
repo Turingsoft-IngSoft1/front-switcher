@@ -26,7 +26,7 @@ function NotifyWinner ({winner, handleHide}) {
 }
 
 export default function Game({onPassTurn, onUpdateBoard}) {
-    const { players, idGame, setInfoPlayers, turnPlayer, winner, namePlayer,playerTurns, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
+    const { players, idGame, setInfoPlayers, idPlayer, turnPlayer, winner, namePlayer,playerTurns, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
     
     const numberOfPlayers = players.length;
@@ -57,18 +57,18 @@ export default function Game({onPassTurn, onUpdateBoard}) {
         <>
             <Row className="justify-content-center" >
                 <Col xs="auto" className="d-flex align-items-center justify-content-center">
-                    {numberOfPlayers > 1 ? <CardFigContainer position={1} isHorizontal={true}/> : <div className="empty-player"></div>}
+                    {numberOfPlayers > 1 ? <CardFigContainer idOwnsSet={players[1]} position={1} isHorizontal={true}/> : <div className="empty-player"></div>}
                 </Col>
             </Row>
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    {numberOfPlayers > 2 ? <CardFigContainer position={2} isHorizontal={false}/> : <div className="empty-player"></div>}
+                    {numberOfPlayers > 2 ? <CardFigContainer idOwnsSet={players[2]} position={2} isHorizontal={false}/> : <div className="empty-player"></div>}
                 </Col>
                 <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
                     <Board />
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center" >
-                    {numberOfPlayers > 3 ? <CardFigContainer position={3} isHorizontal={false} /> : <div className="empty-player"></div>}
+                    {numberOfPlayers > 3 ? <CardFigContainer idOwnsSet={players[3]} position={3} isHorizontal={false} /> : <div className="empty-player"></div>}
                     
                 </Col>
             </Row>
@@ -86,7 +86,7 @@ export default function Game({onPassTurn, onUpdateBoard}) {
                     <CardMovContainer />
                 </Col>
                 <Col xs={4}>
-                    <CardFigContainer position={0} isHorizontal={true}/>
+                    <CardFigContainer idOwnsSet={idPlayer} position={0} isHorizontal={true}/>
                 </Col>
                 
                 <Col xs={2} md={2} className="d-flex align-items-center" ></Col>

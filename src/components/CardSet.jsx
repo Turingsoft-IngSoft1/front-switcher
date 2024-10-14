@@ -86,8 +86,8 @@ function CardSwitcher ({imgsource, selected}) {
 }
 
 
-export default function CardSetFig({ position, isHorizontal }) {
-    const { idPlayer, players, figureCards, playersTurns, turnPlayer, playersNames } = useContext(GameContext);
+export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
+    const { idPlayer, infoPlayers, players, figureCards, playersTurns, turnPlayer, playersNames } = useContext(GameContext);
     const [currentPlayers, setCurrentPlayers] = useState(players);
     let firstPlayer = '';
 
