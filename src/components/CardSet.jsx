@@ -25,7 +25,7 @@ export function CardSetHorizontal({ position }) {
 
     if (currentPlayers.length > position && position != 0) {
         const otherPlayers = currentPlayers.filter(player => player != idPlayer);
-        firstPlayer = otherPlayers[position-1]; // Get the player in the list
+        firstPlayer = otherPlayers[position-1];
     }
 
     return (
@@ -58,16 +58,16 @@ export function CardSetVertical({ position }) {
     useEffect(() => {
         setCurrentPlayers(players);
     }, [players]);
- 
+
     if (currentPlayers.length > position && position != 0) {
         const otherPlayers = currentPlayers.filter(player => player != idPlayer);
-        firstPlayer = otherPlayers[position-1]; // Get the player in the list
+        firstPlayer = otherPlayers[position-1];
     }
 
     return (
         <Col>
             <Row xs="auto">
-            <h4>{firstPlayer ? playersNames[currentPlayers.indexOf(firstPlayer)] : 'Disconnected'} </h4>
+                <h4>{firstPlayer ? playersNames[currentPlayers.indexOf(firstPlayer)] : 'Disconnected'} </h4>
             </Row>
             <Row>
                 <Col className="cardset-vertical align-items-center bg-cardset">
