@@ -39,7 +39,7 @@ function Chat () {
 /* Nota: por defecto, la interfaz se setea en pre-game, se deberia realizar un chequeo por si el jugador ya esta en una partida
          para pasar directamente a in-game sin tener que apretar el boton de comenzar juego*/
 export default function Lobby ({onStartGame}){
-    const { winner, setWinner, fase, idPlayer, namePlayer, players, playersTurns, playersNames, idGame, setBoard, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
+    const { winner, setWinner, fase, idPlayer, namePlayer, players, idGame, setBoard} = useContext(GameContext);
     
     const handleStart = (e) =>{
         e.preventDefault();

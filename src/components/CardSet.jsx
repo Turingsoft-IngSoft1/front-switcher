@@ -15,7 +15,7 @@ function CardSwitcher({ imgsource }) {
 }
 
 export function CardSetHorizontal({ position }) {
-    const { idPlayer, players, playersTurns, turnPlayer, playersNames } = useContext(GameContext);
+    const { idPlayer, players} = useContext(GameContext);
     const [currentPlayers, setCurrentPlayers] = useState(players);
     let firstPlayer = '';
 
@@ -51,7 +51,7 @@ export function CardSetHorizontal({ position }) {
 }
 
 export function CardSetVertical({ position }) {
-    const { idPlayer, players, playersTurns, turnPlayer, playersNames } = useContext(GameContext);
+    const { idPlayer, players, playersNames } = useContext(GameContext);
     const [currentPlayers, setCurrentPlayers] = useState(players);
     let firstPlayer = '';
 
