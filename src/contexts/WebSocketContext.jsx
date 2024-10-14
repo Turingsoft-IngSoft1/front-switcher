@@ -7,7 +7,8 @@ export const WebSocketContext = createContext(null);
 
 export const WebSocketProvider = ({ children }) => {
     const [shouldConnect, setShouldConnect] = useState(false);
-    const { players, playersTurns, playersNames, idPlayer, idGame, setWinner, fase, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
+    const { players, playersTurns, playersNames, idPlayer, idGame, setWinner, fase, infoPlayers,
+            setInfoPlayers, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
     const { lastMessage, readyState } = useWebSocket(`ws://localhost:8000/ws/${idGame}/${idPlayer}`, {
     },
     shouldConnect);
@@ -56,7 +57,10 @@ export const WebSocketProvider = ({ children }) => {
                     setPlayersTurns(newTurns);
                     setPlayersNames(newNames);
                     setPlayers(newPlayers);
-                    console.log(newPlayers, newNames, newTurns);
+                    
+                    const newInfoPlayers = infoPlayers.filter((p) => p.id != playerLeftId );
+                    setInfoPlayers(newInfoPlayers)
+                    console.log(newInfoPlayers);
                 }
             }
             if (lastMessage.data.includes('WIN')) {
@@ -86,6 +90,9 @@ export const WebSocketProvider = ({ children }) => {
                         setPlayers(usersList);
                         setPlayersTurns(playersTurns);
                         setPlayersNames(playersNames);
+
+                        setInfoPlayers(data.users_list);
+                        console.log(data.users_list);
                     } else {
                         console.error('users_list is undefined');
                     }
