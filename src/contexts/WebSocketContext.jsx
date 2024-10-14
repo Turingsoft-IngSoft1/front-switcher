@@ -7,7 +7,7 @@ export const WebSocketContext = createContext(null);
 
 export const WebSocketProvider = ({ children }) => {
     const [shouldConnect, setShouldConnect] = useState(false);
-    const { idPlayer, idGame, setWinner, fase, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
+    const { players, playersTurns, playersNames, idPlayer, idGame, setWinner, fase, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
     const { lastMessage, readyState } = useWebSocket(`ws://localhost:8000/ws/${idGame}/${idPlayer}`, {
     },
     shouldConnect);
@@ -45,12 +45,18 @@ export const WebSocketProvider = ({ children }) => {
     WebSocketProvider
     useEffect(() => {
         if (lastMessage !== null) {
+            console.log('Received a new WebSocket message:', lastMessage);
             // Detecta si un jugador se fue de la partida
             if (lastMessage.data.includes('LEAVE')) {
                 const [playerLeftId, action] = lastMessage.data.split(' ');
                 if (action === 'LEAVE') {
-                    console.log(`Player ${playerLeftId} has left the game`);
-                    setPlayers(prevPlayers => prevPlayers.filter(player => player !== playerLeftId));
+                    const newTurns = playersTurns.filter((turn, index) => players[index] != playerLeftId)
+                    const newNames = playersNames.filter((name, index) => players[index] != playerLeftId)
+                    const newPlayers = players.filter(player => player != playerLeftId);
+                    setPlayersTurns(newTurns);
+                    setPlayersNames(newNames);
+                    setPlayers(newPlayers);
+                    console.log(newPlayers, newNames, newTurns);
                 }
             }
             if (lastMessage.data.includes('WIN')) {
