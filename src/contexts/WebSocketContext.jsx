@@ -1,33 +1,30 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { GameContext } from '../contexts/GameContext.jsx';
+import {getPlayersInfo} from '../utils/gameServices.js'
 
 export const WebSocketContext = createContext(null);
 
 export const WebSocketProvider = ({ children }) => {
-    const [players, setPlayers] = useState([]);
     const [shouldConnect, setShouldConnect] = useState(false);
-    const { idPlayer, idGame, setWinner, fase, setFase, setTurnPlayer} = useContext(GameContext);
-    const { lastMessage, readyState, sendMessage, getWebSocket } = useWebSocket(`ws://localhost:8000/ws/${idGame}/${idPlayer}`, {
+    const { players, playersTurns, playersNames, idPlayer, idGame, setWinner, fase, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
+    const { lastMessage, readyState } = useWebSocket(`ws://localhost:8000/ws/${idGame}/${idPlayer}`, {
     },
     shouldConnect);
 
     useEffect(() => {
         if (readyState === ReadyState.OPEN && fase === 'crear') {
             console.log('Fase cambiada a crear, desconectando WebSocket...');
-            //TODO: Close websocket
+            //TODO: Se puede usar para desconectar todo de golpe
         }
     }, [fase, readyState]);
+
 
     useEffect(() => {
         switch (readyState) {
             case ReadyState.CONNECTING:
                 console.log('Conectando...');
-                break;const [WinnerId, action] = lastMessage.data.split(' ');
-                if (action === 'WIN') {
-                    console.log(`Existe Ganador y es unico`);
-                    setWinner(true);
-                }
+                break;
             case ReadyState.OPEN:
                 console.log('Conexión establecida');
                 break;
@@ -48,13 +45,18 @@ export const WebSocketProvider = ({ children }) => {
     WebSocketProvider
     useEffect(() => {
         if (lastMessage !== null) {
-            console.log('Mensaje recibido');
+            console.log('Received a new WebSocket message:', lastMessage);
             // Detecta si un jugador se fue de la partida
             if (lastMessage.data.includes('LEAVE')) {
                 const [playerLeftId, action] = lastMessage.data.split(' ');
                 if (action === 'LEAVE') {
-                    console.log(`Player ${playerLeftId} has left the game`);
-                    setPlayers(prevPlayers => prevPlayers.filter(player => player !== playerLeftId));
+                    const newTurns = playersTurns.filter((turn, index) => players[index] != playerLeftId)
+                    const newNames = playersNames.filter((name, index) => players[index] != playerLeftId)
+                    const newPlayers = players.filter(player => player != playerLeftId);
+                    setPlayersTurns(newTurns);
+                    setPlayersNames(newNames);
+                    setPlayers(newPlayers);
+                    console.log(newPlayers, newNames, newTurns);
                 }
             }
             if (lastMessage.data.includes('WIN')) {
@@ -65,17 +67,31 @@ export const WebSocketProvider = ({ children }) => {
                 }
             }
             if (lastMessage.data.includes('GAME_STARTED')) {
-                const[action, turnId] = lastMessage.data.split(' ');
-                console.log(action);
-                console.log("turnId" + turnId); 
+                const [action, turnId] = lastMessage.data.split(' ');
                 setFase('in-game');
                 setTurnPlayer(turnId);
+
+                getPlayersInfo(idGame);
             }
             if (lastMessage.data.includes('TURN')){
                 const [action, turnPlayerId] = lastMessage.data.split(' ');
-                console.log("TurnId BY SKIp" + turnPlayerId);
-                console.log('Se actualizan los turnos');
                 setTurnPlayer(turnPlayerId);
+            }
+            if (lastMessage.data.includes('JOIN')) {
+                getPlayersInfo(idGame).then(data => {
+                    if (data && data.users_list) {
+                        const usersList = data.users_list.map(user => user.id);
+                        const playersTurns = data.users_list.map(user => user.turn);
+                        const playersNames = data.users_list.map(user => user.name);
+                        setPlayers(usersList);
+                        setPlayersTurns(playersTurns);
+                        setPlayersNames(playersNames);
+                    } else {
+                        console.error('users_list is undefined');
+                    }
+                }).catch(error => {
+                    console.error('Error fetching players info:', error);
+                });
             }
         }
     }, [lastMessage, setPlayers, setWinner]);
