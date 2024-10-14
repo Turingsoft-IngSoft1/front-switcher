@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Row, Col, Modal } from 'react-bootstrap';
 import { GameContext } from '../contexts/GameContext.jsx';
 import Board from './Board.jsx';
-import {CardSetFig} from './CardSet.jsx';
+import CardSetFig from './CardSet.jsx';
 import PlayerBox from "./PlayerBox.jsx";
 import ExitButton from "./ExitButton.jsx";
 import ButtonSet from "./ButtonSet.jsx";

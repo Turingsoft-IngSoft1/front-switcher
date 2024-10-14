@@ -23,8 +23,8 @@ export default async function getMovementCards(idGame, idPlayer) {
 // Obtener JSON de las cartas de figuras dado un game y un player
 export async function getFigureCards(idGame, idPlayer) {
     try {
-        const response = await fetch(`http://127.0.0.1:8000/get_figure/${idGame}/${idPlayer}`, {
-            method: 'POST',
+        const response = await fetch(`http://127.0.0.1:8000/game_status/${idGame}`, {
+            method: 'GET',
             headers: {
                 'accept': 'application/json'
             },
@@ -35,7 +35,7 @@ export async function getFigureCards(idGame, idPlayer) {
         }
 
         const data = await response.json();
-        return data;
+        return data[idPlayer];
     } catch (error) {
         console.error("Error fetching movement cards:", error);
         return null;

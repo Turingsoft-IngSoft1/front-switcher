@@ -5,7 +5,7 @@ import Board from './Board.jsx'
 import { GameContext } from '../contexts/GameContext.jsx';
 import ExitButton from './ExitButton.jsx';
 import PlayerBox from "./PlayerBox.jsx";
-import {CardSetFig} from './CardSet.jsx';
+import CardSetFig from './CardSet.jsx';
 
 function ButtonSet ({onStartClick}){
     

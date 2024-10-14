@@ -5,10 +5,9 @@ import imgtest from '../styles/cards/fig01.svg'
 import { useContext, useEffect, useState } from "react";
 import { GameContext } from '../contexts/GameContext.jsx';
 import React from 'react';
-import Fig01 from '../styles/cards/fig01.svg';
 import Fig02 from '../styles/cards/fig02.svg';
+import Fig01 from '../styles/cards/fig01.svg';
 import Fig03 from '../styles/cards/fig03.svg';
-
 import Fig04 from '../styles/cards/fig04.svg';
 import Fig05 from '../styles/cards/fig05.svg';
 import Fig06 from '../styles/cards/fig06.svg';
@@ -31,6 +30,34 @@ import Fige04 from '../styles/cards/fige04.svg';
 import Fige05 from '../styles/cards/fige05.svg';
 import Fige06 from '../styles/cards/fige06.svg';
 import Fige07 from '../styles/cards/fige07.svg';
+
+const dictImg = {
+    'fig01': Fig01,
+    'fig02': Fig02,
+    'fig03': Fig03,
+    'fig04': Fig04,
+    'fig05': Fig05,
+    'fig06': Fig06,
+    'fig07': Fig07,
+    'fig08': Fig08,
+    'fig09': Fig09,
+    'fig10': Fig10,
+    'fig11': Fig11,
+    'fig12': Fig12,
+    'fig13': Fig13,
+    'fig14': Fig14,
+    'fig15': Fig15,
+    'fig16': Fig16,
+    'fig17': Fig17,
+    'fig18': Fig18,
+    'fige01': Fige01,
+    'fige02': Fige02,
+    'fige03': Fige03,
+    'fige04': Fige04,
+    'fige05': Fige05,
+    'fige06': Fige06,
+    'fige07': Fige07
+}
 
 function CardSwitcher ({imgsource, selected}) {
     const [isHovered, setIsHovered] = useState(false);
@@ -62,7 +89,7 @@ function CardSwitcher ({imgsource, selected}) {
 export default function CardSetFig({ position, isHorizontal }) {
     const [poolFigureCards, setPoolFigureCards] = useState([Fig04, Fig05, Fig06]);
 
-    const { idPlayer, players, playersTurns, turnPlayer, playersNames } = useContext(GameContext);
+    const { idPlayer, players, figureCards, playersTurns, turnPlayer, playersNames } = useContext(GameContext);
     const [currentPlayers, setCurrentPlayers] = useState(players);
     let firstPlayer = '';
 
@@ -83,13 +110,13 @@ export default function CardSetFig({ position, isHorizontal }) {
                 </Row>
                 <Row className="justify-content-md-center bg-cardset">
                     <Col xs="auto" className="carta">
-                        <CardSwitcher imgsource={poolFigureCards[0]} />
+                        <CardSwitcher imgsource={dictImg[figureCards[0]]} />
                     </Col>
                     <Col xs="auto" className="carta">
-                        <CardSwitcher imgsource={poolFigureCards[1]} />
+                        <CardSwitcher imgsource={dictImg[figureCards[1]]} />
                     </Col>
                     <Col xs="auto" className="carta">
-                        <CardSwitcher imgsource={poolFigureCards[2]} />
+                        <CardSwitcher imgsource={dictImg[figureCards[2]]} />
                     </Col>
                 </Row>
             </Col>

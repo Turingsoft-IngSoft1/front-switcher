@@ -8,12 +8,10 @@ export default function CardFigContainer ({position, isHorizontal}) {
     useEffect(() => {
         const fetchFigureCards = async () => {
                 const result = await getFigureCards(idGame, idPlayer);
-                console.log(result);
-                if (result && result.figures) {
-                    setFigureCards(figureCards => [...figureCards, ...result.figures]);
+                if (result) {
+                    setFigureCards(result);
 
                 }
-            // }
         };
      fetchFigureCards();
      }, [fase, turnPlayer]);
