@@ -24,7 +24,7 @@ function NotifyWinner ({winner, handleHide}) {
 }
 
 export default function Game({onPassTurn, onUpdateBoard}) {
-    const { players, idGame, turnPlayer, winner, namePlayer,playerTurns, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
+    const { players, idGame, setInfoPlayers, turnPlayer, winner, namePlayer,playerTurns, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
     
     const numberOfPlayers = players.length;
@@ -41,6 +41,7 @@ export default function Game({onPassTurn, onUpdateBoard}) {
         setFigureCards([]);
         setMovCards([]);
         setPlayersNames([]);
+        setInfoPlayers([]);
         setPlayersTurns([]);
         setWinner(false);
     }

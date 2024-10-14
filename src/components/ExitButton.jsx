@@ -6,7 +6,7 @@ import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
 function ExitButton({intext}) {
     const { 
         idGame, idPlayer, setFase, setIsOwner, setIdPlayer, 
-        setIdGame, setPlayers, setCurrentTurn, setBoard, 
+        setIdGame, setPlayers, setCurrentTurn, setBoard, setInfoPlayers,
         setFigureCards, setMovCards, setPlayersNames, setPlayersTurns, setWinner
     } = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
@@ -40,6 +40,7 @@ function ExitButton({intext}) {
             setFigureCards([]);
             setMovCards([]);
             setPlayersNames([]);
+            setInfoPlayers([]);
             setPlayersTurns([]);
             setWinner(false);
             //Websocket close
