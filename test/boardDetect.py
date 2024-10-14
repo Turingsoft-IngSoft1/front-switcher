@@ -11,11 +11,11 @@ board = [color_list[i*6:(i+1)*6] for i in range(6)]
  
 #board = \
 #[['y', 'g', 'b', 'g', 'g', 'g'],
-# ['y', 'r', 'b', 'b', 'b', 'g'],
+# ['y', 'r', 'b', 'b', 'g', 'g'],
 # ['y', 'g', 'b', 'g', 'g', 'g'],
-# ['y', 'r', 'y', 'r', 'r', 'r'],
-# ['y', 'b', 'r', 'g', 'g', 'g'],
-# ['g', 'r', 'y', 'r', 'g', 'r']]
+# ['b', 'r', 'y', 'r', 'r', 'r'],
+# ['b', 'b', 'r', 'g', 'g', 'g'],
+# ['b', 'b', 'y', 'r', 'g', 'r']]
 # Print the board
 print("Board:")
 for row in board:
