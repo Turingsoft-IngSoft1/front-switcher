@@ -25,3 +25,8 @@
 .cardset-horizontal {
     
 }
+
+.movement-card-switcher.selected {
+    border: 3px solid red;
+    border-radius: 9%;
+}

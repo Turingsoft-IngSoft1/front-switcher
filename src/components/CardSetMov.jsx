@@ -7,7 +7,7 @@ import simplediagonal  from   '../styles/cards/mov4.svg';
 import mirrorL from '../styles/cards/mov5.svg';
 import rightL from   '../styles/cards/mov6.svg';
 import lateral from  '../styles/cards/mov7.svg';
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GameContext } from '../contexts/GameContext.jsx';
 
 /* 
@@ -15,9 +15,11 @@ import { GameContext } from '../contexts/GameContext.jsx';
     selected: bool, la carta esta actualmente seleccionada
     played: bool, la carta ya fue jugada, se deberia ver mas transparente
 */
-function MovementCard ({imgsource, selected, played}) {
+function MovementCard ({imgsource, onSelect, selected, borderColor}) {
     return (
-        <Container className="movement-card-switcher p-1" >
+        <Container className={`movement-card-switcher p-1 ${selected ? 'selected' : ''}`}
+                   style = {selected ? { border: `3px solid ${borderColor}` } : {}}
+                   onClick = {onSelect}>
             <Row>
                 <Image src={imgsource} className="img-content-mov"/>
             </Row>
@@ -26,8 +28,25 @@ function MovementCard ({imgsource, selected, played}) {
 }
 
 export default function CardSetMov ({requestNewCards}) {
+    const [selectedCard, setSelectedCard] = useState(null);
+    const [borderColor, setBorderColor] = useState("");
     
     const { idGame, idPlayer, turnPlayer, movCards, fase} = useContext(GameContext);
+
+    const getRandomColor = () => {
+        const colors = ['#dc3545', '#198754', '#0d6efd', '#ffc107']; //RGBY
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+    function handleSelect (i) {
+        if (selectedCard === i){
+            setSelectedCard(null);
+            setBorderColor("");
+        }
+        else {
+            setSelectedCard(i);
+            setBorderColor(getRandomColor());
+        }
+    }
 
     const dictImg = {
         'mov1': bigdiagonal,
@@ -46,15 +65,15 @@ export default function CardSetMov ({requestNewCards}) {
         <Col>
             <Row className= "justify-content-md-center">
                 <Col xs="auto" className="p-1" >
-                    <MovementCard imgsource={imgCard1}/>
+                    <MovementCard imgsource={imgCard1} selected={selectedCard === 0} borderColor={selectedCard === 0 ? borderColor : ""} onSelect={() => handleSelect(0)}/>
                 </Col>
 
                 <Col xs="auto" className="p-1">
-                    <MovementCard imgsource={imgCard2}/>
+                    <MovementCard imgsource={imgCard2} selected={selectedCard === 1} borderColor={selectedCard === 1 ? borderColor : ""} onSelect={() =>handleSelect(1)}/>
                 </Col>
 
                 <Col xs="auto" className="p-1">
-                    <MovementCard imgsource={imgCard3}/>
+                    <MovementCard imgsource={imgCard3} selected={selectedCard === 2} borderColor={selectedCard === 2 ? borderColor : ""} onSelect={() => handleSelect(2)}/>
                 </Col>
             </Row>
         </Col>
