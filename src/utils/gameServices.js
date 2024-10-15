@@ -21,5 +21,25 @@ async function getPlayersInfo(idGame) {
     }
 }
 
+export async function getGameFigures(idGame) {
+    try {
+        const response = await fetch('http://127.0.0.1:8000/game_status/' + idGame, {
+            method: 'GET',
+            headers: {
+                'accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! : ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error fetching players info:", error);
+        return null;
+    }
+}
 
 export { getPlayersInfo };

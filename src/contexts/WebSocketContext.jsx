@@ -1,13 +1,14 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { GameContext } from '../contexts/GameContext.jsx';
-import {getPlayersInfo} from '../utils/gameServices.js'
+import {getPlayersInfo, getGameFigures} from '../utils/gameServices.js'
 
 export const WebSocketContext = createContext(null);
 
 export const WebSocketProvider = ({ children }) => {
     const [shouldConnect, setShouldConnect] = useState(false);
-    const { players, playersTurns, playersNames, idPlayer, idGame, setWinner, fase, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
+    const { players, playersTurns, playersNames, idPlayer, idGame, setWinner, fase, infoPlayers,
+            setInfoPlayers, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
     const { lastMessage, readyState } = useWebSocket(`ws://localhost:8000/ws/${idGame}/${idPlayer}`, {
     },
     shouldConnect);
@@ -45,7 +46,7 @@ export const WebSocketProvider = ({ children }) => {
     WebSocketProvider
     useEffect(() => {
         if (lastMessage !== null) {
-            console.log('Received a new WebSocket message:', lastMessage);
+            console.log('Received a new WebSocket message:', lastMessage.data);
             // Detecta si un jugador se fue de la partida
             if (lastMessage.data.includes('LEAVE')) {
                 const [playerLeftId, action] = lastMessage.data.split(' ');
@@ -56,7 +57,9 @@ export const WebSocketProvider = ({ children }) => {
                     setPlayersTurns(newTurns);
                     setPlayersNames(newNames);
                     setPlayers(newPlayers);
-                    console.log(newPlayers, newNames, newTurns);
+                    
+                    const newInfoPlayers = infoPlayers.filter((p) => p.id_user != playerLeftId );
+                    setInfoPlayers(newInfoPlayers);
                 }
             }
             if (lastMessage.data.includes('WIN')) {
@@ -70,8 +73,18 @@ export const WebSocketProvider = ({ children }) => {
                 const [action, turnId] = lastMessage.data.split(' ');
                 setFase('in-game');
                 setTurnPlayer(turnId);
-
-                getPlayersInfo(idGame);
+                getGameFigures(idGame).then(data => {
+                    if (data ){
+                        setInfoPlayers(data);
+                    }
+                });
+            }
+            if (lastMessage.data.includes('REFRESH_FIGURES')){
+                getGameFigures(idGame).then(data => {
+                    if (data ){
+                        setInfoPlayers(data);
+                    }
+                });
             }
             if (lastMessage.data.includes('TURN')){
                 const [action, turnPlayerId] = lastMessage.data.split(' ');
@@ -86,6 +99,7 @@ export const WebSocketProvider = ({ children }) => {
                         setPlayers(usersList);
                         setPlayersTurns(playersTurns);
                         setPlayersNames(playersNames);
+
                     } else {
                         console.error('users_list is undefined');
                     }

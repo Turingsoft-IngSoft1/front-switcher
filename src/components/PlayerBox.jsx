@@ -8,7 +8,6 @@ export default function PlayerBox({ boxNumber }) {
     if (players.length > boxNumber) {
         const otherPlayers = players.filter(player => player !== idPlayer);
         firstPlayer = otherPlayers[boxNumber - 1]; // Get the player in the list
-        console.log(firstPlayer);
     }
     return (
         <Card className="player-box" style={{ width: '100px', height: '100px' }}>
