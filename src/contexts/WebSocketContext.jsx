@@ -46,7 +46,7 @@ export const WebSocketProvider = ({ children }) => {
     WebSocketProvider
     useEffect(() => {
         if (lastMessage !== null) {
-            console.log('Received a new WebSocket message:', lastMessage);
+            console.log('Received a new WebSocket message:', lastMessage.data);
             // Detecta si un jugador se fue de la partida
             if (lastMessage.data.includes('LEAVE')) {
                 const [playerLeftId, action] = lastMessage.data.split(' ');
@@ -73,6 +73,13 @@ export const WebSocketProvider = ({ children }) => {
                 const [action, turnId] = lastMessage.data.split(' ');
                 setFase('in-game');
                 setTurnPlayer(turnId);
+                getGameFigures(idGame).then(data => {
+                    if (data ){
+                        setInfoPlayers(data);
+                    }
+                });
+            }
+            if (lastMessage.data.includes('REFRESH_FIGURES')){
                 getGameFigures(idGame).then(data => {
                     if (data ){
                         setInfoPlayers(data);
