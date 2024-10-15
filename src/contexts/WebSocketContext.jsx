@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { GameContext } from '../contexts/GameContext.jsx';
-import {getPlayersInfo} from '../utils/gameServices.js'
+import {getPlayersInfo, getGameFigures} from '../utils/gameServices.js'
 
 export const WebSocketContext = createContext(null);
 
@@ -58,8 +58,8 @@ export const WebSocketProvider = ({ children }) => {
                     setPlayersNames(newNames);
                     setPlayers(newPlayers);
                     
-                    const newInfoPlayers = infoPlayers.filter((p) => p.id != playerLeftId );
-                    setInfoPlayers(newInfoPlayers)
+                    const newInfoPlayers = infoPlayers.filter((p) => p.id_user != playerLeftId );
+                    setInfoPlayers(newInfoPlayers);
                 }
             }
             if (lastMessage.data.includes('WIN')) {
@@ -73,8 +73,11 @@ export const WebSocketProvider = ({ children }) => {
                 const [action, turnId] = lastMessage.data.split(' ');
                 setFase('in-game');
                 setTurnPlayer(turnId);
-
-                getPlayersInfo(idGame);
+                getGameFigures(idGame).then(data => {
+                    if (data ){
+                        setInfoPlayers(data);
+                    }
+                });
             }
             if (lastMessage.data.includes('TURN')){
                 const [action, turnPlayerId] = lastMessage.data.split(' ');
@@ -90,7 +93,6 @@ export const WebSocketProvider = ({ children }) => {
                         setPlayersTurns(playersTurns);
                         setPlayersNames(playersNames);
 
-                        setInfoPlayers(data.users_list);
                     } else {
                         console.error('users_list is undefined');
                     }

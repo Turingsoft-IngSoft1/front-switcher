@@ -50,7 +50,6 @@ export default function Game({onPassTurn, onUpdateBoard}) {
 
     useEffect(() => {        
         onUpdateBoard()
-        console.log(playerTurns)     
     }, [setBoard, turnPlayer]);
 
     return (

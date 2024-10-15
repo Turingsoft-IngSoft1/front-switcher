@@ -65,19 +65,10 @@ function CardSwitcher ({imgsource, selected}) {
     const handleClick = () => {
         setIsSelected(!isSelected);
     }
-    const handleMouseEnter = () => {
-        setIsHovered(true);
-    };
-    const handleMouseLeave = () => {
-        setIsHovered(false);
-    };
-    const textColor = isSelected ? 'red' : '';
 
     return (
         <Container  onClick={handleClick}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
-                    style={{ backgroundColor: textColor }} className="card-switcher">
+                    className="card-switcher">
             <Row>
                 <Image src={imgsource} className="img-content" />
             </Row>
@@ -95,6 +86,8 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
         setCurrentPlayers(players);
     }, [players]);
 
+    const actualPlayer = infoPlayers.find((p) => p.id_user == idOwnsSet);
+    const actualCards = actualPlayer ? actualPlayer.figures : [];
     if (currentPlayers.length > position && position != 0) {
         const otherPlayers = currentPlayers.filter(player => player != idPlayer);
         firstPlayer = otherPlayers[position-1];
@@ -108,13 +101,13 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
                 </Row>
                 <Row className="justify-content-md-center bg-cardset">
                     <Col xs="auto" className="carta">
-                        <CardSwitcher imgsource={dictImg[figureCards[0]]} />
+                        <CardSwitcher imgsource={dictImg[actualCards[0]]} />
                     </Col>
                     <Col xs="auto" className="carta">
-                        <CardSwitcher imgsource={dictImg[figureCards[1]]} />
+                        <CardSwitcher imgsource={dictImg[actualCards[1]]} />
                     </Col>
                     <Col xs="auto" className="carta">
-                        <CardSwitcher imgsource={dictImg[figureCards[2]]} />
+                        <CardSwitcher imgsource={dictImg[actualCards[2]]} />
                     </Col>
                 </Row>
             </Col>

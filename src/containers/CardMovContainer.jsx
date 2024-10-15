@@ -8,7 +8,6 @@ export default function CardMovContainer () {
     useEffect(() => {
         const fetchMovementCards = async () => {
                 const result = await getMovementCards(idGame, idPlayer);
-                console.log(result);
                 if (result && result.moves) {
                     setMovCards(movCards => [...movCards, ...result.moves]);
 
