@@ -101,13 +101,13 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
                 </Row>
                 <Row className="justify-content-md-center bg-cardset">
                     <Col xs="auto" className="carta">
-                        <CardSwitcher imgsource={dictImg[actualCards[0]]} />
+                       {actualCards[0] &&  <CardSwitcher imgsource={dictImg[actualCards[0]]} /> }
                     </Col>
                     <Col xs="auto" className="carta">
-                        <CardSwitcher imgsource={dictImg[actualCards[1]]} />
+                       {actualCards[1] &&  <CardSwitcher imgsource={dictImg[actualCards[1]]} /> }
                     </Col>
                     <Col xs="auto" className="carta">
-                        <CardSwitcher imgsource={dictImg[actualCards[2]]} />
+                       {actualCards[2] &&  <CardSwitcher imgsource={dictImg[actualCards[2]]} /> }
                     </Col>
                 </Row>
             </Col>
