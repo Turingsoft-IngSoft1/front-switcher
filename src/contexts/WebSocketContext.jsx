@@ -116,16 +116,11 @@ export const WebSocketProvider = ({ children }) => {
                 const newPos1 = pos1[0] * 6 + pos1[1];
                 const newPos2 = pos2[0] * 6 + pos2[1];
 
-                console.log("newpos1: " + newPos1);
-                console.log("newpos2: " + newPos2);
-
                 const newBoard = [...board];
                 const aux = newBoard[newPos2];
                 newBoard[newPos2] = newBoard[newPos1];
                 newBoard[newPos1] = aux;
 
-                console.log("pos1content: " + newBoard[newPos1]);
-                console.log("pos2content: " + newBoard[newPos2]);
                 setBoard(newBoard);
             }
         }
