@@ -42,4 +42,26 @@ export async function getGameFigures(idGame) {
     }
 }
 
-export { getPlayersInfo };
+async function cancelMovements(idGame, idPlayer) {
+    try {
+        const response = await fetch(`http://127.0.0.1.8000/cancel_moves/${idGame}/${idPlayer}`, {
+            method: 'GET',
+            headers: {
+                'accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! : ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    }
+    catch (error) {
+        console.error("Error fetching cancel moves:", error);
+        return null;
+    }
+}
+
+export { getPlayersInfo, cancelMovements };
