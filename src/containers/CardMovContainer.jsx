@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import CardSetMov from '../components/CardSetMov.jsx';
-import getMovementCards from '../services/cardServices.js';
+import {getMovementCards, useMovementCard} from '../services/cardServices.js';
 import { GameContext } from '../contexts/GameContext.jsx';
 
 export default function CardMovContainer () {
