@@ -101,7 +101,7 @@ export default function ButtonSet ({onPassTurn, onConfirmMovement}) {
         const movementData = {
             "id_game" : idGame,
             "id_player": idPlayer,
-            "name" : '', //movcard
+            "name" : movementCard[0], //movcard
             "pos1" : pos1, //pos1
             "pos2" : pos2, //pos2
         };

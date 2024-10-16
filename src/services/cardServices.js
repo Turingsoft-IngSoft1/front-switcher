@@ -67,7 +67,7 @@ export async function useMovementCard (movementData) {
         const response = await fetch(`http://127.0.0.1:8000/use_moves`,
             {
                 method: 'POST',
-                headers: {'accept' : 'application/json'},
+                headers: {'Content-Type' : 'application/json'},
                 body: JSON.stringify(movementData),
             }
         );
@@ -75,6 +75,8 @@ export async function useMovementCard (movementData) {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
+
+        return response;
     }
     catch (error) {
         console.error("Error using movement: ", error);

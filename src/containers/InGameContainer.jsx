@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Game from '../components/Game.jsx';
 import { GameContext } from '../contexts/GameContext.jsx';
-import {getFiguresOnFinishTurn} from '../services/cardServices.js';
+import {getFiguresOnFinishTurn, useMovementCard} from '../services/cardServices.js';
 
 export default function InGameContainer (){
     let currentPlayer = 0;
@@ -108,9 +108,18 @@ export default function InGameContainer (){
           
     }
 
+    const ConfirmMovement = async (movementData) => {
+        const result = await useMovementCard(movementData);
+        if (result){
+            setSelectedTiles([]);
+            setMovementCard([null, null]);
+            updateBoard();
+        }
+    }
+
     const ConfirmMovementMock = () => {
         setMovementCard(null);
         setSelectedTiles([]);
     }
-    return <Game  onPassTurn = {passTurn} onUpdateBoard={updateBoard} onConfirmMovement={ConfirmMovementMock}/>;
+    return <Game  onPassTurn = {passTurn} onUpdateBoard={updateBoard} onConfirmMovement={ConfirmMovement}/>;
 }
