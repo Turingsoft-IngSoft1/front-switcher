@@ -1,5 +1,5 @@
 // Obtener JSON de las cartas de mov dado un game y un player
-export default async function getMovementCards(idGame, idPlayer) {
+export async function getMovementCards(idGame, idPlayer) {
     try {
         const response = await fetch(`http://127.0.0.1:8000/get_moves/${idGame}/${idPlayer}`, {
             method: 'POST',
@@ -59,6 +59,27 @@ export async function getFiguresOnFinishTurn(idGame, idPlayer) {
         return response.json();
     } catch (error) {
         console.error("Error fetching movement cards:", error);
+        return null;
+    }
+}
+export async function useMovementCard (movementData) {
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/use_moves`,
+            {
+                method: 'POST',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify(movementData),
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return response;
+    }
+    catch (error) {
+        console.error("Error using movement: ", error);
         return null;
     }
 }

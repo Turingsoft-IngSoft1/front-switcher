@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Game from '../components/Game.jsx';
 import { GameContext } from '../contexts/GameContext.jsx';
-import {getFiguresOnFinishTurn} from '../services/cardServices.js';
+import {getFiguresOnFinishTurn, useMovementCard} from '../services/cardServices.js';
 
 export default function InGameContainer (){
     let currentPlayer = 0;
 
-    const {idPlayer, players, setTurnPlayer, setBoard, idGame} = useContext(GameContext);
+    const {idPlayer, players, setTurnPlayer, setBoard, idGame, setSelectedTiles, setSelectedMovementCard} = useContext(GameContext);
 
     const passTurn = async (turnData) => {
         const response = await fetch (
@@ -24,6 +24,8 @@ export default function InGameContainer (){
 
         // Al pasar turno, obtener nuevas cartas
         getFiguresOnFinishTurn(idGame, idPlayer);
+        setSelectedTiles([]);
+        setSelectedMovementCard([null, null]);
     }
 
     //esta wea no se puede mockear tan facil, siempre se debe pasar el turno a un ID valido
@@ -105,5 +107,18 @@ export default function InGameContainer (){
           })
           
     }
-    return <Game  onPassTurn = {passTurn} onUpdateBoard={updateBoard}/>;
+
+    const ConfirmMovement = async (movementData) => {
+        const result = await useMovementCard(movementData);
+        if (result){
+            setSelectedTiles([]);
+            setSelectedMovementCard([null, null]);
+        }
+    }
+
+    const ConfirmMovementMock = () => {
+        setSelectedMovementCard(null);
+        setSelectedTiles([]);
+    }
+    return <Game  onPassTurn = {passTurn} onUpdateBoard={updateBoard} onConfirmMovement={ConfirmMovement}/>;
 }

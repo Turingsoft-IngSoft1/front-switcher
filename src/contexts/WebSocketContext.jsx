@@ -7,8 +7,8 @@ export const WebSocketContext = createContext(null);
 
 export const WebSocketProvider = ({ children }) => {
     const [shouldConnect, setShouldConnect] = useState(false);
-    const { players, playersTurns, playersNames, idPlayer, idGame, setWinner, fase, infoPlayers,
-            setInfoPlayers, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
+    const { board, players, playersTurns, playersNames, idPlayer, idGame, setWinner, fase, infoPlayers,
+            setBoard, setInfoPlayers, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
     const { lastMessage, readyState } = useWebSocket(`ws://localhost:8000/ws/${idGame}/${idPlayer}`, {
     },
     shouldConnect);
@@ -106,6 +106,22 @@ export const WebSocketProvider = ({ children }) => {
                 }).catch(error => {
                     console.error('Error fetching players info:', error);
                 });
+            }
+            if (lastMessage.data.includes('MOVE')){
+                const parts = lastMessage.data.replace("MOVE ", "").split(/[(),\s]+/).filter(Boolean);
+                const pos1 = [parseInt(parts[0]), parseInt(parts[1])];
+                const pos2 = [parseInt(parts[2]), parseInt(parts[3])];
+
+                //de coords a index (1,2) => 9
+                const newPos1 = pos1[0] * 6 + pos1[1];
+                const newPos2 = pos2[0] * 6 + pos2[1];
+
+                const newBoard = [...board];
+                const aux = newBoard[newPos2];
+                newBoard[newPos2] = newBoard[newPos1];
+                newBoard[newPos1] = aux;
+
+                setBoard(newBoard);
             }
         }
     }, [lastMessage, setPlayers, setWinner]);

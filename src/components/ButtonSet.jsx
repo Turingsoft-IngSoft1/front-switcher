@@ -5,7 +5,7 @@ import ExitButton from './ExitButton.jsx';
 import CancelMovementsButton from "./CancelMovementsButton.jsx";
 
 
-function ConfirmMovementButton ({status}){
+function ConfirmMovementButton ({status, onConfirmMovementClick}){
     switch(status){
         case 'disabled' :
             return (
@@ -16,7 +16,7 @@ function ConfirmMovementButton ({status}){
         case 'enabled' :
             return(
                 <Col>
-                <Button className="confirm-movement-button">Confirmar movimiento</Button>
+                <Button className="confirm-movement-button" onClick={onConfirmMovementClick}>Confirmar movimiento</Button>
                 </Col>
             );
         default:
@@ -54,8 +54,16 @@ function LeaveGameButton () {
 }
 
 
-export default function ButtonSet ({onPassTurn}) {
-    const {turnPlayer, idPlayer, idGame} = useContext(GameContext);
+export default function ButtonSet ({onPassTurn, onConfirmMovement}) {
+    const {turnPlayer, idPlayer, idGame, selectedTiles, selectedMovementCard} = useContext(GameContext);
+
+
+    const indexToCoords = (index) => {
+        const row = Math.floor(index / 6);
+        const col = index % 6;
+        return [row, col];
+    };
+
 
     const handleNextTurnClick = (e) => {
         e.preventDefault();
@@ -64,12 +72,29 @@ export default function ButtonSet ({onPassTurn}) {
             "id_game" : idGame
         };
         onPassTurn(turnData);
-    }
+    };
+
+    const handleConfirmMovement = (e) => {
+        e.preventDefault();
+        const [pos1Index, pos2Index] = selectedTiles;
+        const pos1 = pos1Index !== undefined ? indexToCoords(pos1Index) : [null, null];
+        const pos2 = pos2Index !== undefined ? indexToCoords(pos2Index) : [null, null];
+
+        const movementData = {
+            "id_game" : idGame,
+            "id_player": idPlayer,
+            "name" : selectedMovementCard[0], //movcard
+            "pos1" : pos1, //pos1
+            "pos2" : pos2, //pos2
+        };
+        onConfirmMovement(movementData);
+    };
+    
     if (turnPlayer == idPlayer){
         return (
             <Row className="justify-content-md-around p-3">
                 <CancelMovementsButton status={'enabled'}/>
-                <ConfirmMovementButton status={'enabled'}/>
+                <ConfirmMovementButton status={'enabled'} onConfirmMovementClick={handleConfirmMovement}/>
                 <NextTurnButton onPassTurnClick = {handleNextTurnClick} status={'enabled'}/>
                 <LeaveGameButton />
             </Row>     
@@ -79,7 +104,7 @@ export default function ButtonSet ({onPassTurn}) {
         return (
             <Row className="justify-content-md-around p-3">
                 <CancelMovementsButton status={'disabled'}/>
-                <ConfirmMovementButton status={'disabled'}/>
+                <ConfirmMovementButton status={'disabled'} />
                 <NextTurnButton  status={'disabled'}/>
                 <LeaveGameButton />
             </Row>      
