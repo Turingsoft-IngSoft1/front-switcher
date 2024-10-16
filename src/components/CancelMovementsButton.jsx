@@ -8,6 +8,14 @@ import { cancelMovements } from "../utils/gameServices.js";
 function rollBackPlayedCards(idGame, idPlayer) {
     console.log("VOLVIENDO ATRAs...");
     cancelMovements(idGame, idPlayer);
+    
+    // TODO:
+    // 1) Actualizar las movCards con estado 'played' a 'noplayed'
+    //
+    // map(mvc.status => 'noplayed')
+    //
+    // 2) "Refrescar tablero" es automatico ya que se recibe REFRESH_BOARD por ws
+
 }
 
 function hideButton(status, cardsPlayed){
