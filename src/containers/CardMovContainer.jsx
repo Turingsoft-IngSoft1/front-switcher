@@ -10,11 +10,12 @@ export default function CardMovContainer () {
                 const result = await getMovementCards(idGame, idPlayer);
                 if (result && result.moves) {
                     setMovCards(movCards => [...movCards, ...result.moves]);
-
+                    
                 }
             // }
         };
      fetchMovementCards();
+     console.log("movCards " + movCards);
      }, [fase, turnPlayer]);
     
 
