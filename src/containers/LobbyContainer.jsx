@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import Lobby from '../components/Lobby.jsx';
-import getMovementCards from '../services/cardServices.js';
+import {getMovementCards} from '../services/cardServices.js';
 import { GameContext } from '../contexts/GameContext.jsx';
 import {getPlayersInfo} from '../utils/gameServices.js'
 
