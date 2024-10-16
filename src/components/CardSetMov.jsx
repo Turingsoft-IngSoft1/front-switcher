@@ -30,21 +30,21 @@ function MovementCard ({imgsource, onSelect, selected, borderColor}) {
 export default function CardSetMov ({requestNewCards}) {
     const [borderColor, setBorderColor] = useState("");
     
-    const { idGame, idPlayer, turnPlayer, movCards, fase, movementCard, setMovementCard} = useContext(GameContext);
+    const { idGame, idPlayer, turnPlayer, movCards, fase, selectedMovementCard, setSelectedMovementCard} = useContext(GameContext);
 
     const getRandomColor = () => {
         const colors = ['#dc3545', '#198754', '#0d6efd', '#ffc107']; //RGBY
         return colors[Math.floor(Math.random() * colors.length)];
     }
     function handleSelect (i) {
-        if (movementCard && movementCard[1] === i){
-            setMovementCard([null, null]);
+        if (selectedMovementCard && selectedMovementCard[1] === i){
+            setSelectedMovementCard([null, null]);
             setBorderColor("");
         }
         else {
             const movKey = movCards[i];
             console.log("MovKey " + movKey);
-            setMovementCard([movKey, i]);
+            setSelectedMovementCard([movKey, i]);
             setBorderColor(getRandomColor());
         }
     }
@@ -67,15 +67,15 @@ export default function CardSetMov ({requestNewCards}) {
         <Col>
             <Row className= "justify-content-md-center">
                 <Col xs="auto" className="p-1" >
-                    <MovementCard imgsource={imgCard1} selected={movementCard && movementCard[1] === 0} borderColor={movementCard && movementCard[1] === 0 ? borderColor : ""} onSelect={() => handleSelect(0)}/>
+                    <MovementCard imgsource={imgCard1} selected={selectedMovementCard && selectedMovementCard[1] === 0} borderColor={selectedMovementCard && selectedMovementCard[1] === 0 ? borderColor : ""} onSelect={() => handleSelect(0)}/>
                 </Col>
 
                 <Col xs="auto" className="p-1">
-                    <MovementCard imgsource={imgCard2} selected={movementCard && movementCard[1] === 1} borderColor={movementCard && movementCard[1] === 1 ? borderColor : ""} onSelect={() =>handleSelect(1)}/>
+                    <MovementCard imgsource={imgCard2} selected={selectedMovementCard && selectedMovementCard[1] === 1} borderColor={selectedMovementCard && selectedMovementCard[1] === 1 ? borderColor : ""} onSelect={() =>handleSelect(1)}/>
                 </Col>
 
                 <Col xs="auto" className="p-1">
-                    <MovementCard imgsource={imgCard3} selected={movementCard && movementCard[1] === 2} borderColor={movementCard && movementCard[1] === 2 ? borderColor : ""} onSelect={() => handleSelect(2)}/>
+                    <MovementCard imgsource={imgCard3} selected={selectedMovementCard && selectedMovementCard[1] === 2} borderColor={selectedMovementCard && selectedMovementCard[1] === 2 ? borderColor : ""} onSelect={() => handleSelect(2)}/>
                 </Col>
             </Row>
         </Col>

@@ -73,7 +73,7 @@ function LeaveGameButton () {
 
 
 export default function ButtonSet ({onPassTurn, onConfirmMovement}) {
-    const {turnPlayer, idPlayer, idGame, selectedTiles, movementCard} = useContext(GameContext);
+    const {turnPlayer, idPlayer, idGame, selectedTiles, selectedMovementCard} = useContext(GameContext);
 
 
     const indexToCoords = (index) => {
@@ -101,7 +101,7 @@ export default function ButtonSet ({onPassTurn, onConfirmMovement}) {
         const movementData = {
             "id_game" : idGame,
             "id_player": idPlayer,
-            "name" : movementCard[0], //movcard
+            "name" : selectedMovementCard[0], //movcard
             "pos1" : pos1, //pos1
             "pos2" : pos2, //pos2
         };
