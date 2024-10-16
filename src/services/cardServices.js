@@ -87,7 +87,7 @@ export async function playFigureCard(playFigureData) {
  */
   export async function getFiguresOnBoard(idGame, idPlayer) {
     try {
-        const response = await fetch(`http://127.0.0.1:8000/detect_figures_in_board/${idGame}/${idPlayer}`, {
+        const response = await fetch(`http://127.0.0.1:8000/detect_figures_on_board/${idGame}/${idPlayer}`, {
             method: 'GET',
             headers: {
                 'accept': 'application/json'
