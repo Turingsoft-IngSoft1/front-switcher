@@ -50,7 +50,7 @@ export default function Game({onPassTurn, onUpdateBoard, onConfirmMovement}) {
 
     useEffect(() => {        
         onUpdateBoard()
-    }, [setBoard, turnPlayer]);
+    }, [turnPlayer]);
 
     const otherPlayers = players.filter(player => player != idPlayer);
 

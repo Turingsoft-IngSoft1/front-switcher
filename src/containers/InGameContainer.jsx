@@ -113,7 +113,6 @@ export default function InGameContainer (){
         if (result){
             setSelectedTiles([]);
             setSelectedMovementCard([null, null]);
-            updateBoard();
         }
     }
 
