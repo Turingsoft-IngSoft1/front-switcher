@@ -2,26 +2,8 @@ import { useContext, useState } from "react";
 import { Row, Col, Button } from "react-bootstrap";
 import {GameContext} from '../contexts/GameContext';
 import ExitButton from './ExitButton.jsx';
+import CancelMovementsButton from "./CancelMovementsButton.jsx";
 
-function PedirCartasButton ({status}){
-    switch(status){
-        case 'disabled':
-            return (
-                <Col>
-                <Button className="pedir-cartas-button" disabled>Pedir cartas</Button>
-                </Col>
-            );
-        case 'enabled':
-            return (
-                <Col>
-                <Button className="pedir-cartas-button">Pedir cartas</Button>
-                </Col>
-            );
-        default:
-            return null;
-    }
-
-}
 
 function ConfirmMovementButton ({status}){
     switch(status){
@@ -86,7 +68,7 @@ export default function ButtonSet ({onPassTurn}) {
     if (turnPlayer == idPlayer){
         return (
             <Row className="justify-content-md-around p-3">
-                <PedirCartasButton status={'enabled'}/>
+                <CancelMovementsButton status={'enabled'}/>
                 <ConfirmMovementButton status={'enabled'}/>
                 <NextTurnButton onPassTurnClick = {handleNextTurnClick} status={'enabled'}/>
                 <LeaveGameButton />
@@ -96,7 +78,7 @@ export default function ButtonSet ({onPassTurn}) {
     else {
         return (
             <Row className="justify-content-md-around p-3">
-                <PedirCartasButton status={'disabled'}/>
+                <CancelMovementsButton status={'disabled'}/>
                 <ConfirmMovementButton status={'disabled'}/>
                 <NextTurnButton  status={'disabled'}/>
                 <LeaveGameButton />
