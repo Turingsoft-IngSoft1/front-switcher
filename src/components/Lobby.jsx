@@ -5,7 +5,7 @@ import Board from './Board.jsx'
 import { GameContext } from '../contexts/GameContext.jsx';
 import ExitButton from './ExitButton.jsx';
 import PlayerBox from "./PlayerBox.jsx";
-import {CardSetHorizontal, CardSetVertical} from './CardSet.jsx';
+import CardSetFig from './CardSet.jsx';
 
 function ButtonSet ({onStartClick}){
     
@@ -39,7 +39,7 @@ function Chat () {
 /* Nota: por defecto, la interfaz se setea en pre-game, se deberia realizar un chequeo por si el jugador ya esta en una partida
          para pasar directamente a in-game sin tener que apretar el boton de comenzar juego*/
 export default function Lobby ({onStartGame}){
-    const { winner, setWinner, fase, idPlayer, namePlayer, players, playersTurns, playersNames, idGame, setBoard, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
+    const { winner, setWinner, fase, idPlayer, namePlayer, players, idGame, setBoard} = useContext(GameContext);
     
     const handleStart = (e) =>{
         e.preventDefault();
@@ -55,18 +55,18 @@ export default function Lobby ({onStartGame}){
         <>
             <Row className="justify-content-center">
                 <Col xs="auto" className="d-flex align-items-center justify-content-center">
-                    {numberOfPlayers > 1 ? <CardSetHorizontal position={1}/> : <div className="empty-player"></div>}
+                    {numberOfPlayers > 1 ? <PlayerBox boxNumber={1}/>: <div className="empty-player"></div>}
                 </Col>
             </Row>
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    {numberOfPlayers > 2 ? <CardSetVertical position={2}/> : <div className="empty-player"></div>}
+                    {numberOfPlayers > 2 ? <PlayerBox boxNumber={2}/> : <div className="empty-player"></div>}
                 </Col>
                 <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
                     <Board />
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    {numberOfPlayers > 3 ? <CardSetVertical position={3}/> : <div className="empty-player"></div>}
+                    {numberOfPlayers > 3 ? <PlayerBox boxNumber={3}/> : <div className="empty-player"></div>}
                 </Col>
             </Row>
             <Row>
@@ -77,7 +77,6 @@ export default function Lobby ({onStartGame}){
 
             {/* Cartas del jugador 0*/} 
             <Row className="justify-content-md-center">
-                <CardSetHorizontal position={0}/>
             </Row>
             {/* acciones del jugador 0*/}
             <Row className="justify-content-md-around p-3">

@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Game from '../components/Game.jsx';
 import { GameContext } from '../contexts/GameContext.jsx';
+import {getFiguresOnFinishTurn} from '../services/cardServices.js';
 
 export default function InGameContainer (){
     let currentPlayer = 0;
 
-    const {players, setTurnPlayer, setBoard, idGame, setSelectedTiles, setMovementCard} = useContext(GameContext);
+    const {idPlayer, players, setTurnPlayer, setBoard, idGame, setSelectedTiles, setMovementCard} = useContext(GameContext);
 
     const passTurn = async (turnData) => {
         const response = await fetch (
@@ -21,6 +22,8 @@ export default function InGameContainer (){
             throw new Error('Error al intentar pasar el turno');
         }
 
+        // Al pasar turno, obtener nuevas cartas
+        getFiguresOnFinishTurn(idGame, idPlayer);
         setSelectedTiles([]);
         setMovementCard(null);
     }
