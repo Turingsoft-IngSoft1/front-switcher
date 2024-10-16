@@ -5,7 +5,7 @@ import { GameContext } from '../contexts/GameContext.jsx';
 export default function InGameContainer (){
     let currentPlayer = 0;
 
-    const {players, setTurnPlayer, setBoard, idGame} = useContext(GameContext);
+    const {players, setTurnPlayer, setBoard, idGame, setSelectedTiles, setMovementCard} = useContext(GameContext);
 
     const passTurn = async (turnData) => {
         const response = await fetch (
@@ -21,6 +21,8 @@ export default function InGameContainer (){
             throw new Error('Error al intentar pasar el turno');
         }
 
+        setSelectedTiles([]);
+        setMovementCard(null);
     }
 
     //esta wea no se puede mockear tan facil, siempre se debe pasar el turno a un ID valido
@@ -102,5 +104,10 @@ export default function InGameContainer (){
           })
           
     }
-    return <Game  onPassTurn = {passTurn} onUpdateBoard={updateBoard}/>;
+
+    const ConfirmMovementMock = () => {
+        setMovementCard(null);
+        setSelectedTiles([]);
+    }
+    return <Game  onPassTurn = {passTurn} onUpdateBoard={updateBoard} onConfirmMovement={ConfirmMovementMock}/>;
 }
