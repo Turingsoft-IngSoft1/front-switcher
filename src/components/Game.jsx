@@ -28,7 +28,6 @@ function NotifyWinner ({winner, handleHide}) {
 export default function Game({onPassTurn, onUpdateBoard, onConfirmMovement}) {
     const { players, idGame, setInfoPlayers, idPlayer, turnPlayer, winner, namePlayer,playerTurns, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
-    const [style, setStyle] = useState({});
     
     const numberOfPlayers = players.length;
 
@@ -76,7 +75,7 @@ export default function Game({onPassTurn, onUpdateBoard, onConfirmMovement}) {
             </Row>
             <Row>
                 <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
-                    <h4 style={style}>
+                    <h4 className={(turnPlayer == idPlayer) ? 'has-turn' : 'not-turn'}>
                         {namePlayer}
                     </h4>
                 </Col>
