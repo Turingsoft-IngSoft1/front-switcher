@@ -1,14 +1,15 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { GameContext } from '../contexts/GameContext.jsx';
-import {getPlayersInfo, getGameFigures} from '../utils/gameServices.js'
+import {getPlayersInfo, getGameFigures} from '../utils/gameServices.js';
+import {getFiguresOnBoard} from '../services/cardServices.js';
 
 export const WebSocketContext = createContext(null);
 
 export const WebSocketProvider = ({ children }) => {
     const [shouldConnect, setShouldConnect] = useState(false);
     const { board, players, playersTurns, playersNames, idPlayer, idGame, setWinner, fase, infoPlayers,
-            setBoard, setInfoPlayers, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
+            setFiguresOnBoard, setBoard, setInfoPlayers, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
     const { lastMessage, readyState } = useWebSocket(`ws://localhost:8000/ws/${idGame}/${idPlayer}`, {
     },
     shouldConnect);
@@ -19,7 +20,6 @@ export const WebSocketProvider = ({ children }) => {
             //TODO: Se puede usar para desconectar todo de golpe
         }
     }, [fase, readyState]);
-
 
     useEffect(() => {
         switch (readyState) {
@@ -123,6 +123,14 @@ export const WebSocketProvider = ({ children }) => {
                 newBoard[newPos1] = aux;
 
                 setBoard(newBoard);
+                
+                console.log("FIGURES:");
+                getFiguresOnBoard(idGame, idPlayer).then(newFiguresOnBoard => {
+                    if (newFiguresOnBoard){
+                        console.log(newFiguresOnBoard);
+                        setFiguresOnBoard(newFiguresOnBoard);
+                    }
+                });
             }
         }
     }, [lastMessage]);
