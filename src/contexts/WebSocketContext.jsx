@@ -21,13 +21,6 @@ export const WebSocketProvider = ({ children }) => {
         }
     }, [fase, readyState]);
 
-
-    async function obtainFiguresOnBoard(myIdGame, myIdPlayer) {
-        const data = await getFiguresOnBoard(myIdGame, myIdPlayer);
-        console.log("Resultado:", data);
-        return data;
-    }
-
     useEffect(() => {
         switch (readyState) {
             case ReadyState.CONNECTING:
@@ -132,8 +125,12 @@ export const WebSocketProvider = ({ children }) => {
                 setBoard(newBoard);
                 
                 console.log("FIGURES:");
-                const newFiguresOnBoard = obtainFiguresOnBoard(idGame, idPlayer);
-                setFiguresOnBoard(newFiguresOnBoard);
+                getFiguresOnBoard(idGame, idPlayer).then(newFiguresOnBoard => {
+                    if (newFiguresOnBoard){
+                        console.log(newFiguresOnBoard);
+                        setFiguresOnBoard(newFiguresOnBoard);
+                    }
+                });
             }
         }
     }, [lastMessage]);
