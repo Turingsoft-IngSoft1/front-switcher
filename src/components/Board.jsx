@@ -4,9 +4,11 @@ import '../styles/Board.css'
 import { GameContext } from '../contexts/GameContext.jsx';
 
 
-function Tile({ variant, onTileClick, selected }) {
+function Tile({ variant, onTileClick, selected, figureMatch }) {
     return (
-        <Button className={`tile ${selected ? 'selected' : ''}`}
+        <Button className={`tile ${selected ? 'selected' : ''}
+                             ${figureMatch ? 'brighter-tile' : ''}`
+                }
                 onClick={onTileClick} 
                 variant={variant}>        
         </Button>
@@ -14,7 +16,7 @@ function Tile({ variant, onTileClick, selected }) {
 }
 
 export default function Board() {
-    const { board, idPlayer, turnPlayer, selectedTiles, setSelectedTiles} = useContext(GameContext);
+    const { board, idPlayer, turnPlayer, selectedFigureCard, figureTile, setFigureTile, selectedTiles, setSelectedTiles} = useContext(GameContext);
     const getTileVariant = (index) => {
         return board[index];
     };
@@ -23,7 +25,13 @@ export default function Board() {
         if (idPlayer != turnPlayer){
             return;
         }
+        if(selectedFigureCard){
+            setFigureTile(figureTile == index? null : index);
+            console.log('click en: ' + index);
+            return;
+        }
         setSelectedTiles((prevSelected) => {
+            console.log('atroden');
             // Si la ficha ya está seleccionada, deseleccionarla
             if (prevSelected.includes(index)) {
                 return prevSelected.filter(tileIndex => tileIndex !== index);
@@ -49,6 +57,7 @@ export default function Board() {
                                 <Col xs="auto" className="p-0" key={index}>
                                     <Tile variant={getTileVariant(index)}
                                           selected = {selectedTiles.includes(index)}
+                                          figureMatch={figureTile == index}
                                           onTileClick={()=> handleTileClick(index)}/>
                                 </Col>
                             );

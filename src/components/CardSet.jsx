@@ -72,7 +72,7 @@ function CardSwitcher({ imgsource, onSelect, isSelected }) {
 
 export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
   const { idPlayer, infoPlayers, players, turnPlayer, playersNames,
-        selectedFigureCard, setSelectedFigureCard
+        selectedFigureCard, setSelectedFigureCard, setSelectedMovementCard, setSelectedTiles
    } =
     useContext(GameContext);
   const [currentPlayers, setCurrentPlayers] = useState(players);
@@ -93,10 +93,12 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
     const infoSelectedCard = {
         idPlayer: idOwnsSet,
         offsetCard: idx
-      }
+    };
     console.log(infoSelectedCard);
     setSelectedFigureCard(selectedFigureCard?.offsetCard == idx &&
-        selectedFigureCard?.idPlayer == idOwnsSet? {} : infoSelectedCard);
+        selectedFigureCard?.idPlayer == idOwnsSet? null : infoSelectedCard);
+    setSelectedMovementCard([null, null]);
+    setSelectedTiles([]);
   };
   return (
     <Row>
