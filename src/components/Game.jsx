@@ -25,7 +25,7 @@ function NotifyWinner ({winner, handleHide}) {
     );
 }
 
-export default function Game({onPassTurn, onUpdateBoard}) {
+export default function Game({onPassTurn, onUpdateBoard, onConfirmMovement}) {
     const { players, idGame, setInfoPlayers, idPlayer, turnPlayer, winner, namePlayer,playerTurns, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
     
@@ -50,7 +50,7 @@ export default function Game({onPassTurn, onUpdateBoard}) {
 
     useEffect(() => {        
         onUpdateBoard()
-    }, [setBoard, turnPlayer]);
+    }, [turnPlayer]);
 
     const otherPlayers = players.filter(player => player != idPlayer);
 
@@ -93,7 +93,7 @@ export default function Game({onPassTurn, onUpdateBoard}) {
                 <Col xs={2} md={2} className="d-flex align-items-center" ></Col>
             </Row>
             <Row>
-                <ButtonSet onPassTurn={onPassTurn} />
+                <ButtonSet onPassTurn={onPassTurn} onConfirmMovement={onConfirmMovement}/>
             </Row>
             <NotifyWinner winner = {winner} handleHide={handleHide}/>
         </>

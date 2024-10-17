@@ -36,6 +36,8 @@ export const GameProvider = ({ children }) => {
     const [playersTurns, setPlayersTurns] = useState([]); // turnos de los jugadores    
     const [infoPlayers, setInfoPlayers] = useState([]);
     const [turnPlayer, setTurnPlayer] = useState(null); // id del jugador que posee el turno actual
+    const [selectedMovementCard, setSelectedMovementCard] = useState([null, null]); //tupla compuesta por el movimiento y el indice en el set de cartas
+    const [selectedTiles, setSelectedTiles] = useState([]); //fichas seleccionadas por el jugador
     const [winner, setWinner] = useState(false); // indicconsta si hay un ganador
 
     const value = {
@@ -69,6 +71,9 @@ export const GameProvider = ({ children }) => {
         setPlayersTurns,
         turnPlayer,
         setTurnPlayer,
+        selectedMovementCard,
+        setSelectedMovementCard,
+        selectedTiles, setSelectedTiles,
         winner,
         setWinner
     };
