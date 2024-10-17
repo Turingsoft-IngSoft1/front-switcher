@@ -90,7 +90,7 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
     const actualCards = actualPlayer ? actualPlayer.figures : [];
     if (currentPlayers.length > position && position != 0) {
         const otherPlayers = currentPlayers.filter(player => player != idPlayer);
-        firstPlayer = otherPlayers[position-1]; // Get the player in the list
+        firstPlayer = otherPlayers[position-1];
     }
 
     return (
