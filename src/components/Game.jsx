@@ -10,8 +10,7 @@ import CardSetMov from "./CardSetMov.jsx";
 import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
 import CardMovContainer from "../containers/CardMovContainer.jsx";
 import CardFigContainer from "../containers/CardSetContainer.jsx";
-
-
+import '../styles/cards.css';
 
 function NotifyWinner ({winner, handleHide}) {
     return (
@@ -30,24 +29,6 @@ export default function Game({onPassTurn, onUpdateBoard, onConfirmMovement}) {
     const { players, idGame, setInfoPlayers, idPlayer, turnPlayer, winner, namePlayer,playerTurns, setBoard, setPlayers, setPlayersTurns, setPlayersNames, setWinner} = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
     const [style, setStyle] = useState({});
-
-    useEffect(() => {
-        if (turnPlayer == idPlayer) {
-            setStyle({
-                color: '#000000', // Color Negro
-                animation: 'vibrate 0.5s 1',
-                textShadow: '0 0 2px #000000', // Efecto de glow
-                fontWeight: 'bold' // Bold
-            });
-        } else {
-            setStyle({
-                color: 'inherit',
-                animation: 'none',
-                textShadow: 'none',
-                fontWeight: 'normal'
-            });
-        }
-    }, [turnPlayer]);
     
     const numberOfPlayers = players.length;
 
@@ -115,9 +96,6 @@ export default function Game({onPassTurn, onUpdateBoard, onConfirmMovement}) {
             <Row>
                 <ButtonSet onPassTurn={onPassTurn} onConfirmMovement={onConfirmMovement}/>
             </Row>
-            <style>
-                {vibrationAnimation}
-            </style>
             <NotifyWinner winner = {winner} handleHide={handleHide}/>
         </>
     );

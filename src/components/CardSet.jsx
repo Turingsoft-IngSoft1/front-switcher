@@ -93,40 +93,13 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
         firstPlayer = otherPlayers[position-1]; // Get the player in the list
     }
 
-    useEffect(() => {
-        if (turnPlayer == firstPlayer) {
-            setStyle({
-                color: '#000000', // Color Negro
-                animation: 'vibrate 0.5s 1',
-                textShadow: '0 0 2px #000000', // Efecto de glow
-                fontWeight: 'bold' // Bold
-            });
-        } else {
-            setStyle({
-                color: 'inherit',
-                animation: 'none',
-                textShadow: 'none',
-                fontWeight: 'normal'
-            });
-        }
-    }, [turnPlayer, firstPlayer]);
-
-    const vibrationAnimation = `
-        @keyframes vibrate {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
-        }
-    `;
-
     return (
         <Row>
-            <Col className= {isHorizontal? "cardset-horizontal" : "cardset-vertical"}>
+            <Col className={isHorizontal ? "cardset-horizontal" : "cardset-vertical"}>
                 <Row className="justify-content-md-center">
-                    <h4 style={style}>{position != 0 ? (firstPlayer ? playersNames[currentPlayers.indexOf(firstPlayer)] : 'Disconnected') : ''} </h4>
+                    <h4 className={(turnPlayer == firstPlayer) ? 'has-turn' : 'not-turn'}>
+                        {position != 0 ? (firstPlayer ? playersNames[currentPlayers.indexOf(firstPlayer)] : 'Disconnected') : ''}
+                    </h4>
                 </Row>
                 <Row className="justify-content-md-center bg-cardset">
                     <Col xs="auto" className="carta">
@@ -139,9 +112,6 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
                        {actualCards[2] &&  <CardSwitcher imgsource={dictImg[actualCards[2]]} /> }
                     </Col>
                 </Row>
-                <style>
-                    {vibrationAnimation}
-                </style>
             </Col>
         </Row>
     );
