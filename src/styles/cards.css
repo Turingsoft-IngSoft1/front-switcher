@@ -27,7 +27,7 @@
 }
 
 .movement-card-switcher{
-    transition: border 0.3s ease;
+    transition: border 0.1s ease;
 }
 .movement-card-switcher.selected {
     border: 3px solid red;

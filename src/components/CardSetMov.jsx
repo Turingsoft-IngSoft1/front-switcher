@@ -15,10 +15,12 @@ import { GameContext } from '../contexts/GameContext.jsx';
     selected: bool, la carta esta actualmente seleccionada
     played: bool, la carta ya fue jugada, se deberia ver mas transparente
 */
-function MovementCard ({imgsource, onSelect, selected, borderColor}) {
+function MovementCard ({imgsource, onSelect, selected, played, borderColor}) {
     return (
         <Container className={`movement-card-switcher p-1 ${selected ? 'selected' : ''}`}
-                   style = {selected ? { border: `3px solid ${borderColor}` } : {}}
+                   style={{border: selected ? `3px solid ${borderColor}` : '',
+                           opacity: played ? 0.5 : 1, // Cambia la opacidad basado en 'played'
+                           pointerEvents: played ? 'none' : 'auto'}} // Desactiva interacciones si está jugada
                    onClick = {onSelect}>
             <Row>
                 <Image src={imgsource} className="img-content-mov"/>
@@ -42,6 +44,9 @@ export default function CardSetMov ({requestNewCards}) {
             setSelectedMovementCard([null, null]);
             setBorderColor("");
         }
+        else if (movCards[i][1] == 'played'){
+            return;
+        }
         else {
             const movKey = movCards[i][0];
             console.log("MovKey " + movKey);
@@ -53,7 +58,7 @@ export default function CardSetMov ({requestNewCards}) {
     if (movCards.length < 3) {
         return <p>No hay suficientes cartas disponibles.</p>;
     }
-    
+
     const dictImg = {
         'mov1': bigdiagonal,
         'mov2': bigline,
@@ -73,21 +78,24 @@ export default function CardSetMov ({requestNewCards}) {
             <Row className= "justify-content-md-center">
                 <Col xs="auto" className="p-1" >
                     <MovementCard imgsource={imgCard1} 
-                                  selected={selectedMovementCard && selectedMovementCard[1] === 0} 
+                                  selected={selectedMovementCard && selectedMovementCard[1] === 0}
+                                  played={movCards[0][1] === 'played'} 
                                   borderColor={selectedMovementCard && selectedMovementCard[1] === 0 ? borderColor : ""} 
                                   onSelect={() => handleSelect(0)}/>
                 </Col>
 
                 <Col xs="auto" className="p-1">
                     <MovementCard imgsource={imgCard2} 
-                                  selected={selectedMovementCard && selectedMovementCard[1] === 1} 
+                                  selected={selectedMovementCard && selectedMovementCard[1] === 1}
+                                  played={movCards[1][1] === 'played'} 
                                   borderColor={selectedMovementCard && selectedMovementCard[1] === 1 ? borderColor : ""} 
                                   onSelect={() =>handleSelect(1)}/>
                 </Col>
 
                 <Col xs="auto" className="p-1">
                     <MovementCard imgsource={imgCard3} 
-                                  selected={selectedMovementCard && selectedMovementCard[1] === 2} 
+                                  selected={selectedMovementCard && selectedMovementCard[1] === 2}
+                                  played={movCards[2][1] === 'played'} 
                                   borderColor={selectedMovementCard && selectedMovementCard[1] === 2 ? borderColor : ""} 
                                   onSelect={() => handleSelect(2)}/>
                 </Col>
