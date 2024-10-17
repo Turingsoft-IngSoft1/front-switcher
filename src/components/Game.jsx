@@ -84,7 +84,7 @@ export default function Game({onPassTurn, onUpdateBoard, onConfirmMovement}) {
             <Row className="justify-content-between">
 
                 <Col xs={6} md={3} className="d-flex justify-items-center" >
-                    <CardSetMov />
+                    <CardMovContainer />
                 </Col>
                 <Col xs={4}>
                     <CardFigContainer idOwnsSet={idPlayer} position={0} isHorizontal={true}/>
