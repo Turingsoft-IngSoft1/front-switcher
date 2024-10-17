@@ -62,8 +62,7 @@ const dictImg = {
 function CardSwitcher({ imgsource, onSelect, isSelected }) {
   return (
     <Container onClick={onSelect} 
-                style = {isSelected ? { backgroundColor: 'blue' } : {}} 
-                className="card-switcher">
+                className={`card-switcher ${isSelected ? 'is-selected-figure' : ''}`}>
       <Row>
         <Image src={imgsource} className="img-content" />
       </Row>
