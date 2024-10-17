@@ -52,6 +52,7 @@ export const WebSocketProvider = ({ children }) => {
     }, [readyState]);
     WebSocketProvider
     useEffect(() => {
+        console.log('Received a new WebSocket message:', lastMessage);
         if (lastMessage !== null) {
             console.log('Received a new WebSocket message:', lastMessage.data);
             // Detecta si un jugador se fue de la partida
@@ -135,7 +136,7 @@ export const WebSocketProvider = ({ children }) => {
                 setFiguresOnBoard(newFiguresOnBoard);
             }
         }
-    }, [lastMessage, setPlayers, setWinner]);
+    }, [lastMessage]);
 
     return (
         <WebSocketContext.Provider value={{ shouldConnect, setShouldConnect }}>

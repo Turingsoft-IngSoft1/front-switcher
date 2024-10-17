@@ -6,11 +6,11 @@ import CardSetFig from './CardSet.jsx';
 import PlayerBox from "./PlayerBox.jsx";
 import ExitButton from "./ExitButton.jsx";
 import ButtonSet from "./ButtonSet.jsx";
+import CardSetMov from "./CardSetMov.jsx";
 import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
 import CardMovContainer from "../containers/CardMovContainer.jsx";
 import CardFigContainer from "../containers/CardSetContainer.jsx";
-
-
+import '../styles/cards.css';
 
 function NotifyWinner ({winner, handleHide}) {
     return (
@@ -75,7 +75,7 @@ export default function Game({onPassTurn, onUpdateBoard, onConfirmMovement}) {
             </Row>
             <Row>
                 <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
-                    <h4>
+                    <h4 className={(turnPlayer == idPlayer) ? 'has-turn' : 'not-turn'}>
                         {namePlayer}
                     </h4>
                 </Col>

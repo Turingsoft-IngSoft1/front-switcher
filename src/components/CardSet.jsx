@@ -95,9 +95,11 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
 
     return (
         <Row>
-            <Col className= {isHorizontal? "cardset-horizontal" : "cardset-vertical"}>
+            <Col className={isHorizontal ? "cardset-horizontal" : "cardset-vertical"}>
                 <Row className="justify-content-md-center">
-                    <h4>{position != 0 ? (firstPlayer ? playersNames[currentPlayers.indexOf(firstPlayer)] : 'Disconnected') : ''} </h4>
+                    <h4 className={(turnPlayer == firstPlayer) ? 'has-turn' : 'not-turn'}>
+                        {position != 0 ? (firstPlayer ? playersNames[currentPlayers.indexOf(firstPlayer)] : 'Disconnected') : ''}
+                    </h4>
                 </Row>
                 <Row className="justify-content-md-center bg-cardset">
                     <Col xs="auto" className="carta">
