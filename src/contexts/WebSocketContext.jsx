@@ -1,13 +1,14 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { GameContext } from '../contexts/GameContext.jsx';
-import {getPlayersInfo} from '../utils/gameServices.js'
+import {getPlayersInfo, getGameFigures} from '../utils/gameServices.js'
 
 export const WebSocketContext = createContext(null);
 
 export const WebSocketProvider = ({ children }) => {
     const [shouldConnect, setShouldConnect] = useState(false);
-    const { players, playersTurns, playersNames, idPlayer, idGame, setWinner, fase, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
+    const { board, players, playersTurns, playersNames, idPlayer, idGame, setWinner, fase, infoPlayers,
+            setBoard, setInfoPlayers, setFase, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
     const { lastMessage, readyState } = useWebSocket(`ws://localhost:8000/ws/${idGame}/${idPlayer}`, {
     },
     shouldConnect);
@@ -46,7 +47,7 @@ export const WebSocketProvider = ({ children }) => {
     useEffect(() => {
         console.log('Received a new WebSocket message:', lastMessage);
         if (lastMessage !== null) {
-            console.log('Received a new WebSocket message:', lastMessage);
+            console.log('Received a new WebSocket message:', lastMessage.data);
             // Detecta si un jugador se fue de la partida
             if (lastMessage.data.includes('LEAVE')) {
                 const [playerLeftId, action] = lastMessage.data.split(' ');
@@ -57,7 +58,9 @@ export const WebSocketProvider = ({ children }) => {
                     setPlayersTurns(newTurns);
                     setPlayersNames(newNames);
                     setPlayers(newPlayers);
-                    console.log(newPlayers, newNames, newTurns);
+                    
+                    const newInfoPlayers = infoPlayers.filter((p) => p.id_user != playerLeftId );
+                    setInfoPlayers(newInfoPlayers);
                 }
             }
             if (lastMessage.data.includes('WIN')) {
@@ -71,8 +74,18 @@ export const WebSocketProvider = ({ children }) => {
                 const [action, turnId] = lastMessage.data.split(' ');
                 setFase('in-game');
                 setTurnPlayer(turnId);
-
-                getPlayersInfo(idGame);
+                getGameFigures(idGame).then(data => {
+                    if (data ){
+                        setInfoPlayers(data);
+                    }
+                });
+            }
+            if (lastMessage.data.includes('REFRESH_FIGURES')){
+                getGameFigures(idGame).then(data => {
+                    if (data ){
+                        setInfoPlayers(data);
+                    }
+                });
             }
             if (lastMessage.data.includes('TURN')){
                 const [action, turnPlayerId] = lastMessage.data.split(' ');
@@ -87,12 +100,29 @@ export const WebSocketProvider = ({ children }) => {
                         setPlayers(usersList);
                         setPlayersTurns(playersTurns);
                         setPlayersNames(playersNames);
+
                     } else {
                         console.error('users_list is undefined');
                     }
                 }).catch(error => {
                     console.error('Error fetching players info:', error);
                 });
+            }
+            if (lastMessage.data.includes('MOVE')){
+                const parts = lastMessage.data.replace("MOVE ", "").split(/[(),\s]+/).filter(Boolean);
+                const pos1 = [parseInt(parts[0]), parseInt(parts[1])];
+                const pos2 = [parseInt(parts[2]), parseInt(parts[3])];
+
+                //de coords a index (1,2) => 9
+                const newPos1 = pos1[0] * 6 + pos1[1];
+                const newPos2 = pos2[0] * 6 + pos2[1];
+
+                const newBoard = [...board];
+                const aux = newBoard[newPos2];
+                newBoard[newPos2] = newBoard[newPos1];
+                newBoard[newPos1] = aux;
+
+                setBoard(newBoard);
             }
         }
     }, [lastMessage]);

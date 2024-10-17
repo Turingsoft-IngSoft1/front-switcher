@@ -1,25 +1,25 @@
 import React, { useContext, useEffect } from 'react';
 import CardSetMov from '../components/CardSetMov.jsx';
-import getMovementCards from '../services/cardServices.js';
+import {getMovementCards, useMovementCard} from '../services/cardServices.js';
 import { GameContext } from '../contexts/GameContext.jsx';
 
 export default function CardMovContainer () {
-    const { idGame, idPlayer, turnPlayer, setMovCards, movCards, fase} = useContext(GameContext);
+    const { idGame, idPlayer, turnPlayer, setMovCards, movCards, fase, board} = useContext(GameContext);
     useEffect(() => {
         const fetchMovementCards = async () => {
                 const result = await getMovementCards(idGame, idPlayer);
-                console.log(result);
                 if (result && result.moves) {
                     setMovCards(movCards => [...movCards, ...result.moves]);
-
+                    
                 }
             // }
         };
      fetchMovementCards();
-     }, [fase, turnPlayer]);
+     console.log("movCards " + movCards);
+     }, [fase, turnPlayer, board]);
     
 
-    return <CardSetMov getMovementCards={getMovementCards} />;
+    return <CardSetMov />;
 
 }
 

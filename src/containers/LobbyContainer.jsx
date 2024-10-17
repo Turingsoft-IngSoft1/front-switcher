@@ -1,11 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import Lobby from '../components/Lobby.jsx';
-import getMovementCards from '../services/cardServices.js';
+import {getMovementCards} from '../services/cardServices.js';
 import { GameContext } from '../contexts/GameContext.jsx';
 import {getPlayersInfo} from '../utils/gameServices.js'
 
 export default function LobbyContainer () {
-    const {idPlayer, idGame, fase, playerTurns, setFase, setMovCards, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
+    const {idPlayer, idGame, fase, playerTurns, setInfoPlayers, setFase, setMovCards, setTurnPlayer, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
     //traete los jugadores
     useEffect(() => {
         getPlayersInfo(idGame).then(data => {
@@ -16,6 +16,7 @@ export default function LobbyContainer () {
                 setPlayers(usersList);
                 setPlayersTurns(playersTurns);
                 setPlayersNames(playersNames);
+                setInfoPlayers(data.users_list);
             } else {
                 console.error('users_list is undefined');
             }
