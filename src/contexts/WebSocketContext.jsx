@@ -124,10 +124,10 @@ export const WebSocketProvider = ({ children }) => {
 
                 setBoard(newBoard);
                 
-                console.log("FIGURES:");
+                
                 getFiguresOnBoard(idGame, idPlayer).then(newFiguresOnBoard => {
+                    
                     if (newFiguresOnBoard){
-                        console.log(newFiguresOnBoard);
                         setFiguresOnBoard(newFiguresOnBoard);
                     }
                 });

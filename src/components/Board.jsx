@@ -16,11 +16,31 @@ function Tile({ variant, onTileClick, selected, figureMatch }) {
 }
 
 export default function Board() {
-    const { board, idPlayer, turnPlayer, selectedFigureCard, figureTile, setFigureTile, selectedTiles, setSelectedTiles} = useContext(GameContext);
+    const { board, idPlayer, turnPlayer, selectedFigureCard, figuresOnBoard, figureTile, setFigureTile, selectedTiles, setSelectedTiles} = useContext(GameContext);
     const getTileVariant = (index) => {
         return board[index];
     };
+    const [tilesToMatch, setTilesToMatch] = useState([]);
 
+    useEffect(() => {
+        const obtainAllTiles = () => {
+            const allTiles = [];
+            for (const fig in figuresOnBoard) {
+                for (const color in figuresOnBoard[fig]) {
+                    const coordinatesList = figuresOnBoard[fig][color];
+                    for (const coordinates of coordinatesList) {
+                        for (const [i, j] of coordinates) {
+                            allTiles.push(i * 6 + j);
+                        }
+                    }
+                }
+            }
+            return allTiles;
+        };
+        
+        setTilesToMatch(obtainAllTiles()); // Actualiza el estado de tilesToMatch
+    }, [figuresOnBoard]);
+    
     const handleTileClick = (index) => {
         if (idPlayer != turnPlayer){
             return;
@@ -57,7 +77,7 @@ export default function Board() {
                                 <Col xs="auto" className="p-0" key={index}>
                                     <Tile variant={getTileVariant(index)}
                                           selected = {selectedTiles.includes(index)}
-                                          figureMatch={figureTile == index}
+                                          figureMatch={tilesToMatch.includes(index)}
                                           onTileClick={()=> handleTileClick(index)}/>
                                 </Col>
                             );
