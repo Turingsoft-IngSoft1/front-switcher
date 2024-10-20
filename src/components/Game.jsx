@@ -14,7 +14,7 @@ import '../styles/cards.css';
 
 function NotifyWinner ({winner, handleHide}) {
     return (
-        <Modal show={winner} onHide={handleHide}>
+        <Modal show={winner == 'abandono'} onHide={handleHide}>
         <Modal.Header>
                 <h4> GANASTE!!! </h4>
         </Modal.Header>
@@ -45,7 +45,7 @@ export default function Game({onPassTurn, onUpdateBoard, onConfirmMovement}) {
         setPlayersNames([]);
         setInfoPlayers([]);
         setPlayersTurns([]);
-        setWinner(false);
+        setWinner('false');
     }
 
     useEffect(() => {        

@@ -1,5 +1,5 @@
 import {useState, useContext, useEffect} from "react";
-import { Container, Button, Row, Col } from "react-bootstrap";
+import { Container, Button, Row, Col, Modal } from "react-bootstrap";
 import '../styles/Board.css'
 import Board from './Board.jsx'
 import { GameContext } from '../contexts/GameContext.jsx';
@@ -7,16 +7,30 @@ import ExitButton from './ExitButton.jsx';
 import PlayerBox from "./PlayerBox.jsx";
 import CardSetFig from './CardSet.jsx';
 
+function NotifyCancel ({winner, handleHide}) {
+    return (
+        <Modal show={winner == 'cancelado'} onHide={handleHide}>
+        <Modal.Header>
+                <h4> Se cancelo la partida </h4>
+        </Modal.Header>
+        <Modal.Footer>
+            <ExitButton intext='Cerrar' variant="success" />
+        </Modal.Footer>
+        </Modal>
+    );
+}
+
 function ButtonSet ({onStartClick}){
     
     const {isOwner} = useContext(GameContext);
             return (
                 <>
-                {isOwner &&
+                {isOwner ?
                     <>
                         <Col xs="auto"><Button className="start-button" onClick={onStartClick}>Iniciar Partida</Button></Col>
                         <Col xs="auto"><ExitButton intext="Cancelar Partida"/></Col>
-                    </>
+                    </> :
+                    <Col xs="auto"><ExitButton intext="Abandonar Partida"/></Col>
                 }
                 </>
             );
@@ -36,7 +50,24 @@ function Chat () {
 /* Nota: por defecto, la interfaz se setea en pre-game, se deberia realizar un chequeo por si el jugador ya esta en una partida
          para pasar directamente a in-game sin tener que apretar el boton de comenzar juego*/
 export default function Lobby ({onStartGame}){
-    const { winner, setWinner, fase, idPlayer, namePlayer, players, idGame, setBoard} = useContext(GameContext);
+    const { setIdGame, setIdPlayer, winner, setWinner, fase, idPlayer, namePlayer, players, idGame, setInfoPlayers, turnPlayer,playerTurns, setBoard, setPlayers, setPlayersTurns, setPlayersNames,} = useContext(GameContext);
+
+    const handleHide = () => {
+        setFase('crear');
+        setShouldConnect(false);
+        setIsOwner(false);
+        setIdPlayer(null);
+        setIdGame(null);
+        setPlayers([]);
+        setCurrentTurn(null);
+        setBoard(Array(36).fill("dark"));
+        setFigureCards([]);
+        setMovCards([]);
+        setPlayersNames([]);
+        setInfoPlayers([]);
+        setPlayersTurns([]);
+        setWinner('false');
+    }
     
     const handleStart = (e) =>{
         e.preventDefault();
@@ -79,6 +110,7 @@ export default function Lobby ({onStartGame}){
             <Row className="justify-content-md-around p-3">
                 <ButtonSet onStartClick= {handleStart}/>
             </Row>
+            <NotifyCancel winner = {winner} handleHide={handleHide}/>
         </>
     );
 }
