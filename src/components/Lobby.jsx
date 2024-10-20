@@ -12,13 +12,14 @@ function ButtonSet ({onStartClick}){
     const {isOwner} = useContext(GameContext);
             return (
                 <>
-                {isOwner && 
+                {isOwner ? 
                     <>
-                        <Col xs="auto"><Button className="start-button" onClick = {onStartClick} >Iniciar Partida</Button></Col>
-                        <Col xs="auto" ><ExitButton intext="Abandonar Sala"/></Col>
-                    </>
+                        <Col xs="auto"><Button className="start-button" onClick={onStartClick}>Iniciar Partida</Button></Col>
+                        <Col xs="auto"><ExitButton intext="Cancelar Partida"/></Col>
+                    </> :
+                    <Col xs="auto"><ExitButton intext="Abandonar Partida"/></Col>
                 }
-            </>
+                </>
             );
 
 }
@@ -31,9 +32,6 @@ function Chat () {
         </Container>
     );
 }
-
-
-
 
 //CARTAS HARDCODEADAS, IMPLEMENTAR LUEGO
 /* Nota: por defecto, la interfaz se setea en pre-game, se deberia realizar un chequeo por si el jugador ya esta en una partida
