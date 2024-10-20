@@ -9,6 +9,7 @@ const ListMatches = () => {
     const [error, setError] = useState(null);
     const [selectedMatch, setSelectedMatch] = useState(null);
     const [filters, setFilters] = useState([]);
+    const [nameFilter, setNameFilter] = useState('');
 
     const fetchData = () => {
         fetch('http://127.0.0.1:8000/list_games', {
@@ -41,6 +42,7 @@ const ListMatches = () => {
 
     const clearFilters = () => {
         setFilters([]);
+        setNameFilter('');
     };
 
     useEffect(() => {
@@ -65,7 +67,7 @@ const ListMatches = () => {
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                         <Dropdown.Header>Jugadores</Dropdown.Header>
-                        {[1, 2, 3, 4].map(num => (
+                        {[1, 2, 3].map(num => (
                             <Dropdown.Item 
                                 key={num}
                                 onClick={() => handleFilterChange(num.toString())}
@@ -77,7 +79,7 @@ const ListMatches = () => {
                         ))}
                         <Dropdown.Divider />
                         <Dropdown.Header>Jugadores Disponibles</Dropdown.Header>
-                        {[1, 2, 3, 4].map(num => (
+                        {[1, 2, 3].map(num => (
                             <Dropdown.Item 
                                 key={num}
                                 onClick={() => handleFilterChange(`disponibles-${num}`)}
@@ -91,6 +93,13 @@ const ListMatches = () => {
                         <Dropdown.Item onClick={clearFilters}>Limpiar Filtros</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
+                <Form.Control 
+                    type="text" 
+                    placeholder="Filtrar por nombre" 
+                    value={nameFilter}
+                    onChange={(e) => setNameFilter(e.target.value)}
+                    style={{ width: '200px', marginLeft: '10px' }}
+                />
             </div>
             <div className='d-flex flex-row justify-content-center mb-3'>
                 <Table className="table table-fixed" borderless hover variant="dark">
@@ -108,9 +117,10 @@ const ListMatches = () => {
                             data
                                 .filter(match => {
                                     const availablePlayers = match.max_players - match.players;
-                                    return filters.length === 0 || 
+                                    return (filters.length === 0 || 
                                         filters.includes(match.players.toString()) ||
-                                        filters.includes(`disponibles-${availablePlayers}`);
+                                        filters.includes(`disponibles-${availablePlayers}`)) &&
+                                        match.name.toLowerCase().startsWith(nameFilter.toLowerCase());
                                 })
                                 .filter(match => match.players < match.max_players)
                                 .map((match) => (
