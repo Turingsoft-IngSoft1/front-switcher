@@ -12,12 +12,11 @@ function ButtonSet ({onStartClick}){
     const {isOwner} = useContext(GameContext);
             return (
                 <>
-                {isOwner ? 
+                {isOwner &&
                     <>
                         <Col xs="auto"><Button className="start-button" onClick={onStartClick}>Iniciar Partida</Button></Col>
                         <Col xs="auto"><ExitButton intext="Cancelar Partida"/></Col>
-                    </> :
-                    <Col xs="auto"><ExitButton intext="Abandonar Partida"/></Col>
+                    </>
                 }
                 </>
             );
