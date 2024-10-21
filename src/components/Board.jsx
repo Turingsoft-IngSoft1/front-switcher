@@ -15,12 +15,32 @@ function Tile({ variant, onTileClick, selected, figureMatch }) {
     );
 }
 
+
+
+
 export default function Board() {
     const { board, idPlayer, turnPlayer, selectedFigureCard, figuresOnBoard, figureTile, setFigureTile, selectedTiles, setSelectedTiles} = useContext(GameContext);
     const getTileVariant = (index) => {
         return board[index];
     };
     const [tilesToMatch, setTilesToMatch] = useState([]);
+
+    function checkAndFetchCompleteFigure(tileSelected, figureSelected) {
+        console.log('params:' + tileSelected + figureSelected);
+        console.log(figureSelected);
+        if(figuresOnBoard[figureSelected]) {
+            console.log('hay figura' + figureSelected);
+            for (const color in figuresOnBoard[figureSelected]) {
+                const coordinatesList = figuresOnBoard[figureSelected][color];
+                for (const coordinates of coordinatesList) {
+                    if((coordinates[0] == tileSelected/6) &&(coordinates[1] == tileSelected % 6)) {
+                        console.log('FIGURA ' + figureSelected + 'FETCHEADA');
+                        fetchCompletedFigure();
+                    }
+                }
+            }
+       }
+    };
 
     useEffect(() => {
         const obtainAllTiles = () => {
@@ -43,15 +63,15 @@ export default function Board() {
     
     const handleTileClick = (index) => {
         if (idPlayer != turnPlayer){
+            console.log("Selección permitida solo en turno propio");
             return;
         }
         if(selectedFigureCard){
+            checkAndFetchCompleteFigure(index, selectedFigureCard);
             setFigureTile(figureTile == index? null : index);
-            console.log('click en: ' + index);
             return;
         }
         setSelectedTiles((prevSelected) => {
-            console.log('atroden');
             // Si la ficha ya está seleccionada, deseleccionarla
             if (prevSelected.includes(index)) {
                 return prevSelected.filter(tileIndex => tileIndex !== index);
