@@ -2,6 +2,7 @@ import {useEffect, useState, useContext} from "react";
 import { Card, Container, Button, Row, Col } from "react-bootstrap";
 import '../styles/Board.css'
 import { GameContext } from '../contexts/GameContext.jsx';
+import {useFigureCard} from '../services/cardServices.js';
 
 
 function Tile({ variant, onTileClick, selected, figureMatch }) {
@@ -19,7 +20,7 @@ function Tile({ variant, onTileClick, selected, figureMatch }) {
 
 
 export default function Board() {
-    const { board, idPlayer, turnPlayer, selectedFigureCard, figuresOnBoard, figureTile, setFigureTile, selectedTiles, setSelectedTiles} = useContext(GameContext);
+    const { board, idGame, idPlayer, turnPlayer, selectedFigureCard, figuresOnBoard, figureTile, setFigureTile, selectedTiles, setSelectedTiles} = useContext(GameContext);
     const getTileVariant = (index) => {
         return board[index];
     };
@@ -32,8 +33,16 @@ export default function Board() {
                 for (const coordinates of coordinatesList) {
                     for(const tuple of coordinates){
                         if((tuple[0] == Math.floor(tileSelected/6)) &&(tuple[1] == tileSelected % 6)) {
-                            console.log('FIGURA ' + figureSelected + 'FETCHEADA');
-                            // fetchCompletedFigure();
+                            
+                            console.log('FIGURA ' + figureSelected + ' FETCHEADA');
+                            const figureData = 
+                                {
+                                    "id_game": idGame,
+                                    "id_player": idPlayer,
+                                    "name": figureSelected,
+                                    "figure_pos": coordinates
+                                };
+                            useFigureCard(figureData);
                         }
                     }
                 }
