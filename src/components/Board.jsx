@@ -20,7 +20,7 @@ function Tile({ variant, onTileClick, selected, figureMatch }) {
 
 
 export default function Board() {
-    const { board, idGame, idPlayer, turnPlayer, selectedFigureCard, setSelectedFigureCard, figuresOnBoard, figureTile, setFigureTile, selectedTiles, setSelectedTiles} = useContext(GameContext);
+    const { board, idGame, idPlayer, turnPlayer, setMovCards, movCards, selectedFigureCard, setSelectedFigureCard, figuresOnBoard, figureTile, setFigureTile, selectedTiles, setSelectedTiles} = useContext(GameContext);
     const getTileVariant = (index) => {
         return board[index];
     };
@@ -47,6 +47,13 @@ export default function Board() {
                             if(!message.ok){
                                 console.error('figura invalida');
                             }
+                            const newMovCards = [...movCards];
+                            for(const c in newMovCards){
+                                if(newMovCards[c][1] === 'played'){
+                                    newMovCards[c][1] = 'confirmed';
+                                }
+                            }
+                            setMovCards(newMovCards);
                         }
                     }
                 }
