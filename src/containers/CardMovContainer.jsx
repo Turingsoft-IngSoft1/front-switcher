@@ -9,14 +9,14 @@ export default function CardMovContainer () {
         const fetchMovementCards = async () => {
                 const result = await getMovementCards(idGame, idPlayer);
                 if (result && result.moves) {
-                    setMovCards(movCards => [...movCards, ...result.moves]);
-                    
+                    const newMovCards = result.moves.map(move => [move, 'nonplayed']);
+                    setMovCards(newMovCards);  
                 }
             // }
         };
      fetchMovementCards();
      console.log("movCards " + movCards);
-     }, [fase, turnPlayer, board]);
+     }, [fase, turnPlayer]);
     
 
     return <CardSetMov />;

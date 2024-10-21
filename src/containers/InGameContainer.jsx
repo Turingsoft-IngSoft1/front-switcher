@@ -6,7 +6,7 @@ import {getFiguresOnFinishTurn, useMovementCard} from '../services/cardServices.
 export default function InGameContainer (){
     let currentPlayer = 0;
 
-    const {idPlayer, players, setTurnPlayer, setBoard, idGame, setSelectedTiles, setSelectedMovementCard} = useContext(GameContext);
+    const {idPlayer, players, selectedMovementCard, movCards, setTurnPlayer, setBoard, idGame, setSelectedTiles, setSelectedMovementCard, setMovCards} = useContext(GameContext);
 
     const passTurn = async (turnData) => {
         const response = await fetch (
@@ -111,6 +111,20 @@ export default function InGameContainer (){
     const ConfirmMovement = async (movementData) => {
         const result = await useMovementCard(movementData);
         if (result){
+            setMovCards((prevMovCards) => {
+                // Hacer una copia del array de cartas
+                const updatedMovCards = [...prevMovCards];
+    
+                // Obtener el índice de la carta seleccionada
+                const selectedIndex = selectedMovementCard[1];
+                
+                if (selectedIndex !== null) {
+                    // Cambiar el estado de la carta a "played"
+                    updatedMovCards[selectedIndex] = [updatedMovCards[selectedIndex][0], 'played'];
+                }
+    
+                return updatedMovCards;
+            });
             setSelectedTiles([]);
             setSelectedMovementCard([null, null]);
         }
