@@ -3,6 +3,7 @@ import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { GameContext } from '../contexts/GameContext.jsx';
 import {getPlayersInfo, getGameFigures} from '../utils/gameServices.js';
 import {getFiguresOnBoard} from '../services/cardServices.js';
+import {getBoard} from '../services/gameServices.js'
 
 export const WebSocketContext = createContext(null);
 
@@ -131,6 +132,11 @@ export const WebSocketProvider = ({ children }) => {
                         setFiguresOnBoard(newFiguresOnBoard);
                     }
                 });
+            }
+
+            if (lastMessage.data.includes('REFRESH_BOARD')){
+                newBoard = getBoard(idGame);
+                setBoard(newBoard);
             }
             if (lastMessage.data.includes('CANCELLED')) {
                 console.log('Match has been cancelled, exiting...');
