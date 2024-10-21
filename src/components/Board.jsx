@@ -20,13 +20,13 @@ function Tile({ variant, onTileClick, selected, figureMatch }) {
 
 
 export default function Board() {
-    const { board, idGame, idPlayer, turnPlayer, selectedFigureCard, figuresOnBoard, figureTile, setFigureTile, selectedTiles, setSelectedTiles} = useContext(GameContext);
+    const { board, idGame, idPlayer, turnPlayer, selectedFigureCard, setSelectedFigureCard, figuresOnBoard, figureTile, setFigureTile, selectedTiles, setSelectedTiles} = useContext(GameContext);
     const getTileVariant = (index) => {
         return board[index];
     };
     const [tilesToMatch, setTilesToMatch] = useState([]);
 
-    function checkAndFetchCompleteFigure(tileSelected, figureSelected) {
+    async function checkAndFetchCompleteFigure(tileSelected, figureSelected) {
         if(figuresOnBoard[figureSelected]) {
             for (const color in figuresOnBoard[figureSelected]) {
                 const coordinatesList = figuresOnBoard[figureSelected][color];
@@ -42,7 +42,11 @@ export default function Board() {
                                     "name": figureSelected,
                                     "figure_pos": coordinates
                                 };
-                            useFigureCard(figureData);
+
+                            const message = await useFigureCard(figureData);
+                            if(!message.ok){
+                                console.error('figura invalida');
+                            }
                         }
                     }
                 }
@@ -77,6 +81,7 @@ export default function Board() {
         if(selectedFigureCard){
             checkAndFetchCompleteFigure(index, selectedFigureCard['nameFig']);
             setFigureTile(figureTile == index? null : index);
+            setSelectedFigureCard(null);
             return;
         }
         setSelectedTiles((prevSelected) => {

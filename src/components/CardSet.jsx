@@ -76,14 +76,23 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
    } =
     useContext(GameContext);
   const [currentPlayers, setCurrentPlayers] = useState(players);
+  const [actualCards, setActualCards] = useState([]);
     let firstPlayer = '';
 
   useEffect(() => {
     setCurrentPlayers(players);
   }, [players]);
 
-  const actualPlayer = infoPlayers.find((p) => p.id_user == idOwnsSet);
-  const actualCards = actualPlayer ? actualPlayer.figures : [];
+  useEffect(() => {
+    const actualPlayer = infoPlayers.find((p) => p.id_user === idOwnsSet);
+    setActualCards(actualPlayer ? actualPlayer.figures : []);
+    console.log('ACTUALIZACIONNN');
+    if(actualPlayer && actualPlayer.figures){
+      console.log(actualPlayer.figures);
+    }
+}, [infoPlayers]);
+
+
   if (currentPlayers.length > position && position != 0) {
         const otherPlayers = currentPlayers.filter(player => player != idPlayer);
         firstPlayer = otherPlayers[position-1];
