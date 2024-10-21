@@ -79,6 +79,12 @@ export const WebSocketProvider = ({ children }) => {
                         setInfoPlayers(data);
                     }
                 });
+                getFiguresOnBoard(idGame, idPlayer).then(newFiguresOnBoard => {
+                    
+                    if (newFiguresOnBoard){
+                        setFiguresOnBoard(newFiguresOnBoard);
+                    }
+                });
             }
             if (lastMessage.data.includes('REFRESH_FIGURES')){
                 getGameFigures(idGame).then(data => {
