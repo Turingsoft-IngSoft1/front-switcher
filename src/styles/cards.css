@@ -1,7 +1,7 @@
 .card-switcher{
     width: 90px;
     height: 90px;
-    border-radius: 15%;
+    border-radius: 5%;
 }
 
 .img-content{
@@ -41,6 +41,10 @@
     animation: none;
     text-shadow: none;
     font-weight: normal;
+}
+
+.is-selected-figure {
+    background-color: rgb(131, 142, 241)
 }
 
 @keyframes vibrate {
