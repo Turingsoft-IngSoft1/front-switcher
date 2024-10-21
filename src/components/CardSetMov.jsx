@@ -32,7 +32,7 @@ function MovementCard ({imgsource, onSelect, selected, played, borderColor}) {
 export default function CardSetMov ({requestNewCards}) {
     const [borderColor, setBorderColor] = useState("");
     
-    const { idGame, idPlayer, turnPlayer, movCards, fase, selectedMovementCard, setSelectedMovementCard} = useContext(GameContext);
+    const { idGame, idPlayer, turnPlayer, movCards, setFigureTile, setSelectedFigureCard, fase, selectedMovementCard, setSelectedMovementCard} = useContext(GameContext);
 
     const getRandomColor = () => {
         const colors = ['#dc3545', '#198754', '#0d6efd', '#ffc107']; //RGBY
@@ -51,6 +51,8 @@ export default function CardSetMov ({requestNewCards}) {
             const movKey = movCards[i][0];
             console.log("MovKey " + movKey);
             setSelectedMovementCard([movKey, i]);
+            setSelectedFigureCard(null);
+            setFigureTile(null)
             setBorderColor(getRandomColor());
         }
     }

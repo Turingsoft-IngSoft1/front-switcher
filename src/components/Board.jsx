@@ -2,25 +2,86 @@ import {useEffect, useState, useContext} from "react";
 import { Card, Container, Button, Row, Col } from "react-bootstrap";
 import '../styles/Board.css'
 import { GameContext } from '../contexts/GameContext.jsx';
+import {useFigureCard} from '../services/cardServices.js';
 
 
-function Tile({ variant, onTileClick, selected }) {
+function Tile({ variant, onTileClick, selected, figureMatch }) {
     return (
-        <Button className={`tile ${selected ? 'selected' : ''}`}
+        <Button className={`tile ${selected ? 'selected' : ''}
+                             ${figureMatch ? 'brighter-tile' : ''}`
+                }
                 onClick={onTileClick} 
                 variant={variant}>        
         </Button>
     );
 }
 
+
+
+
 export default function Board() {
-    const { board, idPlayer, turnPlayer, selectedTiles, setSelectedTiles} = useContext(GameContext);
+    const { board, idGame, idPlayer, turnPlayer, selectedFigureCard, setSelectedFigureCard, figuresOnBoard, figureTile, setFigureTile, selectedTiles, setSelectedTiles} = useContext(GameContext);
     const getTileVariant = (index) => {
         return board[index];
     };
+    const [tilesToMatch, setTilesToMatch] = useState([]);
 
+    async function checkAndFetchCompleteFigure(tileSelected, figureSelected) {
+        if(figuresOnBoard[figureSelected]) {
+            for (const color in figuresOnBoard[figureSelected]) {
+                const coordinatesList = figuresOnBoard[figureSelected][color];
+                for (const coordinates of coordinatesList) {
+                    for(const tuple of coordinates){
+                        if((tuple[0] == Math.floor(tileSelected/6)) &&(tuple[1] == tileSelected % 6)) {
+                            
+                            console.log('FIGURA ' + figureSelected + ' FETCHEADA');
+                            const figureData = 
+                                {
+                                    "id_game": idGame,
+                                    "id_player": idPlayer,
+                                    "name": figureSelected,
+                                    "figure_pos": coordinates
+                                };
+
+                            const message = await useFigureCard(figureData);
+                            if(!message.ok){
+                                console.error('figura invalida');
+                            }
+                        }
+                    }
+                }
+            }
+       }
+    };
+
+    useEffect(() => {
+        const obtainAllTiles = () => {
+            const allTiles = [];
+            for (const fig in figuresOnBoard) {
+                for (const color in figuresOnBoard[fig]) {
+                    const coordinatesList = figuresOnBoard[fig][color];
+                    for (const coordinates of coordinatesList) {
+                        for (const [i, j] of coordinates) {
+                            allTiles.push(i * 6 + j);
+                        }
+                    }
+                }
+            }
+            return allTiles;
+        };
+        
+        setTilesToMatch(obtainAllTiles()); // Actualiza el estado de tilesToMatch
+    }, [figuresOnBoard]);
+    
     const handleTileClick = (index) => {
         if (idPlayer != turnPlayer){
+            console.log("Selección permitida solo en turno propio");
+            return;
+        }
+        if(selectedFigureCard){
+            checkAndFetchCompleteFigure(index, selectedFigureCard['nameFig']);
+            setFigureTile(figureTile == index? null : index);
+            setSelectedFigureCard(null);
             return;
         }
         setSelectedTiles((prevSelected) => {
@@ -49,6 +110,7 @@ export default function Board() {
                                 <Col xs="auto" className="p-0" key={index}>
                                     <Tile variant={getTileVariant(index)}
                                           selected = {selectedTiles.includes(index)}
+                                          figureMatch={tilesToMatch.includes(index)}
                                           onTileClick={()=> handleTileClick(index)}/>
                                 </Col>
                             );

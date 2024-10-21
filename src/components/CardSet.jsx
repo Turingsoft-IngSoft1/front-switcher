@@ -59,61 +59,99 @@ const dictImg = {
     'fige07': Fige07
 }
 
-function CardSwitcher ({imgsource, selected}) {
-    const [isHovered, setIsHovered] = useState(false);
-    const [isSelected, setIsSelected] = useState(false);
-    const handleClick = () => {
-        setIsSelected(!isSelected);
-    }
-
-    return (
-        <Container  onClick={handleClick}
-                    className="card-switcher">
-            <Row>
-                <Image src={imgsource} className="img-content" />
-            </Row>
-        </Container>
-    );
+function CardSwitcher({ imgsource, onSelect, isSelected }) {
+  return (
+    <Container onClick={onSelect} 
+                className={`card-switcher ${isSelected ? 'is-selected-figure' : ''}`}>
+      <Row>
+        <Image src={imgsource} className="img-content" />
+      </Row>
+    </Container>
+  );
 }
-
 
 export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
-    const { idPlayer, infoPlayers, players, figureCards, playersTurns, turnPlayer, playersNames } = useContext(GameContext);
-    const [currentPlayers, setCurrentPlayers] = useState(players);
+  const { idPlayer, infoPlayers, players, turnPlayer, playersNames,
+        selectedFigureCard, setSelectedFigureCard, setSelectedMovementCard, setSelectedTiles
+   } =
+    useContext(GameContext);
+  const [currentPlayers, setCurrentPlayers] = useState(players);
+  const [actualCards, setActualCards] = useState([]);
     let firstPlayer = '';
 
-    useEffect(() => {
-        setCurrentPlayers(players);
-    }, [players]);
+  useEffect(() => {
+    setCurrentPlayers(players);
+  }, [players]);
 
-    const actualPlayer = infoPlayers.find((p) => p.id_user == idOwnsSet);
-    const actualCards = actualPlayer ? actualPlayer.figures : [];
-    if (currentPlayers.length > position && position != 0) {
+  useEffect(() => {
+    const actualPlayer = infoPlayers.find((p) => p.id_user === idOwnsSet);
+    setActualCards(actualPlayer ? actualPlayer.figures : []);
+    console.log('ACTUALIZACIONNN');
+    if(actualPlayer && actualPlayer.figures){
+      console.log(actualPlayer.figures);
+    }
+}, [infoPlayers]);
+
+
+  if (currentPlayers.length > position && position != 0) {
         const otherPlayers = currentPlayers.filter(player => player != idPlayer);
         firstPlayer = otherPlayers[position-1];
-    }
+  }
 
-    return (
-        <Row>
-            <Col className={isHorizontal ? "cardset-horizontal" : "cardset-vertical"}>
-                <Row className="justify-content-md-center">
-                    <h4 className={(turnPlayer == firstPlayer) ? 'has-turn' : 'not-turn'}>
-                        {position != 0 ? (firstPlayer ? playersNames[currentPlayers.indexOf(firstPlayer)] : 'Disconnected') : ''}
-                    </h4>
-                </Row>
-                <Row className="justify-content-md-center bg-cardset">
-                    <Col xs="auto" className="carta">
-                       {actualCards[0] &&  <CardSwitcher imgsource={dictImg[actualCards[0]]} /> }
-                    </Col>
-                    <Col xs="auto" className="carta">
-                       {actualCards[1] &&  <CardSwitcher imgsource={dictImg[actualCards[1]]} /> }
-                    </Col>
-                    <Col xs="auto" className="carta">
-                       {actualCards[2] &&  <CardSwitcher imgsource={dictImg[actualCards[2]]} /> }
-                    </Col>
-                </Row>
-            </Col>
+  const handleClick = (idx) => {
+    const infoSelectedCard = {
+        idPlayer: idOwnsSet,
+        offsetCard: idx,
+        nameFig: actualCards[idx]
+    };
+    console.log(infoSelectedCard);
+    setSelectedFigureCard(selectedFigureCard?.offsetCard == idx &&
+        selectedFigureCard?.idPlayer == idOwnsSet? null : infoSelectedCard);
+    setSelectedMovementCard([null, null]);
+    setSelectedTiles([]);
+  };
+  return (
+    <Row>
+      <Col className={isHorizontal ? "cardset-horizontal" : "cardset-vertical"}>
+        <Row className="justify-content-md-center">
+          <h4 className={turnPlayer == firstPlayer ? "has-turn" : "not-turn"}>
+            {position != 0
+              ? firstPlayer
+                ? playersNames[currentPlayers.indexOf(firstPlayer)]
+                : "Disconnected"
+              : ""}
+          </h4>
         </Row>
-    );
+        <Row className="justify-content-md-center bg-cardset">
+          <Col xs="auto" className="carta">
+            {actualCards[0] && (
+              <CardSwitcher
+                onSelect={() => handleClick(0)}
+                imgsource={dictImg[actualCards[0]]}
+                isSelected={selectedFigureCard && selectedFigureCard.offsetCard == 0 && selectedFigureCard.idPlayer == idOwnsSet}
+                />
+            )}
+          </Col>
+          <Col xs="auto" className="carta">
+            {actualCards[1] && (
+              <CardSwitcher
+                onSelect={() => handleClick(1)}
+                imgsource={dictImg[actualCards[1]]}
+                isSelected={selectedFigureCard && selectedFigureCard.offsetCard == 1 && selectedFigureCard.idPlayer == idOwnsSet}
+                />
+            )}
+          </Col>
+          <Col xs="auto" className="carta">
+            {actualCards[2] && (
+              <CardSwitcher
+                onSelect={() => handleClick(2)}
+                imgsource={dictImg[actualCards[2]]}
+                isSelected={selectedFigureCard && selectedFigureCard.offsetCard == 2 && selectedFigureCard.idPlayer == idOwnsSet}
+                />
+            )}
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+  );
 }
-

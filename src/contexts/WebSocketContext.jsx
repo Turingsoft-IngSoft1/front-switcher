@@ -79,17 +79,44 @@ export const WebSocketProvider = ({ children }) => {
                         setInfoPlayers(data);
                     }
                 });
+                getFiguresOnBoard(idGame, idPlayer).then(newFiguresOnBoard => {
+                    
+                    if (newFiguresOnBoard){
+                        setFiguresOnBoard(newFiguresOnBoard);
+                    }
+                });
             }
             if (lastMessage.data.includes('REFRESH_FIGURES')){
                 getGameFigures(idGame).then(data => {
+                    console.log('NUEVAS FIGURAS!!!');
+                    console.log(data);
                     if (data ){
                         setInfoPlayers(data);
+                    }
+                });
+                getFiguresOnBoard(idGame, idPlayer).then(newFiguresOnBoard => {
+                    
+                    if (newFiguresOnBoard){
+                        setFiguresOnBoard(newFiguresOnBoard);
                     }
                 });
             }
             if (lastMessage.data.includes('TURN')){
                 const [action, turnPlayerId] = lastMessage.data.split(' ');
                 setTurnPlayer(turnPlayerId);
+                getGameFigures(idGame).then(data => {
+                    console.log('NUEVAS FIGURAS!!!');
+                    console.log(data);
+                    if (data ){
+                        setInfoPlayers(data);
+                    }
+                });
+                getFiguresOnBoard(idGame, idPlayer).then(newFiguresOnBoard => {
+                    console.log("COLOCANDOFIGURAS");
+                    if (newFiguresOnBoard){
+                        setFiguresOnBoard(newFiguresOnBoard);
+                    }
+                });
             }
             if (lastMessage.data.includes('JOIN')) {
                 getPlayersInfo(idGame).then(data => {
@@ -124,10 +151,10 @@ export const WebSocketProvider = ({ children }) => {
 
                 setBoard(newBoard);
                 
-                console.log("FIGURES:");
+                
                 getFiguresOnBoard(idGame, idPlayer).then(newFiguresOnBoard => {
+                    
                     if (newFiguresOnBoard){
-                        console.log(newFiguresOnBoard);
                         setFiguresOnBoard(newFiguresOnBoard);
                     }
                 });
