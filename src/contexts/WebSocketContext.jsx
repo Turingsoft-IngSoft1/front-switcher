@@ -67,7 +67,7 @@ export const WebSocketProvider = ({ children }) => {
                 const [WinnerId, action] = lastMessage.data.split(' ');
                 if (action === 'WIN') {
                     console.log(`Existe Ganador y es unico`);
-                    setWinner(true);
+                    setWinner('abandono');
                 }
             }
             if (lastMessage.data.includes('GAME_STARTED')) {
@@ -158,6 +158,10 @@ export const WebSocketProvider = ({ children }) => {
                         setFiguresOnBoard(newFiguresOnBoard);
                     }
                 });
+            }
+            if (lastMessage.data.includes('CANCELLED')) {
+                console.log('Match has been cancelled, exiting...');
+                setWinner('cancelado');
             }
         }
     }, [lastMessage]);

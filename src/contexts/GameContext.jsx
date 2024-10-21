@@ -40,7 +40,7 @@ export const GameProvider = ({ children }) => {
     const [selectedFigureCard, setSelectedFigureCard] = useState(null);
     const [figureTile, setFigureTile] = useState(null);
     const [selectedTiles, setSelectedTiles] = useState([]); //fichas seleccionadas por el jugador
-    const [winner, setWinner] = useState(false); // indicconsta si hay un ganador
+    const [winner, setWinner] = useState('false'); // indicconsta si hay un ganador
 
     const value = {
         fase,
