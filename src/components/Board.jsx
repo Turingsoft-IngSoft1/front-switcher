@@ -26,16 +26,15 @@ export default function Board() {
     const [tilesToMatch, setTilesToMatch] = useState([]);
 
     function checkAndFetchCompleteFigure(tileSelected, figureSelected) {
-        console.log('params:' + tileSelected + figureSelected);
-        console.log(figureSelected);
         if(figuresOnBoard[figureSelected]) {
-            console.log('hay figura' + figureSelected);
             for (const color in figuresOnBoard[figureSelected]) {
                 const coordinatesList = figuresOnBoard[figureSelected][color];
                 for (const coordinates of coordinatesList) {
-                    if((coordinates[0] == tileSelected/6) &&(coordinates[1] == tileSelected % 6)) {
-                        console.log('FIGURA ' + figureSelected + 'FETCHEADA');
-                        fetchCompletedFigure();
+                    for(const tuple of coordinates){
+                        if((tuple[0] == Math.floor(tileSelected/6)) &&(tuple[1] == tileSelected % 6)) {
+                            console.log('FIGURA ' + figureSelected + 'FETCHEADA');
+                            // fetchCompletedFigure();
+                        }
                     }
                 }
             }
@@ -67,7 +66,7 @@ export default function Board() {
             return;
         }
         if(selectedFigureCard){
-            checkAndFetchCompleteFigure(index, selectedFigureCard);
+            checkAndFetchCompleteFigure(index, selectedFigureCard['nameFig']);
             setFigureTile(figureTile == index? null : index);
             return;
         }

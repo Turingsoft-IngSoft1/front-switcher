@@ -92,7 +92,8 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
   const handleClick = (idx) => {
     const infoSelectedCard = {
         idPlayer: idOwnsSet,
-        offsetCard: idx
+        offsetCard: idx,
+        nameFig: actualCards[idx]
     };
     console.log(infoSelectedCard);
     setSelectedFigureCard(selectedFigureCard?.offsetCard == idx &&
