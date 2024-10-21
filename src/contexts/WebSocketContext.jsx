@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { GameContext } from '../contexts/GameContext.jsx';
-import {getPlayersInfo, getGameFigures} from '../utils/gameServices.js';
+import {getPlayersInfo, getGameFigures, getBoard} from '../utils/gameServices.js';
 import {getFiguresOnBoard} from '../services/cardServices.js';
 
 export const WebSocketContext = createContext(null);
@@ -69,6 +69,11 @@ export const WebSocketProvider = ({ children }) => {
                     console.log(`Existe Ganador y es unico`);
                     setWinner('abandono');
                 }
+            }
+            if (lastMessage.data.includes('REFRESH_BOARD')){
+                getBoard(idGame).then(newBoard => {
+                    setBoard(newBoard);
+                });  
             }
             if (lastMessage.data.includes('GAME_STARTED')) {
                 const [action, turnId] = lastMessage.data.split(' ');

@@ -81,7 +81,7 @@ export default function CardSetMov ({requestNewCards}) {
                 <Col xs="auto" className="p-1" >
                     <MovementCard imgsource={imgCard1} 
                                   selected={selectedMovementCard && selectedMovementCard[1] === 0}
-                                  played={movCards[0][1] === 'played'} 
+                                  played={movCards[0][1] === 'played' || movCards[0][1] === 'confirmed'} 
                                   borderColor={selectedMovementCard && selectedMovementCard[1] === 0 ? borderColor : ""} 
                                   onSelect={() => handleSelect(0)}/>
                 </Col>
@@ -89,7 +89,7 @@ export default function CardSetMov ({requestNewCards}) {
                 <Col xs="auto" className="p-1">
                     <MovementCard imgsource={imgCard2} 
                                   selected={selectedMovementCard && selectedMovementCard[1] === 1}
-                                  played={movCards[1][1] === 'played'} 
+                                  played={movCards[1][1] === 'played' || movCards[1][1] === 'confirmed'} 
                                   borderColor={selectedMovementCard && selectedMovementCard[1] === 1 ? borderColor : ""} 
                                   onSelect={() =>handleSelect(1)}/>
                 </Col>
@@ -97,7 +97,7 @@ export default function CardSetMov ({requestNewCards}) {
                 <Col xs="auto" className="p-1">
                     <MovementCard imgsource={imgCard3} 
                                   selected={selectedMovementCard && selectedMovementCard[1] === 2}
-                                  played={movCards[2][1] === 'played'} 
+                                  played={movCards[2][1] === 'played' || movCards[2][1] === 'confirmed'} 
                                   borderColor={selectedMovementCard && selectedMovementCard[1] === 2 ? borderColor : ""} 
                                   onSelect={() => handleSelect(2)}/>
                 </Col>
