@@ -132,7 +132,7 @@ export const WebSocketProvider = ({ children }) => {
                         setPlayers(usersList);
                         setPlayersTurns(playersTurns);
                         setPlayersNames(playersNames);
-
+                        setBoard(Array(36).fill("dark"));
                     } else {
                         console.error('users_list is undefined');
                     }
