@@ -17,7 +17,7 @@ function NotifyWinner ({winner, handleHide}) {
     return (
         <Modal show={winner != 'false'} onHide={handleHide}>
         <Modal.Header>
-                {winner === idPlayer ? <h4>GANASTE!!!!</h4> : <h4>PERDISTE</h4>};
+                {winner == idPlayer ? <h4>GANASTE!!!!</h4> : <h4>PERDISTE</h4>}
         </Modal.Header>
         <Modal.Footer>
             <ExitButton intext='Cerrar' variant="success" />
