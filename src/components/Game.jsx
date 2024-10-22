@@ -13,10 +13,11 @@ import CardFigContainer from "../containers/CardSetContainer.jsx";
 import '../styles/cards.css';
 
 function NotifyWinner ({winner, handleHide}) {
+    const {idPlayer} = useContext(GameContext);
     return (
         <Modal show={winner != null} onHide={handleHide}>
         <Modal.Header>
-                {winner === playerId ? <h4>GANASTE!!!!</h4> : <h4>PERDISTE</h4>};
+                {winner === idPlayer ? <h4>GANASTE!!!!</h4> : <h4>PERDISTE</h4>};
         </Modal.Header>
         <Modal.Footer>
             <ExitButton intext='Cerrar' variant="success" />
