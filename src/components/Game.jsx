@@ -15,7 +15,7 @@ import '../styles/cards.css';
 function NotifyWinner ({winner, handleHide}) {
     const {idPlayer} = useContext(GameContext);
     return (
-        <Modal show={winner != null} onHide={handleHide}>
+        <Modal show={winner != 'false'} onHide={handleHide}>
         <Modal.Header>
                 {winner === idPlayer ? <h4>GANASTE!!!!</h4> : <h4>PERDISTE</h4>};
         </Modal.Header>
