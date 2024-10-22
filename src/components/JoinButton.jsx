@@ -46,6 +46,7 @@ function JoinButton ({selectedMatch}) {
           setIdPlayer(newIdPlayer);
           setNamePlayer(nickname);
           setFase('lobby');
+          setBoard(Array(36).fill("dark"));
           console.log(`Joined: ${selectedMatch.id}`)
         } catch (error) {
           console.error('Error:', error);
@@ -54,7 +55,7 @@ function JoinButton ({selectedMatch}) {
 
     return (
         <div>
-            <Button variant='success' onClick={handleJoinRequest} disabled={!selectedMatch}>
+            <Button className="join-btn" variant='success' onClick={handleJoinRequest} disabled={!selectedMatch}>
                 Unirse a la sala
             </Button>
             <Modal show={showModal} onHide={handleClose}>

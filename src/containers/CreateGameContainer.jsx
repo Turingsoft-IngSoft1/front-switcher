@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import CreateGame from '../components/CreateGame.jsx';
 import { GameContext } from '../contexts/GameContext.jsx';
+const isMock = import.meta.env.USE_MOCK;
+
 
 export default function CreateGameContainer({ onCreateGame }) {
   const { isOwner, setIsOwner, idGame, idPlayer, players, fase, setIdGame, setIdPlayer, setPlayers, setFase} = useContext(GameContext);
@@ -41,5 +43,5 @@ export default function CreateGameContainer({ onCreateGame }) {
     console.log('Partida (mockeada) creada con exito')
   }
 
-  return <CreateGame onCreateGame={createGame} />;
+  return <CreateGame onCreateGame={isMock ? createGameMock : createGame} />;
 }

@@ -1,24 +1,38 @@
 import {useState, useContext, useEffect} from "react";
-import { Container, Button, Row, Col } from "react-bootstrap";
+import { Container, Button, Row, Col, Modal } from "react-bootstrap";
 import '../styles/Board.css'
 import Board from './Board.jsx'
 import { GameContext } from '../contexts/GameContext.jsx';
 import ExitButton from './ExitButton.jsx';
 import PlayerBox from "./PlayerBox.jsx";
-import CardSet from './CardSet.jsx';
+import CardSetFig from './CardSet.jsx';
+
+function NotifyCancel ({winner, handleHide}) {
+    return (
+        <Modal show={winner == 'cancelado'} onHide={handleHide}>
+        <Modal.Header>
+                <h4> Se cancelo la partida </h4>
+        </Modal.Header>
+        <Modal.Footer>
+            <ExitButton intext='Cerrar' variant="success" />
+        </Modal.Footer>
+        </Modal>
+    );
+}
 
 function ButtonSet ({onStartClick}){
     
     const {isOwner} = useContext(GameContext);
             return (
                 <>
-                {isOwner && 
+                {isOwner ?
                     <>
-                        <Col xs="auto"><Button className="start-button" onClick = {onStartClick} >Iniciar Partida</Button></Col>
-                        <Col xs="auto" ><ExitButton intext="Abandonar Sala"/></Col>
-                    </>
+                        <Col xs="auto"><Button className="start-button" onClick={onStartClick}>Iniciar Partida</Button></Col>
+                        <Col xs="auto"><ExitButton intext="Cancelar Partida"/></Col>
+                    </> :
+                    <Col xs="auto"><ExitButton intext="Abandonar Partida"/></Col>
                 }
-            </>
+                </>
             );
 
 }
@@ -32,14 +46,28 @@ function Chat () {
     );
 }
 
-
-
-
 //CARTAS HARDCODEADAS, IMPLEMENTAR LUEGO
 /* Nota: por defecto, la interfaz se setea en pre-game, se deberia realizar un chequeo por si el jugador ya esta en una partida
          para pasar directamente a in-game sin tener que apretar el boton de comenzar juego*/
 export default function Lobby ({onStartGame}){
-    const { winner, setWinner, fase, idPlayer, namePlayer, players, playersTurns, playersNames, idGame, setBoard, setPlayers, setPlayersTurns, setPlayersNames} = useContext(GameContext);
+    const { setIdGame, setIdPlayer, winner, setWinner, fase, idPlayer, namePlayer, players, idGame, setInfoPlayers, turnPlayer,playerTurns, setBoard, setPlayers, setPlayersTurns, setPlayersNames,} = useContext(GameContext);
+
+    const handleHide = () => {
+        setFase('crear');
+        setShouldConnect(false);
+        setIsOwner(false);
+        setIdPlayer(null);
+        setIdGame(null);
+        setPlayers([]);
+        setCurrentTurn(null);
+        setBoard(Array(36).fill("dark"));
+        setFigureCards([]);
+        setMovCards([]);
+        setPlayersNames([]);
+        setInfoPlayers([]);
+        setPlayersTurns([]);
+        setWinner('false');
+    }
     
     const handleStart = (e) =>{
         e.preventDefault();
@@ -48,49 +76,41 @@ export default function Lobby ({onStartGame}){
         };
         onStartGame(gameData);
     }
+
+    const numberOfPlayers = players.length;
+
     return (
         <>
-             {/* Cartas del jugador 1, tablero jugador 3 */}
-            <Row>
-                <Col xs={4} md={3} className="d-flex align-items-center">
-                </Col>
-                <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
-                    <PlayerBox boxNumber={1}/>
-                </Col>
-                <Col xs={4} md={3} className="d-flex align-items-center" >
-                    
+            <Row className="justify-content-center">
+                <Col xs="auto" className="d-flex align-items-center justify-content-center">
+                    {numberOfPlayers > 1 ? <PlayerBox boxNumber={1}/>: <div className="empty-player"></div>}
                 </Col>
             </Row>
             <Row>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    <PlayerBox boxNumber={2}/>
+                    {numberOfPlayers > 2 ? <PlayerBox boxNumber={2}/> : <div className="empty-player"></div>}
                 </Col>
-                <Col xs={4} md={6}>
+                <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
                     <Board />
                 </Col>
                 <Col xs={4} md={3} className="d-flex align-items-center">
-                    <PlayerBox boxNumber={3}/>
+                    {numberOfPlayers > 3 ? <PlayerBox boxNumber={3}/> : <div className="empty-player"></div>}
                 </Col>
             </Row>
             <Row>
-                <Col xs={4} md={3} className="d-flex align-items-center">
-                </Col>
                 <Col xs={4} md={6} className="d-flex align-items-center justify-content-center">
-                    {namePlayer}
-                </Col>
-                <Col xs={4} md={3} className="d-flex align-items-center" >
-                    
+                    <h4>{namePlayer}</h4>
                 </Col>
             </Row>
-                            {/* Cartas del jugador usuario (0) */}
-            
+
+            {/* Cartas del jugador 0*/} 
             <Row className="justify-content-md-center">
-                <CardSet className="card-set"/>
             </Row>
-            {/* acciones del jugador */}
+            {/* acciones del jugador 0*/}
             <Row className="justify-content-md-around p-3">
                 <ButtonSet onStartClick= {handleStart}/>
             </Row>
+            <NotifyCancel winner = {winner} handleHide={handleHide}/>
         </>
     );
 }

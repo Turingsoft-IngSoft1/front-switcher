@@ -1,10 +1,57 @@
 .card-switcher{
     width: 90px;
     height: 90px;
-    border-radius: 15%;
+    border-radius: 5%;
 }
 
 .img-content{
     width: 90px;
     height: 90px;
+}
+
+.img-content-mov {
+    width: 100px; 
+    height: auto;
+}
+
+.bg-cardset {
+    background-color: silver;
+}
+
+.cardset-vertical {
+    margin: 10% 35%;
+}
+
+.movement-card-switcher{
+    transition: border 0.1s ease;
+}
+.movement-card-switcher.selected {
+    border: 3px solid red;
+    border-radius: 9%;
+}
+.has-turn {
+    color: #000000; /* Color Negro */
+    animation: vibrate 0.5s 1;
+    text-shadow: 0 0 2px #000000; /* Efecto de glow */
+    font-weight: bold; /* Bold */
+}
+
+.not-turn {
+    color: inherit;
+    animation: none;
+    text-shadow: none;
+    font-weight: normal;
+}
+
+.is-selected-figure {
+    background-color: rgb(131, 142, 241)
+}
+
+@keyframes vibrate {
+    0% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+    100% { transform: translate(0); }
 }

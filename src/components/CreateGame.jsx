@@ -46,7 +46,7 @@ export default function CreateGame({ onCreateGame }) {
           <Form.Control required type="number" min="2" max="4" name="submitted-gametitle" placeholder="Máximo" onChange={e => setMaxPlayers(e.target.value)} />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button id="crear-partida-btn" variant="primary" type="submit">
           Crear Partida
         </Button>
       </Form>
