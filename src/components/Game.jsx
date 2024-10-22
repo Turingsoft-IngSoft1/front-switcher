@@ -14,9 +14,9 @@ import '../styles/cards.css';
 
 function NotifyWinner ({winner, handleHide}) {
     return (
-        <Modal show={winner == 'abandono'} onHide={handleHide}>
+        <Modal show={winner != null} onHide={handleHide}>
         <Modal.Header>
-                <h4> GANASTE!!! </h4>
+                {winner === playerId ? <h4>GANASTE!!!!</h4> : <h4>PERDISTE</h4>};
         </Modal.Header>
         <Modal.Footer>
             <ExitButton intext='Cerrar' variant="success" />
