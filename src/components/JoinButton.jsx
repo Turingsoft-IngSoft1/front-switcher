@@ -46,6 +46,7 @@ function JoinButton ({selectedMatch}) {
           setIdPlayer(newIdPlayer);
           setNamePlayer(nickname);
           setFase('lobby');
+          setBoard(Array(36).fill("dark"));
           console.log(`Joined: ${selectedMatch.id}`)
         } catch (error) {
           console.error('Error:', error);

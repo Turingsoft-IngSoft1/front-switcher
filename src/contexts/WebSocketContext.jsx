@@ -67,7 +67,7 @@ export const WebSocketProvider = ({ children }) => {
                 const [WinnerId, action] = lastMessage.data.split(' ');
                 if (action === 'WIN') {
                     console.log(`Existe Ganador y es unico`);
-                    setWinner('abandono');
+                    setWinner(WinnerId);
                 }
             }
             if (lastMessage.data.includes('REFRESH_BOARD')){
