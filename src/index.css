@@ -6,5 +6,8 @@ body, html {
 
 #root {
   min-height: 100vh;
-  background-color: rgb(221, 188, 169);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 1s ease-in-out; /* Transición suave de 1 segundo */
 }

@@ -17,7 +17,12 @@ Creación de GameContext para la organización general del juego. Se debe tener
                     figCards: ['fig01', 'fige02', 'fig11'],
                 }
 */
-import React, { createContext, useState} from 'react';
+import React, { createContext, useEffect, useState} from 'react';
+import defaultBackground from '../styles/default_background.jpg';
+import redBackground from '../styles/red_background.jpg';
+import greenBackground from '../styles/green_background.jpg';
+import blueBackground from '../styles/blue_background.jpg';
+import yellowBackground from '../styles/yellow_background.jpg';
 
 export const GameContext = createContext();
 export const GameProvider = ({ children }) => {
@@ -40,6 +45,7 @@ export const GameProvider = ({ children }) => {
     const [selectedFigureCard, setSelectedFigureCard] = useState(null);
     const [figureTile, setFigureTile] = useState(null);
     const [selectedTiles, setSelectedTiles] = useState([]); //fichas seleccionadas por el jugador
+    const [blockedColor, setBlockedColor] = useState('default'); //informacion sobre el color bloqueado (si no estamos in-game debe ser default)
     const [winner, setWinner] = useState('false'); // indicconsta si hay un ganador
 
     const value = {
@@ -80,9 +86,27 @@ export const GameProvider = ({ children }) => {
         figureTile,
         setFigureTile,
         selectedTiles, setSelectedTiles,
+        blockedColor,
+        setBlockedColor,
         winner,
         setWinner
     };
+
+    //cambia el fondo de la app segun el color bloqueado
+    useEffect ( () => {
+        const backgrounds = {
+            default : defaultBackground,
+            red : redBackground,
+            green : greenBackground,
+            blue : blueBackground,
+            yellow : yellowBackground,
+        };
+
+        const rootElement = document.getElementById('root');
+        rootElement.style.backgroundImage = `url(${backgrounds[blockedColor]})`;
+
+    }, [blockedColor]);
+
 
     return (
         <GameContext.Provider value={value}>
