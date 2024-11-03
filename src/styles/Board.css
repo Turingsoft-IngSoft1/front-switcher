@@ -34,3 +34,9 @@
   background-color: rgb(221, 170, 102);
 }
  
+.img-blocked-color{
+  height:100px;
+  width: 100px;
+  margin: 1px;
+  border: 2px;
+}

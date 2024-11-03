@@ -1,9 +1,23 @@
 import {useEffect, useState, useContext} from "react";
-import { Card, Container, Button, Row, Col } from "react-bootstrap";
+import { Card, Container, Button, Row, Col, Image} from "react-bootstrap";
 import '../styles/Board.css'
 import { GameContext } from '../contexts/GameContext.jsx';
 import {useFigureCard} from '../services/cardServices.js';
+import BlockedRed from '../styles/cards/A.svg'
+import BlockedBlue from '../styles/cards/D.svg'
+import BlockedGreen from '../styles/cards/C.svg'
+import BlockedYellow from '../styles/cards/B.svg'
+//import BlockedNone from '../styles/cards/x.svg'
 
+function BlockedColor({imgsource}){
+    return (
+        <Container>
+            <Row>
+                <Image src={imgsource} className="img-blocked-color"/>
+            </Row>
+        </Container>
+    )
+}
 
 function Tile({ variant, onTileClick, selected, figureMatch }) {
     return (
@@ -20,7 +34,7 @@ function Tile({ variant, onTileClick, selected, figureMatch }) {
 
 
 export default function Board() {
-    const { board, idGame, idPlayer, turnPlayer, setMovCards, movCards, selectedFigureCard, setSelectedFigureCard, figuresOnBoard, figureTile, setFigureTile, selectedTiles, setSelectedTiles} = useContext(GameContext);
+    const {fase, board, idGame, idPlayer, turnPlayer, setMovCards, movCards, selectedFigureCard, setSelectedFigureCard, figuresOnBoard, figureTile, setFigureTile, selectedTiles, setSelectedTiles} = useContext(GameContext);
     const getTileVariant = (index) => {
         return board[index];
     };
@@ -124,6 +138,18 @@ export default function Board() {
                         })}
                     </Row>
                 ))}
+                {fase == 'in-game'?
+                                <Row className="justify-content-md-center">
+                                <Col className="d-flex align-items-center justify-content-center">
+                                <h4>Color bloqueado: </h4>
+                                </Col>
+                                <Col className="d-flex align-items-center justify-content-center">
+                                <BlockedColor/>
+                                </Col>
+                            </Row> 
+                            :
+                            <div></div> }
+
             </Container>
         </div>
     );
