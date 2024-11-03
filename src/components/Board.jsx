@@ -34,7 +34,7 @@ function Tile({ variant, onTileClick, selected, figureMatch }) {
 
 
 export default function Board() {
-    const {fase, board, idGame, idPlayer, turnPlayer, setMovCards, movCards, selectedFigureCard, setSelectedFigureCard, figuresOnBoard, figureTile, setFigureTile, selectedTiles, setSelectedTiles} = useContext(GameContext);
+    const {fase, board, blockedColor, idGame, idPlayer, turnPlayer, setMovCards, movCards, selectedFigureCard, setSelectedFigureCard, figuresOnBoard, figureTile, setFigureTile, selectedTiles, setSelectedTiles} = useContext(GameContext);
     const getTileVariant = (index) => {
         return board[index];
     };
@@ -138,7 +138,7 @@ export default function Board() {
                         })}
                     </Row>
                 ))}
-                {fase == 'in-game'?
+                {blockedColor != 'default'?
                                 <Row className="justify-content-md-center">
                                 <Col className="d-flex align-items-center justify-content-center">
                                 <h4>Color bloqueado: </h4>
