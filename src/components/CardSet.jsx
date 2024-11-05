@@ -96,10 +96,10 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
 
     useEffect(() => {
         const actualPlayer = infoPlayers.find((p) => p.id_user === idOwnsSet);
-        setActualCards(actualPlayer ? actualPlayer.figures : []);
+        setActualCards(actualPlayer ? actualPlayer.figures_available : []);
         console.log("ACTUALIZACIONNN");
-        if (actualPlayer && actualPlayer.figures) {
-            console.log(actualPlayer.figures);
+        if (actualPlayer && actualPlayer.figures_available) {
+            console.log(actualPlayer.figures_available);
         }
     }, [infoPlayers]);
 
