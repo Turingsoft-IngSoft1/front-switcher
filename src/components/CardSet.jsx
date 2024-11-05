@@ -90,9 +90,6 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
     } = useContext(GameContext);
     const [currentPlayers, setCurrentPlayers] = useState(players);
     const [actualCards, setActualCards] = useState([]);
-    const blocked = [{name: 'fig01', isBlocked: true}];
-    const unblocked = [{name: 'fig02', isBlocked: false},
-                        {name: 'fig03', isBlocked: false}];
     let firstPlayer = "";
 
     useEffect(() => {
@@ -101,7 +98,21 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
 
     useEffect(() => {
         const actualPlayer = infoPlayers.find((p) => p.id_user === idOwnsSet);
-        setActualCards(actualPlayer ? [...blocked, ...unblocked] : []);
+        console.log(actualPlayer);
+        if(actualPlayer){
+            const unblocked = actualPlayer.figures_available.map(
+                (fig) => ({name: fig, isBlocked: false})
+            )
+            const blocked = actualPlayer.figures_blocked.map(
+                (fig) => ({name: fig, isBlocked: true})
+            )
+            const figures_concat = blocked.concat(unblocked);
+        
+            setActualCards(actualPlayer ? figures_concat : []);
+            console.log(figures_concat);
+        }
+        
+        
         console.log("ACTUALIZACIONNN");
         if (actualPlayer && actualPlayer.figures) {
             console.log(actualPlayer.figures);

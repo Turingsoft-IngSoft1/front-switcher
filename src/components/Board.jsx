@@ -37,9 +37,10 @@ export default function Board() {
     const [tilesToMatch, setTilesToMatch] = useState([]);
 
     async function checkAndFetchCompleteFigure(tileSelected, figureSelected) {
-        if (figuresOnBoard[figureSelected]) {
-            for (const color in figuresOnBoard[figureSelected]) {
-                const coordinatesList = figuresOnBoard[figureSelected][color];
+        const nameFig = figureSelected["nameFig"];
+        if (figuresOnBoard[nameFig]) {
+            for (const color in figuresOnBoard[nameFig]) {
+                const coordinatesList = figuresOnBoard[nameFig][color];
                 for (const coordinates of coordinatesList) {
                     for (const tuple of coordinates) {
                         if (
@@ -47,12 +48,12 @@ export default function Board() {
                             tuple[1] == tileSelected % 6
                         ) {
                             console.log(
-                                "FIGURA " + figureSelected + " FETCHEADA"
+                                "FIGURA " + nameFig + " FETCHEADA"
                             );
                             const figureData = {
                                 id_game: idGame,
                                 id_player: idPlayer,
-                                name: figureSelected,
+                                name: nameFig,
                                 figure_pos: coordinates,
                             };
 
@@ -94,12 +95,13 @@ export default function Board() {
     }, [figuresOnBoard]);
 
     const handleTileClick = (index) => {
+        // TODO: AGREGAR BLOQUEO DE FIGURA!!!!
         if (idPlayer != turnPlayer) {
             console.log("Selección permitida solo en turno propio");
             return;
         }
         if (selectedFigureCard) {
-            checkAndFetchCompleteFigure(index, selectedFigureCard["nameFig"]);
+            checkAndFetchCompleteFigure(index, selectedFigureCard);
             setFigureTile(figureTile == index ? null : index);
             setSelectedFigureCard(null);
             return;
