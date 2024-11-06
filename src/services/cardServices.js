@@ -202,6 +202,11 @@ export async function blockFigureCard(figureData) {
     }
 }
 
+export async function blockFigureCardMock(figureData){
+    const messageContent = "MOCK bloqueando carta de " + figureData["id_target"]
+    return {message: messageContent};
+}
+
 /**
  * Desbloquea una carta de figura propia
  *

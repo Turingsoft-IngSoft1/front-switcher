@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { Card, Container, Button, Row, Col } from "react-bootstrap";
 import "../styles/Board.css";
 import { GameContext } from "../contexts/GameContext.jsx";
-import { useFigureCard } from "../services/cardServices.js";
+import { useFigureCard, blockFigureCardMock} from "../services/cardServices.js";
 
 function Tile({ variant, onTileClick, selected, figureMatch }) {
     return (
@@ -75,6 +75,17 @@ export default function Board() {
         }
     }
 
+    async function checkAndFetchBlockFigure(tileSelected, figureSelected){
+        const figureData = {
+            id_game: idGame,
+            id_caller: idPlayer,
+            id_target: figureSelected["idPlayer"],
+            figure_name: figureSelected["nameFig"]
+        }
+        const message = await blockFigureCardMock(figureData);
+        console.log(message.message);
+    }
+
     useEffect(() => {
         const obtainAllTiles = () => {
             const allTiles = [];
@@ -100,12 +111,18 @@ export default function Board() {
             console.log("Selección permitida solo en turno propio");
             return;
         }
-        if (selectedFigureCard) {
+        if (selectedFigureCard && idPlayer == selectedFigureCard["idPlayer"]) {
+            console.log("jugando carta");
+            console.log(selectedFigureCard);
             checkAndFetchCompleteFigure(index, selectedFigureCard);
             setFigureTile(figureTile == index ? null : index);
             setSelectedFigureCard(null);
             return;
         }
+        else if(selectedFigureCard && idPlayer != selectedFigureCard["idPlayer"]){
+                checkAndFetchBlockFigure(index, selectedFigureCard);
+                console.log("Bloqueando/desbloqueando figura");
+            }
         setSelectedTiles((prevSelected) => {
             // Si la ficha ya está seleccionada, deseleccionarla
             if (prevSelected.includes(index)) {
