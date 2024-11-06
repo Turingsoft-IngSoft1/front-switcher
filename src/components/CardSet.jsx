@@ -131,11 +131,14 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
             idPlayer: idOwnsSet,
             offsetCard: idx,
             nameFig: actualCards[idx].name,
+            isBlocked: actualCards[idx].isBlocked
         };
         console.log(infoSelectedCard);
+        console.log(actualCards);
         setSelectedFigureCard(
             selectedFigureCard?.offsetCard == idx &&
-                selectedFigureCard?.idPlayer == idOwnsSet
+                selectedFigureCard?.idPlayer == idOwnsSet &&
+                !infoSelectedCard?.isBlocked
                 ? null
                 : infoSelectedCard
         );
