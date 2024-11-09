@@ -75,7 +75,7 @@ export default function Game({ onPassTurn, onUpdateBoard, onConfirmMovement }) {
     return (
         <>
             <Row>
-                <Col xs={9}>
+                <Col xs={10}>
                     <Row className="justify-content-center">
                         <Col
                             xs="auto"
@@ -169,7 +169,7 @@ export default function Game({ onPassTurn, onUpdateBoard, onConfirmMovement }) {
                         />
                     </Row>
                 </Col>
-                <Col xs={3} style={{ paddingRight: "20px" }}>
+                <Col xs={2} className="px-0">
                     <Chat />
                 </Col>
             </Row>

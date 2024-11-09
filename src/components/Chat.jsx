@@ -42,7 +42,7 @@ const AsciiArtSelector = ({ onSelect }) => {
                             key={index}
                             className="ascii-art-item"
                             onClick={() => handleSelect(art)}
-                            style={{ display: 'block', width: '100%', marginBottom: '5px' }}
+                            style={{ display: 'block'}}
                         >
                             {art}
                         </button>
@@ -53,9 +53,9 @@ const AsciiArtSelector = ({ onSelect }) => {
     );
 
     return (
-        <div className="ascii-selector" style={{ height: '100%' }}>
-            <button className="ascii-button" onClick={handleClick} style={{ height: '100%', width: '60px' }}>
-                ASCII
+        <div className="ascii-selector" >
+            <button className="ascii-button" onClick={handleClick} >
+                Emojis
             </button>
             <Overlay
                 show={Boolean(target)}
