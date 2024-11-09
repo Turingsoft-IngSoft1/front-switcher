@@ -134,3 +134,27 @@ async function cancelMovements(idGame) {
 }
 
 export { getPlayersInfo, cancelMovements };
+
+export async function sendMessage(idGame, idPlayer, message) {
+    try {
+        const response = await fetch(
+            `http://127.0.0.1:8000/chat/${idGame}/${idPlayer}?message=${encodeURIComponent(message)}`,
+            {
+                method: "POST",
+                headers: {
+                    accept: "application/json",
+                },
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! : ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error sending message:", error);
+        return null;
+    }
+}
