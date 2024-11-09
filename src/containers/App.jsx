@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import MatchesList from "./MatchesListContainer.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -25,6 +25,13 @@ const Main = () => {
     const { fase, idGame, idPlayer, players } = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
 
+    const [profileId, setProfileId] = useState(null);
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(";").shift();
+    }
     useEffect(() => {
         if (fase === "lobby") {
             // Activar la conexion del WebSocket
@@ -32,14 +39,23 @@ const Main = () => {
         }
     }, [fase]);
 
+    useEffect(() => {
+        const id = getCookie("id");
+        setProfileId(id);
+    }, []);
+
+    const handleNewProfile = (newId) => {
+        setProfileId(newId);
+    };
     return (
         <Container className="pt-5">
             {fase === "inicial" && (
-                <MainPage/>
+                <MainPage onNewProfile={handleNewProfile}/>
             )}
             {fase === "crear" && (
                 <Col>
                     <Row md={12} className="mb-4">
+                        <p>ID guardado en la cookie: {profileId}</p>
                         <MatchesList />
                     </Row>
                     <Row md={12}>

@@ -9,10 +9,17 @@ export default function CreateGame({ onCreateGame }) {
     const [gameTitle, setGameTitle] = useState("");
     const [minPlayers, setMinPlayers] = useState("");
     const [maxPlayers, setMaxPlayers] = useState("");
-
+    
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(";").shift();
+    }
     const handleSubmit = (e) => {
         e.preventDefault();
+        const profile_id = getCookie("id");
         const gameData = {
+            "profile_id": profile_id,
             game_name: gameTitle,
             owner_name: username,
             min_player: minPlayers,
