@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import React, { useState, useEffect, useRef, useContext } from 'react';
+import Overlay from 'react-bootstrap/Overlay';
 import Popover from 'react-bootstrap/Popover';
-
+import { sendMessage } from '../utils/gameServices';
+import { GameContext } from "../contexts/GameContext.jsx";
 import '../styles/Chat.css';
 
 const AsciiArtSelector = ({ onSelect }) => {
@@ -11,19 +12,39 @@ const AsciiArtSelector = ({ onSelect }) => {
         'ಠ_ಠ',
         '(╯°□°）╯︵ ┻━┻',
         '┬─┬ ノ( ゜-゜ノ)',
-        ' /\\_/\\\n( o.o )\n > ^ <',
-        '(̿▀̿ ̿Ĺ̯̿̿▀̿ ̿)̄',
+        '(^._.^)ﾉ',
+        '(̿▀̿ ̿Ĺ̯̿̿▀̿ ̿)̄',
         '(ಥ﹏ಥ)',
     ];
 
+    const [target, setTarget] = useState(null);
+
+    const handleClick = (event) => {
+        setTarget(event.target);
+    };
+
+    const handleClose = () => {
+        setTarget(null);
+    };
+
+    const handleSelect = (art) => {
+        onSelect(art);
+        handleClose();
+    };
+
     const popover = (
-        <Popover className="ascii-art-popover">
+        <Popover id="ascii-art-popover" className="ascii-art-popover">
             <Popover.Body>
-                <div className="ascii-art-selector">
+                <div className="ascii-art-list">
                     {asciiArts.map((art, index) => (
-                        <div key={index} onClick={() => onSelect(art)} className="ascii-art-item">
+                        <button
+                            key={index}
+                            className="ascii-art-item"
+                            onClick={() => handleSelect(art)}
+                            style={{ display: 'block', width: '100%', marginBottom: '5px' }}
+                        >
                             {art}
-                        </div>
+                        </button>
                     ))}
                 </div>
             </Popover.Body>
@@ -31,13 +52,20 @@ const AsciiArtSelector = ({ onSelect }) => {
     );
 
     return (
-        <OverlayTrigger
-            trigger={['click', 'focus']}
-            placement="left"
-            overlay={popover}
-        >
-            <button className="ascii-button">ASCII</button>
-        </OverlayTrigger>
+        <div className="ascii-selector" style={{ height: '100%' }}>
+            <button className="ascii-button" onClick={handleClick} style={{ height: '100%', width: '60px' }}>
+                ASCII
+            </button>
+            <Overlay
+                show={Boolean(target)}
+                target={target}
+                placement="left"
+                rootClose
+                onHide={handleClose}
+            >
+                {popover}
+            </Overlay>
+        </div>
     );
 };
 
@@ -47,6 +75,7 @@ const Chat = () => {
     const [receivedMessage, setReceivedMessage] = useState('');
     const [sender, setSender] = useState('');
     const messagesEndRef = useRef(null);
+    const { idGame, idPlayer } = useContext(GameContext);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -56,10 +85,12 @@ const Chat = () => {
         scrollToBottom();
     }, [messages]);
 
-    const handleSendMessage = () => {
+    const handleSendMessage = async () => {
         if (newMessage.trim() !== '') {
-            setMessages([...messages, { text: newMessage, sender: 'me' }]);
+            const message = newMessage;
+            setMessages([...messages, { text: message, sender: 'me' }]);
             setNewMessage('');
+            await sendMessage(idGame, idPlayer, message);
         }
     };
 
@@ -104,8 +135,9 @@ const Chat = () => {
                     style={{ resize: 'none' }}
                 />
                 <button onClick={handleSendMessage}>Send</button>
-                <AsciiArtSelector onSelect={(art) => {
+                <AsciiArtSelector onSelect={async (art) => {
                     setMessages([...messages, { text: art, sender: 'me' }]);
+                    await sendMessage(idGame, idPlayer, art);
                 }}/>
             </div>
             <div className="input">
