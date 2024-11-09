@@ -9,6 +9,7 @@ import Game from "../components/Game.jsx";
 import { GameContext, GameProvider } from "../contexts/GameContext.jsx";
 import { WebSocketProvider } from "../contexts/WebSocketContext.jsx";
 import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
+import MainPage from "../components/MainPage/MainPage.jsx";
 
 function App() {
     return (
@@ -33,6 +34,9 @@ const Main = () => {
 
     return (
         <Container className="pt-5">
+            {fase === "inicial" && (
+                <MainPage/>
+            )}
             {fase === "crear" && (
                 <Col>
                     <Row md={12} className="mb-4">

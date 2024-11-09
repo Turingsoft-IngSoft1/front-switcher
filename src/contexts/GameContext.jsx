@@ -21,7 +21,7 @@ import React, { createContext, useState } from "react";
 
 export const GameContext = createContext();
 export const GameProvider = ({ children }) => {
-    const [fase, setFase] = useState("crear");
+    const [fase, setFase] = useState("inicial");
     const [isOwner, setIsOwner] = useState(false);
     const [idPlayer, setIdPlayer] = useState(null); // id del jugador
     const [namePlayer, setNamePlayer] = useState(null); //nombre del jugador
