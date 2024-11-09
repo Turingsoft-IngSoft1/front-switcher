@@ -7,6 +7,7 @@ import ExitButton from "./ExitButton.jsx";
 import PlayerBox from "./PlayerBox.jsx";
 import CardSetFig from "./CardSet.jsx";
 import Chat from "./Chat.jsx";
+import { WebSocketContext, ChatWebSocketContext} from "../contexts/WebSocketContext.jsx";
 
 function NotifyCancel({ winner, handleHide }) {
     return (
@@ -66,10 +67,13 @@ export default function Lobby({ onStartGame }) {
         setPlayersTurns,
         setPlayersNames,
     } = useContext(GameContext);
-
+    const { setShouldConnect } = useContext(WebSocketContext);
+    const { setShouldConnectChat } = useContext(ChatWebSocketContext);
+    
     const handleHide = () => {
         setFase("crear");
         setShouldConnect(false);
+        setShouldConnectChat(false);
         setIsOwner(false);
         setIdPlayer(null);
         setIdGame(null);

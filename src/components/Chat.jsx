@@ -3,6 +3,7 @@ import Overlay from 'react-bootstrap/Overlay';
 import Popover from 'react-bootstrap/Popover';
 import { sendMessage } from '../utils/gameServices';
 import { GameContext } from "../contexts/GameContext.jsx";
+import { ChatWebSocketContext } from "../contexts/WebSocketContext.jsx"; 
 import '../styles/Chat.css';
 
 const AsciiArtSelector = ({ onSelect }) => {
@@ -72,10 +73,24 @@ const AsciiArtSelector = ({ onSelect }) => {
 const Chat = () => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
-    const [receivedMessage, setReceivedMessage] = useState('');
-    const [sender, setSender] = useState('');
     const messagesEndRef = useRef(null);
     const { idGame, idPlayer } = useContext(GameContext);
+    const { setShouldConnectChat } = useContext(ChatWebSocketContext); 
+
+    useEffect(() => {
+        setShouldConnectChat(true);
+        return () => setShouldConnectChat(false);
+    }, [setShouldConnectChat]);
+
+    useEffect(() => {
+        const handleChatMessage = (event) => {
+            const { sender, message } = event.detail;
+            setMessages(prev => [...prev, { text: message, sender }]);
+        };
+
+        document.addEventListener('chatMessage', handleChatMessage);
+        return () => document.removeEventListener('chatMessage', handleChatMessage);
+    }, []);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -94,22 +109,10 @@ const Chat = () => {
         }
     };
 
-    const handleReceiveMessage = () => {
-        if (receivedMessage.trim() !== '' && sender.trim() !== '') {
-            setMessages([...messages, { text: receivedMessage, sender }]);
-            setReceivedMessage('');
-            setSender('');
-        }
-    };
-
-    const handleKeyPress = (event, type) => {
+    const handleKeyPress = (event) => {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
-            if (type === 'send') {
-                handleSendMessage();
-            } else if (type === 'receive') {
-                handleReceiveMessage();
-            }
+            handleSendMessage();
         }
     };
 
@@ -131,7 +134,7 @@ const Chat = () => {
                 <textarea
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
-                    onKeyDown={(e) => handleKeyPress(e, 'send')}
+                    onKeyDown={handleKeyPress}
                     style={{ resize: 'none' }}
                 />
                 <button onClick={handleSendMessage}>Send</button>
@@ -139,22 +142,6 @@ const Chat = () => {
                     setMessages([...messages, { text: art, sender: 'me' }]);
                     await sendMessage(idGame, idPlayer, art);
                 }}/>
-            </div>
-            <div className="input">
-                <input
-                    type="text"
-                    placeholder="Sender name"
-                    value={sender}
-                    onChange={(e) => setSender(e.target.value)}
-                />
-                <textarea
-                    placeholder="Received message"
-                    value={receivedMessage}
-                    onChange={(e) => setReceivedMessage(e.target.value)}
-                    onKeyDown={(e) => handleKeyPress(e, 'receive')}
-                    style={{ resize: 'none' }}
-                />
-                <button onClick={handleReceiveMessage}>Receive</button>
             </div>
         </div>
     );

@@ -7,7 +7,7 @@ import PlayerBox from "./PlayerBox.jsx";
 import ExitButton from "./ExitButton.jsx";
 import ButtonSet from "./ButtonSet.jsx";
 import CardSetMov from "./CardSetMov.jsx";
-import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
+import { WebSocketContext, ChatWebSocketContext} from "../contexts/WebSocketContext.jsx";
 import CardMovContainer from "../containers/CardMovContainer.jsx";
 import CardFigContainer from "../containers/CardSetContainer.jsx";
 import "../styles/cards.css";
@@ -44,12 +44,14 @@ export default function Game({ onPassTurn, onUpdateBoard, onConfirmMovement }) {
         setWinner,
     } = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
+    const { setShouldConnectChat } = useContext(ChatWebSocketContext);
 
     const numberOfPlayers = players.length;
 
     const handleHide = () => {
         setFase("crear");
         setShouldConnect(false);
+        setShouldConnectChat(false);
         setIsOwner(false);
         setIdPlayer(null);
         setIdGame(null);
