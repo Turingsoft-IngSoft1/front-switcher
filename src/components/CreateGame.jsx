@@ -19,14 +19,13 @@ export default function CreateGame({ onCreateGame }) {
         e.preventDefault();
         const profile_id = getCookie("id");
         const gameData = {
-            "profile_id": profile_id,
             game_name: gameTitle,
             owner_name: username,
             min_player: minPlayers,
             max_player: maxPlayers,
         };
         setNamePlayer(username);
-        onCreateGame(gameData);
+        onCreateGame(gameData, profile_id);
     };
 
     return (

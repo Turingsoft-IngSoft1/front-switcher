@@ -16,10 +16,10 @@ export default function CreateGameContainer({ onCreateGame }) {
         setPlayers,
         setFase,
     } = useContext(GameContext);
-    const createGame = async (gameData) => {
+    const createGame = async (gameData, profileId) => {
         try {
             //TODO: direccion de api
-            const response = await fetch("http://127.0.0.1:8000/create_game", {
+            const response = await fetch(`http://127.0.0.1:8000/create_game?profile_id=${profileId}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
