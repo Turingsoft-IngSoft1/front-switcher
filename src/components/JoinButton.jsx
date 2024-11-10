@@ -17,6 +17,7 @@ function JoinButton({ selectedMatch }) {
         setNamePlayer,
         setPlayers,
         setFase,
+        setBoard,
     } = useContext(GameContext);
     const [showModal, setShowModal] = useState(false);
     const [nickname, setNickname] = useState("");

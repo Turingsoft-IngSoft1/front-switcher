@@ -1,8 +1,13 @@
-import { useEffect, useState, useContext } from "react";
-import { Card, Container, Button, Row, Col } from "react-bootstrap";
-import "../styles/Board.css";
-import { GameContext } from "../contexts/GameContext.jsx";
-import { useFigureCard } from "../services/cardServices.js";
+import {useEffect, useState, useContext} from "react";
+import { Card, Container, Button, Row, Col, Image} from "react-bootstrap";
+import '../styles/Board.css'
+import { GameContext } from '../contexts/GameContext.jsx';
+import {useFigureCard} from '../services/cardServices.js';
+import BlockedRed from '../styles/cards/A.svg'
+import BlockedBlue from '../styles/cards/D.svg'
+import BlockedGreen from '../styles/cards/C.svg'
+import BlockedYellow from '../styles/cards/B.svg'
+//import BlockedNone from '../styles/cards/x.svg'
 
 function Tile({ variant, onTileClick, selected, figureMatch }) {
     return (
@@ -18,6 +23,7 @@ function Tile({ variant, onTileClick, selected, figureMatch }) {
 export default function Board() {
     const {
         board,
+        blockedColor,
         idGame,
         idPlayer,
         turnPlayer,
@@ -142,6 +148,7 @@ export default function Board() {
                         })}
                     </Row>
                 ))}
+
             </Container>
         </div>
     );

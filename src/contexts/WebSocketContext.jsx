@@ -14,6 +14,7 @@ export const WebSocketProvider = ({ children }) => {
     const [shouldConnect, setShouldConnect] = useState(false);
     const {
         board,
+        setBlockedColor,
         players,
         playersTurns,
         playersNames,
@@ -102,8 +103,9 @@ export const WebSocketProvider = ({ children }) => {
                 }
             }
             if (lastMessage.data.includes("REFRESH_BOARD")) {
-                getBoard(idGame).then((newBoard) => {
-                    setBoard(newBoard);
+                getBoard(idGame).then((newResponse) => {
+                    setBoard(newResponse.board);
+                    setBlockedColor(newResponse.blocked_color);
                 });
             }
             if (lastMessage.data.includes("GAME_STARTED")) {
@@ -221,5 +223,56 @@ export const WebSocketProvider = ({ children }) => {
         <WebSocketContext.Provider value={{ shouldConnect, setShouldConnect }}>
             {children}
         </WebSocketContext.Provider>
+    );
+};
+
+export const ChatWebSocketContext = createContext(null);
+
+export const ChatWebSocketProvider = ({ children }) => {
+    const [shouldConnectChat, setShouldConnectChat] = useState(false);
+    const { idGame, idPlayer } = useContext(GameContext);
+    const { lastMessage, readyState } = useWebSocket(
+        `ws://localhost:8000/chat/${idGame}/${idPlayer}`,
+        {},
+        shouldConnectChat
+    );
+
+    useEffect(() => {
+        switch (readyState) {
+            case ReadyState.CONNECTING:
+                console.log("Chat: Conectando...");
+                break;
+            case ReadyState.OPEN:
+                console.log("Chat: Conexión establecida");
+                break;
+            case ReadyState.CLOSED:
+                console.log("Chat: Conexión cerrada");
+                break;
+            default:
+                console.log("Chat: Estado desconocido");
+                break;
+        }
+    }, [readyState]);
+
+    useEffect(() => {
+        if (lastMessage !== null) {
+            console.log("Chat message received:", lastMessage.data);
+            // Handle chat messages here
+            const [sender, ...messageParts] = lastMessage.data.split(':');
+            const messageContent = messageParts.join(':').trim();
+            const event = new CustomEvent('chatMessage', {
+                detail: {
+                    sender,
+                    message: messageContent
+                }
+            });
+            document.dispatchEvent(event);
+            }
+    }, [lastMessage]);
+
+    return (
+        <ChatWebSocketContext.Provider value={{ shouldConnectChat, setShouldConnectChat }}>
+            {children}
+        </ChatWebSocketContext.Provider>
     );
 };

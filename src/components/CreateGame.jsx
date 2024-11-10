@@ -5,7 +5,7 @@ import { GameContext } from "../contexts/GameContext.jsx";
 import { getCookie } from "../utils/cookie.js";
 
 export default function CreateGame({ onCreateGame }) {
-    const { namePlayer, setNamePlayer } = useContext(GameContext);
+    const { namePlayer, setNamePlayer, setBlockedColor, setBoard } = useContext(GameContext);
     const [username, setUsername] = useState("");
     const [gameTitle, setGameTitle] = useState("");
     const [minPlayers, setMinPlayers] = useState("");
@@ -20,6 +20,8 @@ export default function CreateGame({ onCreateGame }) {
             min_player: minPlayers,
             max_player: maxPlayers,
         };
+        setBlockedColor("default");
+        setBoard(Array(36).fill("dark"));
         setNamePlayer(username);
         onCreateGame(gameData, profile_id);
     };
