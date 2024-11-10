@@ -186,3 +186,27 @@ export async function obtainActiveGames(profile_id) {
         return null;
     }
 }
+
+export async function getRecoverGameData(idGame, idPlayer) {
+    try {
+        const response = await fetch(
+            `http://127.0.0.1:8000/recover_game_data/${idGame}/${idPlayer}`,
+            {
+                method: "GET",
+                headers: {
+                    accept: "application/json",
+                },
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! : ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error recovering game data:", error);
+        return null;
+    }
+}

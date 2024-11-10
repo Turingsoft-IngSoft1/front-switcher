@@ -47,8 +47,8 @@ const ActiveList = () => {
                     <thead>
                         <tr>
                             <th className="match-name">Sala</th>
-                            <th>Jugadores</th>
-                            <th>Min/Max</th>
+                            <th>Nombre de usuario</th>
+                            <th> Cantidad de jugadores</th>
                         </tr>
                     </thead>
                     <tbody>
