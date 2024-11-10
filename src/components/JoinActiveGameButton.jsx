@@ -49,6 +49,7 @@ export default function JoinActiveGameButton({ selectedMatch }) {
         setFiguresOnBoard,
         setMovCards,
         setNamePlayer,
+        setBlockedColor,
         setPlayers,
         setPlayersNames,
         setPlayersTurns,
@@ -69,6 +70,7 @@ export default function JoinActiveGameButton({ selectedMatch }) {
                 console.log(data);
                 const newBoard = processBoard(data.actual_board);
                 setBoard(newBoard);
+                setBlockedColor(data.blocked_color);
                 const newMovCards = processMovCards(
                     data.available_moves,
                     data.partial_moves
