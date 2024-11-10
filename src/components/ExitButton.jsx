@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { Button } from "react-bootstrap";
 import { GameContext } from "../contexts/GameContext.jsx";
-import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
+import { WebSocketContext, ChatWebSocketContext} from "../contexts/WebSocketContext.jsx";
 import { cancelGame } from "../utils/gameServices.js";
 
 function ExitButton({ intext }) {
@@ -18,6 +18,7 @@ function ExitButton({ intext }) {
         setBoard,
         setInfoPlayers,
         fase,
+        setBlockedColor,
         setFigureCards,
         setMovCards,
         setPlayersNames,
@@ -26,14 +27,17 @@ function ExitButton({ intext }) {
         isOwner,
     } = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
+    const { setShouldConnectChat } = useContext(ChatWebSocketContext);
     function resetGameContext() {
         setFase("crear");
+        setShouldConnectChat(false);
         setShouldConnect(false);
         setIsOwner(false);
         setIdPlayer(null);
         setIdGame(null);
         setPlayers([]);
         setCurrentTurn(null);
+        setBlockedColor("default");
         setBoard(Array(36).fill("dark"));
         setFigureCards([]);
         setMovCards([]);
