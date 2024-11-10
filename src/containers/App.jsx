@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import CreateGameContainer from "./CreateGameContainer.jsx";
 import InGameContainer from "./InGameContainer.jsx";
 import LobbyContainer from "./LobbyContainer.jsx";
+import ActiveList from "../components/ActiveList.jsx";
 import Game from "../components/Game.jsx";
 import { GameContext, GameProvider } from "../contexts/GameContext.jsx";
 import { WebSocketProvider, ChatWebSocketProvider } from "../contexts/WebSocketContext.jsx";
@@ -24,7 +25,7 @@ function App() {
 }
 
 const Main = () => {
-    const { fase, idGame, idPlayer, players } = useContext(GameContext);
+    const { fase, idGame, idPlayer, players, isInvited } = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
     const { setShouldConnectChat } = useContext(ChatWebSocketContext);
 
@@ -62,6 +63,12 @@ const Main = () => {
                         <p>ID guardado en la cookie: {profileId}</p>
                         <MatchesList />
                     </Row>
+                    {!isInvited &&
+                        <Row md={12} className="mb-4">
+                            <ActiveList />
+                        </Row>
+                    }
+                    
                     <Row md={12}>
                         <div className="bg-dark text-white p-3 rounded">
                             <CreateGameContainer />
