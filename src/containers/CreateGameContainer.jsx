@@ -1,48 +1,39 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import CreateGame from "../components/CreateGame.jsx";
 import { GameContext } from "../contexts/GameContext.jsx";
 const isMock = import.meta.env.USE_MOCK;
 
-export default function CreateGameContainer({ onCreateGame }) {
+export default function CreateGameContainer() {
     const {
-        isOwner,
         setIsOwner,
-        idGame,
-        idPlayer,
-        players,
-        fase,
         setIdGame,
         setIdPlayer,
         setPlayers,
         setFase,
     } = useContext(GameContext);
+
     const createGame = async (gameData) => {
-        try {
-            //TODO: direccion de api
-            const response = await fetch("http://127.0.0.1:8000/create_game", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(gameData),
-            });
+        const response = await fetch("http://127.0.0.1:8000/create_game/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(gameData),
+        });
 
-            if (!response.ok) {
-                throw new Error("Error al crear la partida");
-            }
-
-            const responseData = await response.json();
-            const newIdGame = responseData.id_game;
-            const newIdPlayer = responseData.id_player;
-            setIdGame(newIdGame);
-            setIdPlayer(newIdPlayer);
-            setPlayers([newIdPlayer]);
-            setFase("lobby");
-            setIsOwner(true);
-            console.log("Partida creada con exito");
-        } catch (error) {
-            console.error("Error:", error);
+        if (!response.ok) {
+            throw new Error("Error al crear la partida");
         }
+
+        const responseData = await response.json();
+        const newIdGame = responseData.id_game;
+        const newIdPlayer = responseData.id_player;
+        setIdGame(newIdGame);
+        setIdPlayer(newIdPlayer);
+        setPlayers([newIdPlayer]);
+        setFase("lobby");
+        setIsOwner(true);
+        console.log("Partida creada con exito");
     };
 
     const createGameMock = () => {

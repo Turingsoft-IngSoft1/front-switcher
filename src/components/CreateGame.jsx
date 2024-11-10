@@ -9,6 +9,7 @@ export default function CreateGame({ onCreateGame }) {
     const [gameTitle, setGameTitle] = useState("");
     const [minPlayers, setMinPlayers] = useState("");
     const [maxPlayers, setMaxPlayers] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -17,6 +18,7 @@ export default function CreateGame({ onCreateGame }) {
             owner_name: username,
             min_player: minPlayers,
             max_player: maxPlayers,
+            password: password
         };
         setBlockedColor("default");
         setBoard(Array(36).fill("dark"));
@@ -40,6 +42,18 @@ export default function CreateGame({ onCreateGame }) {
                     />
                 </Form.Group>
 
+                <Form.Group className="mb-3" controlId="formPassword">
+                    <Form.Label>Contraseña (opcional)</Form.Label>
+                    <Form.Control
+                        type="password"
+                        minLength="8"
+                        maxLength="20"
+                        name="submitted-password"
+                        placeholder="Ingresa una contraseña"
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </Form.Group>
+
                 <Form.Group className="mb-3" controlId="formGameTitle">
                     <Form.Label>Nombre de la partida</Form.Label>
                     <Form.Control
@@ -60,7 +74,7 @@ export default function CreateGame({ onCreateGame }) {
                         type="number"
                         min="2"
                         max="4"
-                        name="submitted-gametitle"
+                        name="submitted-minplayers"
                         placeholder="Mínimo"
                         onChange={(e) => setMinPlayers(e.target.value)}
                     />
@@ -73,7 +87,7 @@ export default function CreateGame({ onCreateGame }) {
                         type="number"
                         min="2"
                         max="4"
-                        name="submitted-gametitle"
+                        name="submitted-maxplayers"
                         placeholder="Máximo"
                         onChange={(e) => setMaxPlayers(e.target.value)}
                     />
