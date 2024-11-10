@@ -32,11 +32,18 @@ export const WebSocketProvider = ({ children }) => {
         setPlayersTurns,
         setPlayersNames,
     } = useContext(GameContext);
+
     const { lastMessage, readyState } = useWebSocket(
         `ws://localhost:8000/ws/${idGame}/${idPlayer}`,
         {},
         shouldConnect
     );
+
+    useEffect(() => {
+        setShouldConnect(true);
+        return () => setShouldConnect(false);
+    }, [setShouldConnect]);    
+
 
     useEffect(() => {
         if (readyState === ReadyState.OPEN && fase === "crear") {
