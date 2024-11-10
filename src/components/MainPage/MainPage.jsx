@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { Container, Button, Row, Col, Modal } from "react-bootstrap";
 import NewProfileButton from "./NewProfileButton";
 import LoadProfileButton from "./LoadProfileButton";
+import PlayAsInvitedButton from "./PlayAsInvitedButton";
 
 export default function MainPage({onNewProfile}) {
     const [profileId, setProfileId] = useState(null);
@@ -24,6 +25,7 @@ export default function MainPage({onNewProfile}) {
             <p>ID guardado en la cookie: {profileId}</p>
             <NewProfileButton onNewProfile={onNewProfile}  />
             <LoadProfileButton />
+            <PlayAsInvitedButton />
         </Container>
     );
 }

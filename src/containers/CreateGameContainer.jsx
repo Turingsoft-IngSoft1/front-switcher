@@ -11,6 +11,7 @@ export default function CreateGameContainer({ onCreateGame }) {
         idPlayer,
         players,
         fase,
+        isInvited,
         setIdGame,
         setIdPlayer,
         setPlayers,
@@ -18,8 +19,10 @@ export default function CreateGameContainer({ onCreateGame }) {
     } = useContext(GameContext);
     const createGame = async (gameData, profileId) => {
         try {
-            //TODO: direccion de api
-            const response = await fetch(`http://127.0.0.1:8000/create_game?profile_id=${profileId}`, {
+            const fetchDirection = isInvited
+                ? `http://127.0.0.1:8000/create_game`
+                : `http://127.0.0.1:8000/create_game?profile_id=${profileId}`;
+            const response = await fetch(fetchDirection, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

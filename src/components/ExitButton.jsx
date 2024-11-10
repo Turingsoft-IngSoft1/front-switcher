@@ -18,6 +18,7 @@ function ExitButton({ intext }) {
         setCurrentTurn,
         setBoard,
         setInfoPlayers,
+        isInvited,
         fase,
         setFigureCards,
         setMovCards,
@@ -46,6 +47,9 @@ function ExitButton({ intext }) {
     
     function exitGame() {
         const profileId = getCookie('id');
+        const fetchDirection = isInvited
+            ? `http://127.0.0.1:8000/leave_game`
+            : `http://127.0.0.1:8000/leave_game?profile_id=${profileId}`;
         if (isOwner && fase == "lobby") {
             cancelGame(idGame, idPlayer)
                 .then((data) => {
@@ -59,7 +63,7 @@ function ExitButton({ intext }) {
             console.log("Exit Game");
             resetGameContext();
         } else {
-            fetch(`http://127.0.0.1:8000/leave_game?profile_id=${profileId}`, {
+            fetch(fetchDirection, {
                 method: "POST",
                 headers: {
                     Accept: "application/json",

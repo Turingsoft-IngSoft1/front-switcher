@@ -11,6 +11,7 @@ function JoinButton({ selectedMatch }) {
         idPlayer,
         players,
         fase,
+        isInvited,
         setIdGame,
         setIdPlayer,
         setNamePlayer,
@@ -38,7 +39,10 @@ function JoinButton({ selectedMatch }) {
     };
     const joinGame = async (profileId) => {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/join_game?profile_id=${profileId}`, {
+            const fetchDirection = isInvited
+                ? `http://127.0.0.1:8000/join_game`
+                : `http://127.0.0.1:8000/join_game?profile_id=${profileId}`;
+            const response = await fetch(fetchDirection, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -27,6 +27,7 @@ export const GameProvider = ({ children }) => {
     const [namePlayer, setNamePlayer] = useState(null); //nombre del jugador
     const [idGame, setIdGame] = useState(null); //id de la partida asignada
     const [players, setPlayers] = useState([]); // cantidad de jugadores en la partida
+    const [isInvited, setIsInvited] = useState(false);
     const [currentTurn, setCurrentTurn] = useState(null); // turno actual
     const [board, setBoard] = useState(Array(36).fill("dark"));
     const [figuresOnBoard, setFiguresOnBoard] = useState(null);
@@ -58,6 +59,8 @@ export const GameProvider = ({ children }) => {
         setIdGame,
         players,
         setPlayers,
+        isInvited,
+        setIsInvited,
         currentTurn,
         setCurrentTurn,
         board,
