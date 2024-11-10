@@ -147,6 +147,10 @@ export const WebSocketProvider = ({ children }) => {
                         }
                     }
                 );
+                getBoard(idGame).then((newResponse) => {
+                    setBoard(newResponse.board);
+                    setBlockedColor(newResponse.blocked_color);
+                });
             }
             if (lastMessage.data.includes("TURN")) {
                 const [action, turnPlayerId] = lastMessage.data.split(" ");
