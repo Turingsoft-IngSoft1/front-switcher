@@ -105,6 +105,13 @@ export const WebSocketProvider = ({ children }) => {
                 getBoard(idGame).then((newBoard) => {
                     setBoard(newBoard);
                 });
+                getFiguresOnBoard(idGame, idPlayer).then(
+                    (newFiguresOnBoard) => {
+                        if (newFiguresOnBoard) {
+                            setFiguresOnBoard(newFiguresOnBoard);
+                        }
+                    }
+                );
             }
             if (lastMessage.data.includes("GAME_STARTED")) {
                 const [action, turnId] = lastMessage.data.split(" ");

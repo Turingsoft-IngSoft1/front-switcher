@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { Card, Container, Button, Row, Col } from "react-bootstrap";
 import "../styles/Board.css";
 import { GameContext } from "../contexts/GameContext.jsx";
-import { useFigureCard, blockFigureCardMock} from "../services/cardServices.js";
+import { useFigureCard, blockFigureCard} from "../services/cardServices.js";
 
 function Tile({ variant, onTileClick, selected, figureMatch }) {
     return (
@@ -75,15 +75,35 @@ export default function Board() {
         }
     }
 
-    async function checkAndFetchBlockFigure(tileSelected, figureSelected){
-        const figureData = {
-            id_game: idGame,
-            id_caller: idPlayer,
-            id_target: figureSelected["idPlayer"],
-            figure_name: figureSelected["nameFig"]
+    async function checkAndFetchBlockFigure(tileSelected, figureSelected) {
+        const nameFig = figureSelected["nameFig"];
+        if (figuresOnBoard[nameFig]) {
+            for (const color in figuresOnBoard[nameFig]) {
+                const coordinatesList = figuresOnBoard[nameFig][color];
+                for (const coordinates of coordinatesList) {
+                    for (const tuple of coordinates) {
+                        if (
+                            tuple[0] == Math.floor(tileSelected / 6) &&
+                            tuple[1] == tileSelected % 6
+                        ) {
+                            console.log(
+                                "FIGURA " + nameFig + " BLOQUEADA"
+                            );
+                            const figureData = {
+                                id_game: idGame,
+                                id_caller: idPlayer,
+                                id_target: figureSelected["idPlayer"],
+                                figure_name: figureSelected["nameFig"],
+                                figure_pos: coordinates,
+                            };
+
+                            const message = await blockFigureCard(figureData);
+                            console.log(message.message);
+                        }
+                    }
+                }
+            }
         }
-        const message = await blockFigureCardMock(figureData);
-        console.log(message.message);
     }
 
     useEffect(() => {
