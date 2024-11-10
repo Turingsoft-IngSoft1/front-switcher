@@ -1,22 +1,32 @@
 import {useState, useEffect, useContext} from "react";
 import { Image, Container, Col, Row } from "react-bootstrap";
+import { GameContext } from "../contexts/GameContext";
 
 export default function Timer (){
-    const [time, setTime] = useState(0);
-    const [isRunning, setIsRunning] = useState(false);
+    const [time, setTime] = useState(120); //2 minutos
+    const [isRunning, setIsRunning] = useState(true);
+    const {turnPlayer} = useContext(GameContext)
+    
+
+    //cada vez que se cambie el turno del jugador, el timer se resetea
+    useEffect(() => {
+        setTime(120);
+        setIsRunning(true);
+    }, [turnPlayer]);
+
 
     useEffect(() => {
         let interval;
-        if (isRunning){
+        if (isRunning && time > 0) {
             interval = setInterval(() => {
-                setTime(prevTime => prevTime + 1);
-            }, 1000); // cada 1s
-        }
-        else if (!isRunning && time !== 0){
+                setTime(prevTime => prevTime - 1);
+            }, 1000);
+        } else if (time === 0) {
             clearInterval(interval);
+            setIsRunning(false); // Detener el temporizador al llegar a 0
         }
-        return () => clearInterval(interval); //limpia el intervalo
-    }, [isRunning]);
+        return () => clearInterval(interval);
+    }, [isRunning, time]);
 
     const startOrStop = () => {
         setIsRunning(!isRunning);
@@ -35,9 +45,7 @@ export default function Timer (){
 
     return (
         <Container>
-            <h2>Timer: {formatTime(time)}</h2>
-            <button onClick={startOrStop}>{isRunning? 'Pausar' : 'Iniciar'}</button>
-            <button onClick={reset} disabled={time===0}>Reiniciar</button>
+            <h2>Tiempo restante: {formatTime(time)}</h2>
         </Container>
     );
 }

@@ -124,6 +124,7 @@ export default function ButtonSet({ onPassTurn, onConfirmMovement }) {
                     status={"enabled"}
                 />
                 <LeaveGameButton />
+                <Timer />
             </Row>
         );
     } else {
@@ -133,7 +134,6 @@ export default function ButtonSet({ onPassTurn, onConfirmMovement }) {
                 <ConfirmMovementButton status={"disabled"} />
                 <NextTurnButton status={"disabled"} />
                 <LeaveGameButton />
-                <Timer />
             </Row>
         );
     }
