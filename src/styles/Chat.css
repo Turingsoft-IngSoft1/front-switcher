@@ -8,14 +8,14 @@
     border: 1px solid #333;
     border-radius: 16px;
     overflow: auto;
-    background-color: #2a2f32;
+    background-color: rgba(0,0,0,0.15);
 }
 
 .messages {
     flex: 1 1 auto;
     padding: 10px;
     overflow-y: auto;
-    background-color: #131c21;
+    background-color: rgba(0,0,0,0.85);
 }
 
 .message {
@@ -62,7 +62,7 @@
     flex-shrink: 0;
     padding: 10px;
     border-top: 1px solid #333;
-    background-color: #2a2f32;
+    background-color: rgba(0,0,0,0.85);
     box-sizing: border-box;
 }
 
@@ -73,7 +73,7 @@
     border-radius: 4px;
     margin-right: 10px;
     box-sizing: border-box;
-    background-color: #131c21;
+    background-color: rgba(0,0,0,0.85);
     color: #d1d1d1;
     resize: none;
 }

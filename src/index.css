@@ -12,3 +12,8 @@ html {
   background-repeat: no-repeat;
   transition: background-image 1s ease-in-out; /* Transición suave de 1 segundo */
 }
+
+.player-box {
+  background-color: rgba(0, 200, 183, 0.20);
+  text-align: center;
+}

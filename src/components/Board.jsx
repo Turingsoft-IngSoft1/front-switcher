@@ -9,16 +9,6 @@ import BlockedGreen from '../styles/cards/C.svg'
 import BlockedYellow from '../styles/cards/B.svg'
 //import BlockedNone from '../styles/cards/x.svg'
 
-function BlockedColor({imgsource}){
-    return (
-        <Container>
-            <Row>
-                <Image src={imgsource} className="img-blocked-color"/>
-            </Row>
-        </Container>
-    )
-}
-
 function Tile({ variant, onTileClick, selected, figureMatch }) {
     return (
         <Button
@@ -158,17 +148,6 @@ export default function Board() {
                         })}
                     </Row>
                 ))}
-                {blockedColor != 'default'?
-                                <Row className="justify-content-md-center">
-                                <Col className="d-flex align-items-center justify-content-center">
-                                <h4>Color bloqueado: </h4>
-                                </Col>
-                                <Col className="d-flex align-items-center justify-content-center">
-                                <BlockedColor/>
-                                </Col>
-                            </Row> 
-                            :
-                            <div></div> }
 
             </Container>
         </div>

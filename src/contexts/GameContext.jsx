@@ -18,11 +18,11 @@ Creación de GameContext para la organización general del juego. Se debe tener
                 }
 */
 import React, { createContext, useEffect, useState} from 'react';
-import defaultBackground from '../styles/default_background.jpg';
-import redBackground from '../styles/red_background.jpg';
-import greenBackground from '../styles/green_background.jpg';
-import blueBackground from '../styles/blue_background.jpg';
-import yellowBackground from '../styles/yellow_background.jpg';
+import defaultBackground from '../styles/backgrounds/default_background.jpg';
+import redBackground from '../styles/backgrounds/red_background.jpg';
+import greenBackground from '../styles/backgrounds/green_background.jpg';
+import blueBackground from '../styles/backgrounds/blue_background.jpg';
+import yellowBackground from '../styles/backgrounds/yellow_background.jpg';
 
 export const GameContext = createContext();
 export const GameProvider = ({ children }) => {

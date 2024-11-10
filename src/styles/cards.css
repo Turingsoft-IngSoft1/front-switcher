@@ -15,7 +15,7 @@
 }
 
 .bg-cardset {
-    background-color: silver;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .cardset-vertical {
@@ -25,10 +25,12 @@
 .movement-card-switcher {
     transition: border 0.1s ease;
 }
+
 .movement-card-switcher.selected {
     border: 3px solid red;
     border-radius: 9%;
 }
+
 .has-turn {
     color: #000000; /* Color Negro */
     animation: vibrate 0.5s 1;
@@ -44,7 +46,7 @@
 }
 
 .is-selected-figure {
-    background-color: rgb(131, 142, 241);
+    background-color: rgba(10, 10, 10, 0.675);
 }
 
 @keyframes vibrate {
