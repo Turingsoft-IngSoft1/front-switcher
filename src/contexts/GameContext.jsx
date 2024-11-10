@@ -99,10 +99,11 @@ export const GameProvider = ({ children }) => {
     useEffect ( () => {
         const backgrounds = {
             default : defaultBackground,
-            red : redBackground,
-            green : greenBackground,
-            blue : blueBackground,
-            yellow : yellowBackground,
+            NOT : defaultBackground,
+            R : redBackground,
+            G : greenBackground,
+            B : blueBackground,
+            Y : yellowBackground,
         };
 
         const rootElement = document.getElementById('root');

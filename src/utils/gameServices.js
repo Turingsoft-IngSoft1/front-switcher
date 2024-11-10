@@ -85,6 +85,7 @@ export async function getBoard(idGame) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const responseData = await response.json();
+        const newBlockedColor = responseData.blocked_color;
         const boardData = responseData.board;
         const newBoard = Array(36).fill(null);
         let index = 0;
@@ -102,7 +103,8 @@ export async function getBoard(idGame) {
                 index++;
             });
         });
-        return newBoard;
+        return {'board': newBoard, 'blocked_color': newBlockedColor};
+        
     } catch (error) {
         console.log("Error fetching the board: ", error);
         return null;
