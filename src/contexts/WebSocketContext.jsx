@@ -32,6 +32,12 @@ export const WebSocketProvider = ({ children }) => {
         setPlayersTurns,
         setPlayersNames,
     } = useContext(GameContext);
+    
+    useEffect(() => {
+        setShouldConnect(true);
+        return () => setShouldConnect(false);
+    }, [setShouldConnect]);
+    
     const { lastMessage, readyState } = useWebSocket(
         `ws://localhost:8000/ws/${idGame}/${idPlayer}`,
         {},
