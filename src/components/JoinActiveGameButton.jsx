@@ -52,7 +52,7 @@ export default function JoinActiveGameButton({ selectedMatch }) {
         setPlayers,
         setPlayersNames,
         setPlayersTurns,
-        setCurrentTurn
+        setTurnPlayer,
     } = useContext(GameContext);
 
     const id_game = selectedMatch?.id_game;
@@ -64,7 +64,7 @@ export default function JoinActiveGameButton({ selectedMatch }) {
                 setIdGame(id_game);
                 setIdPlayer(id_player);
                 setNamePlayer(name_player);
-                setCurrentTurn(data.actual_turn_player);
+                setTurnPlayer(data.actual_turn_player);
                 console.log("recuperando juego..");
                 console.log(data);
                 const newBoard = processBoard(data.actual_board);
