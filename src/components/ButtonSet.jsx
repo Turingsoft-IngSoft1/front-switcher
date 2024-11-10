@@ -3,6 +3,7 @@ import { Row, Col, Button } from "react-bootstrap";
 import { GameContext } from "../contexts/GameContext";
 import ExitButton from "./ExitButton.jsx";
 import CancelMovementsButton from "./CancelMovementsButton.jsx";
+import Timer from './Timer.jsx';
 
 function ConfirmMovementButton({ status, onConfirmMovementClick }) {
     switch (status) {
@@ -132,6 +133,7 @@ export default function ButtonSet({ onPassTurn, onConfirmMovement }) {
                 <ConfirmMovementButton status={"disabled"} />
                 <NextTurnButton status={"disabled"} />
                 <LeaveGameButton />
+                <Timer />
             </Row>
         );
     }
