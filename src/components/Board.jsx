@@ -102,7 +102,7 @@ export default function Board() {
                                 id_caller: idPlayer,
                                 id_target: figureSelected["idPlayer"],
                                 figure_name: figureSelected["nameFig"],
-                                figure_pos: coordinates,
+                                pos: coordinates,
                             };
 
                             const message = await blockFigureCard(figureData);
