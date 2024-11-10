@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { GameContext } from "../contexts/GameContext.jsx";
+import { getCookie } from "../utils/cookie.js";
 
 export default function CreateGame({ onCreateGame }) {
     const { namePlayer, setNamePlayer } = useContext(GameContext);
@@ -10,11 +11,6 @@ export default function CreateGame({ onCreateGame }) {
     const [minPlayers, setMinPlayers] = useState("");
     const [maxPlayers, setMaxPlayers] = useState("");
     
-    function getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(";").shift();
-    }
     const handleSubmit = (e) => {
         e.preventDefault();
         const profile_id = getCookie("id");

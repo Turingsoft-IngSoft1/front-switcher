@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import { GameContext } from "../contexts/GameContext.jsx";
 import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
 import { cancelGame } from "../utils/gameServices.js";
+import { getCookie } from "../utils/cookie.js";
 
 function ExitButton({ intext }) {
     const {
@@ -42,7 +43,9 @@ function ExitButton({ intext }) {
         setPlayersTurns([]);
         setWinner("false");
     }
+    
     function exitGame() {
+        const profileId = getCookie('id');
         if (isOwner && fase == "lobby") {
             cancelGame(idGame, idPlayer)
                 .then((data) => {
@@ -56,7 +59,7 @@ function ExitButton({ intext }) {
             console.log("Exit Game");
             resetGameContext();
         } else {
-            fetch(`http://127.0.0.1:8000/leave_game`, {
+            fetch(`http://127.0.0.1:8000/leave_game?profile_id=${profileId}`, {
                 method: "POST",
                 headers: {
                     Accept: "application/json",
