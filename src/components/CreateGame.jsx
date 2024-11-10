@@ -42,18 +42,6 @@ export default function CreateGame({ onCreateGame }) {
                     />
                 </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formPassword">
-                    <Form.Label>Contraseña (opcional)</Form.Label>
-                    <Form.Control
-                        type="password"
-                        minLength="8"
-                        maxLength="20"
-                        name="submitted-password"
-                        placeholder="Ingresa una contraseña"
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </Form.Group>
-
                 <Form.Group className="mb-3" controlId="formGameTitle">
                     <Form.Label>Nombre de la partida</Form.Label>
                     <Form.Control
@@ -64,6 +52,18 @@ export default function CreateGame({ onCreateGame }) {
                         name="submitted-gametitle"
                         placeholder="Ingresa el nombre de la partida"
                         onChange={(e) => setGameTitle(e.target.value)}
+                    />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formPassword">
+                    <Form.Label>Contraseña (opcional)</Form.Label>
+                    <Form.Control
+                        type="password"
+                        minLength="8"
+                        maxLength="20"
+                        name="submitted-password"
+                        placeholder="Ingresa una contraseña"
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                 </Form.Group>
 
