@@ -26,7 +26,7 @@ import yellowBackground from '../styles/yellow_background.jpg';
 
 export const GameContext = createContext();
 export const GameProvider = ({ children }) => {
-    const [fase, setFase] = useState('crear')
+    const [fase, setFase] = useState("crear");
     const [isOwner, setIsOwner] = useState(false);
     const [idPlayer, setIdPlayer] = useState(null); // id del jugador
     const [namePlayer, setNamePlayer] = useState(null); //nombre del jugador
@@ -38,10 +38,13 @@ export const GameProvider = ({ children }) => {
     const [figureCards, setFigureCards] = useState([]); // cartas de movimiento actuales
     const [movCards, setMovCards] = useState([]); // cartas de figura actuales
     const [playersNames, setPlayersNames] = useState([]); // nombres de los jugadores
-    const [playersTurns, setPlayersTurns] = useState([]); // turnos de los jugadores    
+    const [playersTurns, setPlayersTurns] = useState([]); // turnos de los jugadores
     const [infoPlayers, setInfoPlayers] = useState([]);
     const [turnPlayer, setTurnPlayer] = useState(null); // id del jugador que posee el turno actual
-    const [selectedMovementCard, setSelectedMovementCard] = useState([null, null]); //tupla compuesta por el movimiento y el indice en el set de cartas
+    const [selectedMovementCard, setSelectedMovementCard] = useState([
+        null,
+        null,
+    ]); //tupla compuesta por el movimiento y el indice en el set de cartas
     const [selectedFigureCard, setSelectedFigureCard] = useState(null);
     const [figureTile, setFigureTile] = useState(null);
     const [selectedTiles, setSelectedTiles] = useState([]); //fichas seleccionadas por el jugador
@@ -89,7 +92,7 @@ export const GameProvider = ({ children }) => {
         blockedColor,
         setBlockedColor,
         winner,
-        setWinner
+        setWinner,
     };
 
     //cambia el fondo de la app segun el color bloqueado
@@ -109,8 +112,6 @@ export const GameProvider = ({ children }) => {
 
 
     return (
-        <GameContext.Provider value={value}>
-            {children}
-        </GameContext.Provider>
+        <GameContext.Provider value={value}>{children}</GameContext.Provider>
     );
 };

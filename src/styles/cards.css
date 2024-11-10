@@ -1,16 +1,16 @@
-.card-switcher{
+.card-switcher {
     width: 90px;
     height: 90px;
     border-radius: 5%;
 }
 
-.img-content{
+.img-content {
     width: 90px;
     height: 90px;
 }
 
 .img-content-mov {
-    width: 100px; 
+    width: 100px;
     height: auto;
 }
 
@@ -22,7 +22,7 @@
     margin: 10% 35%;
 }
 
-.movement-card-switcher{
+.movement-card-switcher {
     transition: border 0.1s ease;
 }
 .movement-card-switcher.selected {
@@ -44,14 +44,26 @@
 }
 
 .is-selected-figure {
-    background-color: rgb(131, 142, 241)
+    background-color: rgb(131, 142, 241);
 }
 
 @keyframes vibrate {
-    0% { transform: translate(0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(-2px, -2px); }
-    60% { transform: translate(2px, 2px); }
-    80% { transform: translate(2px, -2px); }
-    100% { transform: translate(0); }
+    0% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-2px, 2px);
+    }
+    40% {
+        transform: translate(-2px, -2px);
+    }
+    60% {
+        transform: translate(2px, 2px);
+    }
+    80% {
+        transform: translate(2px, -2px);
+    }
+    100% {
+        transform: translate(0);
+    }
 }

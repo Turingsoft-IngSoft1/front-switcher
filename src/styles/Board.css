@@ -1,37 +1,37 @@
 .tablero {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
 }
 
-.tile{
-  height: 50px;
-  width: 50px;
-  margin: 1px;
-  border: 2px solid transparent; /* Borde transparente por defecto */
-  transition: border 0.3s ease;  /* Transición suave para el cambio de borde */
+.tile {
+    height: 50px;
+    width: 50px;
+    margin: 1px;
+    border: 2px solid transparent; /* Borde transparente por defecto */
+    transition: border 0.3s ease; /* Transición suave para el cambio de borde */
 }
 
 .tile.selected {
-  border: 4px solid #212529; /* Borde color naranja para las fichas seleccionadas */
-  border-radius: 16%;
+    border: 4px solid #212529; /* Borde color naranja para las fichas seleccionadas */
+    border-radius: 16%;
 }
 
- .brighter-tile {
-  filter: brightness(1.4);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); 
-  transition: filter 0.3s ease, box-shadow 0.1s ease;
-  border: 3px solid rgb(51, 44, 44);
-} 
-
-.cardset{
-  display: flex;
-  align-items: center;
+.brighter-tile {
+    filter: brightness(1.4);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    transition: filter 0.3s ease, box-shadow 0.1s ease;
+    border: 3px solid rgb(51, 44, 44);
 }
 
-.card{
-  background-color: rgb(221, 170, 102);
+.cardset {
+    display: flex;
+    align-items: center;
+}
+
+.card {
+    background-color: rgb(221, 170, 102);
 }
  
 .img-blocked-color{
