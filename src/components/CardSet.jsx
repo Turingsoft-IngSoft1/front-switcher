@@ -1,12 +1,11 @@
 import "../styles/cards.css";
 import { Image, Container, Col, Row } from "react-bootstrap";
 import { onMouseEnter } from "react";
-import imgtest from "../styles/cards/fig01.svg";
 import { useContext, useEffect, useState } from "react";
 import { GameContext } from "../contexts/GameContext.jsx";
 import React from "react";
-import Fig02 from "../styles/cards/fig02.svg";
 import Fig01 from "../styles/cards/fig01.svg";
+import Fig02 from "../styles/cards/fig02.svg";
 import Fig03 from "../styles/cards/fig03.svg";
 import Fig04 from "../styles/cards/fig04.svg";
 import Fig05 from "../styles/cards/fig05.svg";
@@ -125,7 +124,7 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
         setSelectedTiles([]);
     };
     return (
-        <Row>
+        <Row  className={`${idOwnsSet==idPlayer ? "is-my-set" : ""}`}>
             <Col
                 className={
                     isHorizontal ? "cardset-horizontal" : "cardset-vertical"

@@ -49,6 +49,11 @@
     background-color: rgba(10, 10, 10, 0.675);
 }
 
+.is-my-set {
+    margin-left: 0%;
+    margin-right: 20%;
+}
+
 @keyframes vibrate {
     0% {
         transform: translate(0);
