@@ -74,7 +74,7 @@ export default function Game({ onPassTurn, onUpdateBoard, onConfirmMovement }) {
 
     return (
         <>
-            <Row>
+            <Row> 
                 <Col xs={10}>
                     <Row className="justify-content-center">
                         <Col
@@ -111,7 +111,7 @@ export default function Game({ onPassTurn, onUpdateBoard, onConfirmMovement }) {
                         >
                             <Board />
                         </Col>
-                        <Col xs={4} md={3} className="d-flex align-items-center">
+                        <Col xs={4} md={2} className="d-flex align-items-center">
                             {numberOfPlayers > 3 ? (
                                 <CardFigContainer
                                     idOwnsSet={otherPlayers[2]}
@@ -127,7 +127,7 @@ export default function Game({ onPassTurn, onUpdateBoard, onConfirmMovement }) {
                         <Col
                             xs={4}
                             md={6}
-                            className="d-flex align-items-center justify-content-center"
+                            className="d-flex justify-content-end"
                         >
                             <h4
                                 className={
@@ -140,15 +140,15 @@ export default function Game({ onPassTurn, onUpdateBoard, onConfirmMovement }) {
                             </h4>
                         </Col>
                     </Row>
-                    <Row className="justify-content-between">
+                    <Row className="justify-content-start">
                         <Col
                             xs={6}
-                            md={3}
-                            className="d-flex justify-items-center"
+                            md={4}
+                            className="d-flex"
                         >
                             <CardMovContainer />
                         </Col>
-                        <Col xs={4}>
+                        <Col xs={5}>
                             <CardFigContainer
                                 idOwnsSet={idPlayer}
                                 position={0}
@@ -157,7 +157,7 @@ export default function Game({ onPassTurn, onUpdateBoard, onConfirmMovement }) {
                         </Col>
 
                         <Col
-                            xs={2}
+                            xs={0}
                             md={2}
                             className="d-flex align-items-center"
                         ></Col>

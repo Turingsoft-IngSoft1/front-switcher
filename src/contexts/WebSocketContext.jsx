@@ -14,6 +14,7 @@ export const WebSocketProvider = ({ children }) => {
     const [shouldConnect, setShouldConnect] = useState(false);
     const {
         board,
+        setBlockedColor,
         players,
         playersTurns,
         playersNames,
@@ -102,8 +103,9 @@ export const WebSocketProvider = ({ children }) => {
                 }
             }
             if (lastMessage.data.includes("REFRESH_BOARD")) {
-                getBoard(idGame).then((newBoard) => {
-                    setBoard(newBoard);
+                getBoard(idGame).then((newResponse) => {
+                    setBoard(newResponse.board);
+                    setBlockedColor(newResponse.blocked_color);
                 });
             }
             if (lastMessage.data.includes("GAME_STARTED")) {
