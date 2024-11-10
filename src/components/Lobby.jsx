@@ -97,7 +97,6 @@ export default function Lobby({ onStartGame }) {
     };
 
     const numberOfPlayers = players.length;
-
     return (
         <>
             <Row>

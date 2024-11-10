@@ -18,6 +18,7 @@ function ExitButton({ intext }) {
         setBoard,
         setInfoPlayers,
         fase,
+        setBlockedColor,
         setFigureCards,
         setMovCards,
         setPlayersNames,
@@ -36,6 +37,7 @@ function ExitButton({ intext }) {
         setIdGame(null);
         setPlayers([]);
         setCurrentTurn(null);
+        setBlockedColor("default");
         setBoard(Array(36).fill("dark"));
         setFigureCards([]);
         setMovCards([]);
