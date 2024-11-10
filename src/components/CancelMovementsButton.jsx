@@ -27,16 +27,11 @@ export default function CancelMovementsButton({ status }) {
     function hideButton(status) {
         const isDisabled = status === "disabled";
         let hasCardsPlayed = false;
-        console.log(movCards);
         for (const mc in movCards) {
             if (movCards[mc][1] === "played") {
                 hasCardsPlayed = true;
             }
         }
-        console.log("-----");
-        console.log(isDisabled ? "isDisabled" : "is not Disabled");
-        console.log(hasCardsPlayed ? "hasCardsPlayed" : "has not cards played");
-        console.log("-----");
         return !hasCardsPlayed || isDisabled;
     }
 

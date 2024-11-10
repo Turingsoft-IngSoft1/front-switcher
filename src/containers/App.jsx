@@ -7,14 +7,16 @@ import InGameContainer from "./InGameContainer.jsx";
 import LobbyContainer from "./LobbyContainer.jsx";
 import Game from "../components/Game.jsx";
 import { GameContext, GameProvider } from "../contexts/GameContext.jsx";
-import { WebSocketProvider } from "../contexts/WebSocketContext.jsx";
-import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
+import { WebSocketProvider, ChatWebSocketProvider } from "../contexts/WebSocketContext.jsx";
+import { WebSocketContext, ChatWebSocketContext } from "../contexts/WebSocketContext.jsx";
 
 function App() {
     return (
         <GameProvider>
             <WebSocketProvider>
-                <Main />
+                <ChatWebSocketProvider>
+                    <Main />
+                </ChatWebSocketProvider>
             </WebSocketProvider>
         </GameProvider>
     );
@@ -23,11 +25,13 @@ function App() {
 const Main = () => {
     const { fase, idGame, idPlayer, players } = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
+    const { setShouldConnectChat } = useContext(ChatWebSocketContext);
 
     useEffect(() => {
         if (fase === "lobby") {
             // Activar la conexion del WebSocket
             setShouldConnect(true);
+            setShouldConnectChat(true);
         }
     }, [fase]);
 
