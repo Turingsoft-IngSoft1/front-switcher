@@ -114,9 +114,6 @@ export default function ButtonSet({ onPassTurn, onConfirmMovement }) {
     if (turnPlayer == idPlayer) {
         return (
             <Container> 
-            <Row>
-                <Timer />
-            </Row>
             <Row className="justify-content-md-around p-3">
                 <CancelMovementsButton status={"enabled"} />
                 <ConfirmMovementButton
@@ -134,9 +131,6 @@ export default function ButtonSet({ onPassTurn, onConfirmMovement }) {
     } else {
         return (
             <Container>
-            <Row>
-                <Timer />
-            </Row>
             <Row className="justify-content-md-around p-3">
                 <CancelMovementsButton status={"disabled"} />
                 <ConfirmMovementButton status={"disabled"} />

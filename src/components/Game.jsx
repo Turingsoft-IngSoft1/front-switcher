@@ -2,11 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { Row, Col, Modal, Container } from "react-bootstrap";
 import { GameContext } from "../contexts/GameContext.jsx";
 import Board from "./Board.jsx";
-import CardSetFig from "./CardSet.jsx";
-import PlayerBox from "./PlayerBox.jsx";
 import ExitButton from "./ExitButton.jsx";
 import ButtonSet from "./ButtonSet.jsx";
-import CardSetMov from "./CardSetMov.jsx";
+import Timer from "./Timer.jsx";
 import { WebSocketContext, ChatWebSocketContext} from "../contexts/WebSocketContext.jsx";
 import CardMovContainer from "../containers/CardMovContainer.jsx";
 import CardFigContainer from "../containers/CardSetContainer.jsx";
@@ -160,7 +158,9 @@ export default function Game({ onPassTurn, onUpdateBoard, onConfirmMovement }) {
                             xs={0}
                             md={2}
                             className="d-flex align-items-center"
-                        ></Col>
+                        >
+                        <Timer/>
+                        </Col>
                     </Row>
                     <Row>
                         <ButtonSet
