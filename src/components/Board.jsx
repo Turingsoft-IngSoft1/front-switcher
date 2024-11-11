@@ -150,6 +150,7 @@ export default function Board() {
         else if(selectedFigureCard && idPlayer != selectedFigureCard["idPlayer"]){
                 checkAndFetchBlockFigure(index, selectedFigureCard);
                 console.log("Bloqueando/desbloqueando figura");
+                setSelectedFigureCard(null);
             }
         setSelectedTiles((prevSelected) => {
             // Si la ficha ya está seleccionada, deseleccionarla
