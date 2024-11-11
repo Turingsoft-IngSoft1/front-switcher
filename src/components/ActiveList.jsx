@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, onClik } from "react";
-import { Table, Button, Dropdown, Form } from "react-bootstrap";
+import { Table, Button, Dropdown, Form, Container } from "react-bootstrap";
 import { GameContext } from "../contexts/GameContext.jsx";
 import { obtainActiveGames } from "../utils/gameServices.js";
 import { getCookie } from "../utils/cookie.js";
@@ -35,7 +35,7 @@ const ActiveList = () => {
     return (
         <div className="d-lg-flex flex-column">
             <div className="d-flex flex-row justify-content-left mb-3">
-                <h1>Partidas activas:</h1>
+                <h3>Partidas activas:</h3>
             </div>
             <div className="d-flex flex-row justify-content-center mb-3">
                 <Table

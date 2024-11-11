@@ -60,7 +60,6 @@ const Main = () => {
             {fase === "crear" && (
                 <Col>
                     <Row md={12} className="mb-4">
-                        <p>ID guardado en la cookie: {profileId}</p>
                         <MatchesList />
                     </Row>
                     {!isInvited &&

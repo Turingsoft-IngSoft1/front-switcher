@@ -22,7 +22,6 @@ export default function MainPage({onNewProfile}) {
 
     return (
         <Container>
-            <p>ID guardado en la cookie: {profileId}</p>
             <NewProfileButton onNewProfile={onNewProfile}  />
             <LoadProfileButton />
             <PlayAsInvitedButton />
