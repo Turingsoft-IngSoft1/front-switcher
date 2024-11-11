@@ -11,6 +11,7 @@ const ActiveList = () => {
     const [error, setError] = useState(null);
     const [selectedMatch, setSelectedMatch] = useState(null);
     const [listGames, setListGames] = useState([]);
+    const [isFirst, setIsFirst] = useState(true);
     const {idProfile} = useContext(GameContext);
     
 
@@ -26,11 +27,10 @@ const ActiveList = () => {
                 });
     }
 
-    useEffect(() =>{
-        console.log("listgamesss");
-        console.log(listGames);
-        console.log(selectedMatch);
-    }, [listGames, selectedMatch]);
+    if(isFirst){
+        fetchActiveGames(getCookie("id"));
+        setIsFirst(false);
+    }
 
     return (
         <div className="d-lg-flex flex-column">
@@ -58,7 +58,7 @@ const ActiveList = () => {
                                     Error cargando partidas: {error.message}
                                 </td>
                             </tr>
-                        ) : listGames.length > 0 ? (
+                        ) : listGames?.length > 0 ? (
                             listGames
                                 .map((match) => (
                                     <MatchItemActiveList
