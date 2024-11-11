@@ -154,6 +154,7 @@ const ListMatches = () => {
                                             selectedMatch &&
                                             selectedMatch.id === match.id
                                         }
+                                        isPrivate = {match.private}
                                     />
                                 ))
                         ) : (
