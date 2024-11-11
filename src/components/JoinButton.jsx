@@ -21,10 +21,13 @@ function JoinButton({ selectedMatch }) {
     } = useContext(GameContext);
     const [showModal, setShowModal] = useState(false);
     const [nickname, setNickname] = useState("");
+    const [password, setPassword] = useState("");
+    const [errorMessage, setErrorMessage] = useState ("");
 
     const handleJoinRequest = () => {
         if (selectedMatch) {
             setShowModal(true);
+            setErrorMessage(""); // Limpiar mensaje de error al abrir el modal
             console.log(`Trying to join match: ${selectedMatch.id}`);
         }
     };
@@ -51,12 +54,23 @@ function JoinButton({ selectedMatch }) {
                 body: JSON.stringify({
                     id_game: selectedMatch.id,
                     player_name: nickname,
+                    password: selectedMatch.private ? password : "" // Enviar la contraseña solo si es privada
                 }),
             });
 
-            if (!response.ok) {
-                throw new Error("Error al unirse a la partida");
+            //contrasena incorrecta
+            if (response.status === 403) {
+                const responseData = await response.json();
+                setErrorMessage(responseData.detail);
+                setPassword("");
+                return;
             }
+
+            if (!response.ok) {
+                console.error("Error: ", error);
+                setErrorMessage("Error al intentar unirse a la partida.");
+            }
+
             const responseData = await response.json();
             const newIdPlayer = responseData.new_player_id;
             console.log("Response:", responseData);
@@ -65,6 +79,7 @@ function JoinButton({ selectedMatch }) {
             setNamePlayer(nickname);
             setFase("lobby");
             setBoard(Array(36).fill("dark"));
+            setShowModal(false); // Cerrar el modal solo en caso de éxito
             console.log(`Joined: ${selectedMatch.id}`);
         } catch (error) {
             console.error("Error:", error);
@@ -86,13 +101,25 @@ function JoinButton({ selectedMatch }) {
                     <h4> Escriba un nickname para usar </h4>
                 </Modal.Header>
                 <Modal.Body>
-                    <input
+                <input
                         className="mb-3 form-control w-100"
                         placeholder="Escriba su nombre..."
                         type="text"
                         value={nickname}
                         onChange={(e) => setNickname(e.target.value)}
                     />
+                    {selectedMatch?.private && ( // Mostrar campo de contraseña si la partida es privada
+                        <input
+                            className="mb-3 form-control w-100"
+                            placeholder="Escriba la contraseña..."
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    )}
+                    {errorMessage && ( // Mostrar el mensaje de error si existe
+                        <div className="text-danger mb-3">{errorMessage}</div>
+                    )}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={handleSubmit} variant="success">

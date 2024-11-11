@@ -1,11 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import CreateGame from "../components/CreateGame.jsx";
 import { GameContext } from "../contexts/GameContext.jsx";
 const isMock = import.meta.env.USE_MOCK;
 
-export default function CreateGameContainer({ onCreateGame }) {
+export default function CreateGameContainer() {
     const {
-        isOwner,
         setIsOwner,
         idGame,
         idPlayer,
