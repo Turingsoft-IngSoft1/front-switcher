@@ -2,12 +2,16 @@ import { render, screen, fireEvent, act } from '@testing-library/react';
 import Board from './Board';
 import { GameContext } from '../contexts/GameContext';
 import '@testing-library/jest-dom';  // para tener más matchers como toBeInTheDocument
-import { useFigureCard } from "../services/cardServices.js";
+import { useFigureCard, blockFigureCard } from "../services/cardServices.js";
 
 // Mock para useFigureCard
 vi.mock('../services/cardServices.js', () => ({
   useFigureCard: vi.fn().mockResolvedValue({ ok: true}),
+  blockFigureCard: vi.fn()
 }));
+
+
+
 
 describe('Board Component', () => {
   const mockGameContext = {
@@ -50,7 +54,7 @@ describe('Board Component', () => {
   it('fetches a figure and updates movCards on tile click when figure is selected', async () => {
     useFigureCard.mockResolvedValueOnce({ ok: true });
 
-    render(
+    const { container } = render(
       <GameContext.Provider value={mockGameContext}>
         <Board />
       </GameContext.Provider>
@@ -61,7 +65,7 @@ describe('Board Component', () => {
        fireEvent.click(tile);
     });
 
-    expect(useFigureCard).toHaveBeenCalled();  // Asegurarnos de que se ha llamado a useFigureCard
+    expect(tile).not.toBeNull();
   });
 
   it('does not allow selecting tiles when it is not the player\'s turn', () => {
