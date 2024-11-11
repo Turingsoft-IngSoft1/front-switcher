@@ -21,4 +21,19 @@ function MatchItem({
     );
 }
 
+export function MatchItemActiveList( {gameName,
+    playerName,
+    numPlayers,
+    onClick,
+    isSelected
+}) {
+    return (
+        <tr onClick={onClick} className={isSelected ? "selected" : ""}>
+            <td>{gameName}</td>
+            <td>{playerName}</td>
+            <td>{numPlayers}</td>
+        </tr>
+    );
+}
+
 export default MatchItem;

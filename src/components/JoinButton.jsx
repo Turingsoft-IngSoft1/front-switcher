@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import { GameContext, GameProvider } from "../contexts/GameContext.jsx";
 import { useState, useContext } from "react";
+import { getCookie } from "../utils/cookie.js";
 
 function JoinButton({ selectedMatch }) {
     const {
@@ -10,6 +11,7 @@ function JoinButton({ selectedMatch }) {
         idPlayer,
         players,
         fase,
+        isInvited,
         setIdGame,
         setIdPlayer,
         setNamePlayer,
@@ -31,15 +33,20 @@ function JoinButton({ selectedMatch }) {
     };
 
     const handleClose = () => setShowModal(false);
-
+    
     const handleSubmit = () => {
         if (nickname.trim()) {
-            joinGame();
+            const profileId = getCookie("id")
+            joinGame(profileId);
+            setShowModal(false);
         }
     };
-    const joinGame = async () => {
+    const joinGame = async (profileId) => {
         try {
-            const response = await fetch("http://127.0.0.1:8000/join_game", {
+            const fetchDirection = isInvited
+                ? `http://127.0.0.1:8000/join_game`
+                : `http://127.0.0.1:8000/join_game?profile_id=${profileId}`;
+            const response = await fetch(fetchDirection, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
