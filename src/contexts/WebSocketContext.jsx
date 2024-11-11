@@ -31,6 +31,7 @@ export const WebSocketProvider = ({ children }) => {
         setPlayers,
         setPlayersTurns,
         setPlayersNames,
+        setTime
     } = useContext(GameContext);
 
     const { lastMessage, readyState } = useWebSocket(
@@ -222,6 +223,12 @@ export const WebSocketProvider = ({ children }) => {
             if (lastMessage.data.includes("CANCELLED")) {
                 console.log("Match has been cancelled, exiting...");
                 setWinner("cancelado");
+            }
+
+            if (lastMessage.data.includes("TIMER")){
+              const [action, remaining] = lastMessage.data.split(" ");
+              setTime(remaining);
+              console.log("Se ha actualizado el timer, ws back");
             }
         }
     }, [lastMessage]);
