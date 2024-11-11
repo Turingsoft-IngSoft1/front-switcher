@@ -65,7 +65,6 @@ export default function LobbyContainer() {
         }
 
         setFase("in-game");
-        console.log(playerTurns);
         console.log("Partida iniciada con exito");
     };
 

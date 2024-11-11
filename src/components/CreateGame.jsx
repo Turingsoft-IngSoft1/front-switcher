@@ -2,24 +2,30 @@ import React, { useContext } from "react";
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { GameContext } from "../contexts/GameContext.jsx";
+import { getCookie } from "../utils/cookie.js";
 
 export default function CreateGame({ onCreateGame }) {
-    const { namePlayer, setNamePlayer } = useContext(GameContext);
+    const { namePlayer, setNamePlayer, setBlockedColor, setBoard } = useContext(GameContext);
     const [username, setUsername] = useState("");
     const [gameTitle, setGameTitle] = useState("");
     const [minPlayers, setMinPlayers] = useState("");
     const [maxPlayers, setMaxPlayers] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const profile_id = getCookie("id");
         const gameData = {
             game_name: gameTitle,
             owner_name: username,
             min_player: minPlayers,
             max_player: maxPlayers,
+            password: password
         };
+        setBlockedColor("default");
+        setBoard(Array(36).fill("dark"));
         setNamePlayer(username);
-        onCreateGame(gameData);
+        onCreateGame(gameData, profile_id);
     };
 
     return (
@@ -51,6 +57,18 @@ export default function CreateGame({ onCreateGame }) {
                     />
                 </Form.Group>
 
+                <Form.Group className="mb-3" controlId="formPassword">
+                    <Form.Label>Contraseña (opcional)</Form.Label>
+                    <Form.Control
+                        type="password"
+                        minLength="8"
+                        maxLength="20"
+                        name="submitted-password"
+                        placeholder="Ingresa una contraseña"
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </Form.Group>
+
                 <Form.Group className="mb-3" controlId="formMinPlayers">
                     <Form.Label>Cantidad minima de jugadores</Form.Label>
                     <Form.Control
@@ -58,7 +76,7 @@ export default function CreateGame({ onCreateGame }) {
                         type="number"
                         min="2"
                         max="4"
-                        name="submitted-gametitle"
+                        name="submitted-minplayers"
                         placeholder="Mínimo"
                         onChange={(e) => setMinPlayers(e.target.value)}
                     />
@@ -71,7 +89,7 @@ export default function CreateGame({ onCreateGame }) {
                         type="number"
                         min="2"
                         max="4"
-                        name="submitted-gametitle"
+                        name="submitted-maxplayers"
                         placeholder="Máximo"
                         onChange={(e) => setMaxPlayers(e.target.value)}
                     />

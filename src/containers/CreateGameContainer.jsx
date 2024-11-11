@@ -1,25 +1,27 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import CreateGame from "../components/CreateGame.jsx";
 import { GameContext } from "../contexts/GameContext.jsx";
 const isMock = import.meta.env.USE_MOCK;
 
-export default function CreateGameContainer({ onCreateGame }) {
+export default function CreateGameContainer() {
     const {
-        isOwner,
         setIsOwner,
         idGame,
         idPlayer,
         players,
         fase,
+        isInvited,
         setIdGame,
         setIdPlayer,
         setPlayers,
         setFase,
     } = useContext(GameContext);
-    const createGame = async (gameData) => {
+    const createGame = async (gameData, profileId) => {
         try {
-            //TODO: direccion de api
-            const response = await fetch("http://127.0.0.1:8000/create_game", {
+            const fetchDirection = isInvited
+                ? `http://127.0.0.1:8000/create_game`
+                : `http://127.0.0.1:8000/create_game?profile_id=${profileId}`;
+            const response = await fetch(fetchDirection, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -1,8 +1,9 @@
 import { useContext } from "react";
 import { Button } from "react-bootstrap";
 import { GameContext } from "../contexts/GameContext.jsx";
-import { WebSocketContext } from "../contexts/WebSocketContext.jsx";
+import { WebSocketContext, ChatWebSocketContext} from "../contexts/WebSocketContext.jsx";
 import { cancelGame } from "../utils/gameServices.js";
+import { getCookie } from "../utils/cookie.js";
 
 function ExitButton({ intext }) {
     const {
@@ -17,7 +18,9 @@ function ExitButton({ intext }) {
         setCurrentTurn,
         setBoard,
         setInfoPlayers,
+        isInvited,
         fase,
+        setBlockedColor,
         setFigureCards,
         setMovCards,
         setPlayersNames,
@@ -26,14 +29,17 @@ function ExitButton({ intext }) {
         isOwner,
     } = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
+    const { setShouldConnectChat } = useContext(ChatWebSocketContext);
     function resetGameContext() {
         setFase("crear");
+        setShouldConnectChat(false);
         setShouldConnect(false);
         setIsOwner(false);
         setIdPlayer(null);
         setIdGame(null);
         setPlayers([]);
         setCurrentTurn(null);
+        setBlockedColor("default");
         setBoard(Array(36).fill("dark"));
         setFigureCards([]);
         setMovCards([]);
@@ -42,7 +48,12 @@ function ExitButton({ intext }) {
         setPlayersTurns([]);
         setWinner("false");
     }
+    
     function exitGame() {
+        const profileId = getCookie('id');
+        const fetchDirection = isInvited
+            ? `http://127.0.0.1:8000/leave_game`
+            : `http://127.0.0.1:8000/leave_game?profile_id=${profileId}`;
         if (isOwner && fase == "lobby") {
             cancelGame(idGame, idPlayer)
                 .then((data) => {
@@ -56,7 +67,7 @@ function ExitButton({ intext }) {
             console.log("Exit Game");
             resetGameContext();
         } else {
-            fetch(`http://127.0.0.1:8000/leave_game`, {
+            fetch(fetchDirection, {
                 method: "POST",
                 headers: {
                     Accept: "application/json",

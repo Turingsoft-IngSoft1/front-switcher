@@ -85,6 +85,7 @@ export async function getBoard(idGame) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         const responseData = await response.json();
+        const newBlockedColor = responseData.blocked_color;
         const boardData = responseData.board;
         const newBoard = Array(36).fill(null);
         let index = 0;
@@ -102,7 +103,8 @@ export async function getBoard(idGame) {
                 index++;
             });
         });
-        return newBoard;
+        return {'board': newBoard, 'blocked_color': newBlockedColor};
+        
     } catch (error) {
         console.log("Error fetching the board: ", error);
         return null;
@@ -134,3 +136,77 @@ async function cancelMovements(idGame) {
 }
 
 export { getPlayersInfo, cancelMovements };
+
+export async function sendMessage(idGame, idPlayer, message) {
+    try {
+        const response = await fetch(
+            `http://127.0.0.1:8000/chat/${idGame}/${idPlayer}?message=${encodeURIComponent(message)}`,
+            {
+                method: "POST",
+                headers: {
+                    accept: "application/json",
+                },
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! : ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error sending message:", error);
+        return null;
+    }
+}
+
+export async function obtainActiveGames(profile_id) {
+    try {
+        console.log("bueeno");
+        console.log(profile_id);
+        const response = await fetch(
+            `http://127.0.0.1:8000/load_profile/${profile_id}`,
+            {
+                method: "GET",
+                headers: {
+                    accept: "application/json",
+                },
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! : ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error obtaining active games:", error);
+        return null;
+    }
+}
+
+export async function getRecoverGameData(idGame, idPlayer) {
+    try {
+        const response = await fetch(
+            `http://127.0.0.1:8000/recover_game_data/${idGame}/${idPlayer}`,
+            {
+                method: "GET",
+                headers: {
+                    accept: "application/json",
+                },
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! : ${response.status}`);
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Error recovering game data:", error);
+        return null;
+    }
+}

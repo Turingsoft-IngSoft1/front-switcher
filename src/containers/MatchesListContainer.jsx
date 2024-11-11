@@ -8,7 +8,7 @@ const ListMatches = () => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     const [selectedMatch, setSelectedMatch] = useState(null);
-    const [filters, setFilters] = useState([]);
+    const [selectedFilter, setSelectedFilter] = useState("");
     const [nameFilter, setNameFilter] = useState("");
 
     const fetchData = () => {
@@ -36,15 +36,13 @@ const ListMatches = () => {
     };
 
     const handleFilterChange = (value) => {
-        setFilters((prevFilters) =>
-            prevFilters.includes(value)
-                ? prevFilters.filter((filter) => filter !== value)
-                : [...prevFilters, value]
+        setSelectedFilter((prevFilter) =>
+            prevFilter === value ? "" : value
         );
     };
 
     const clearFilters = () => {
-        setFilters([]);
+        setSelectedFilter("");
         setNameFilter("");
     };
 
@@ -54,102 +52,58 @@ const ListMatches = () => {
 
     return (
         <div className="d-lg-flex flex-column">
-            <div className="d-flex flex-row justify-content-center mb-3">
-                <Dropdown>
-                    <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                        {filters.length === 0
-                            ? "Mostrar Filtros"
-                            : (() => {
-                                  const playerFilters = filters.filter(
-                                      (filter) =>
-                                          !filter.includes("disponibles")
-                                  );
-                                  const availableFilters = filters.filter(
-                                      (filter) => filter.includes("disponibles")
-                                  );
-                                  const playerFilterText =
-                                      playerFilters.length > 0
-                                          ? `${playerFilters.join(
-                                                ", "
-                                            )} Jugadores`
-                                          : "";
-                                  const availableFilterText =
-                                      availableFilters.length > 0
-                                          ? `${availableFilters
-                                                .map(
-                                                    (filter) =>
-                                                        filter.split("-")[1]
-                                                )
-                                                .join(", ")} Disponibles`
-                                          : "";
-                                  return `${playerFilterText}${
-                                      playerFilterText && availableFilterText
-                                          ? " y "
-                                          : ""
-                                  }${availableFilterText}`;
-                              })()}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        <Dropdown.Header>Jugadores</Dropdown.Header>
-                        {[1, 2, 3].map((num) => (
-                            <Dropdown.Item
-                                key={num}
-                                onClick={() =>
-                                    handleFilterChange(num.toString())
-                                }
-                                className={
-                                    filters.includes(num.toString())
-                                        ? "selected-filter"
-                                        : ""
-                                }
-                                style={{
-                                    backgroundColor: filters.includes(
-                                        num.toString()
-                                    )
-                                        ? "grey"
-                                        : "transparent",
-                                }}
-                            >
-                                {`${num} Jugador${num > 1 ? "es" : ""}`}
+            <div className="d-flex justify-content-between align-items-center mb-3">
+                <h3 className="me-3">Partidas disponibles:</h3>
+                <div className="d-flex align-items-center">
+                    <Dropdown>
+                        <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                            {selectedFilter === ""
+                                ? "Mostrar Filtros"
+                                : `${selectedFilter.split("-")[1]} ${
+                                    selectedFilter.split("-")[1] === "1"
+                                        ? "Lugar disponible"
+                                        : "Lugares disponibles"
+                                }`}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Header>Lugares Disponibles</Dropdown.Header>
+                            {[1, 2, 3].map((num) => (
+                                <Dropdown.Item
+                                    key={num}
+                                    onClick={() =>
+                                        handleFilterChange(`disponibles-${num}`)
+                                    }
+                                    className={
+                                        selectedFilter === `disponibles-${num}`
+                                            ? "selected-filter"
+                                            : ""
+                                    }
+                                    style={{
+                                        backgroundColor:
+                                            selectedFilter === `disponibles-${num}`
+                                                ? "grey"
+                                                : "transparent",
+                                    }}
+                                >
+                                    {`${num} ${
+                                        num === 1 ? "Disponible" : "Disponibles"
+                                    }`}
+                                </Dropdown.Item>
+                            ))}
+                            <Dropdown.Divider />
+                            <Dropdown.Item onClick={clearFilters}>
+                                Limpiar Filtros
                             </Dropdown.Item>
-                        ))}
-                        <Dropdown.Divider />
-                        <Dropdown.Header>Jugadores Disponibles</Dropdown.Header>
-                        {[1, 2, 3].map((num) => (
-                            <Dropdown.Item
-                                key={num}
-                                onClick={() =>
-                                    handleFilterChange(`disponibles-${num}`)
-                                }
-                                className={
-                                    filters.includes(`disponibles-${num}`)
-                                        ? "selected-filter"
-                                        : ""
-                                }
-                                style={{
-                                    backgroundColor: filters.includes(
-                                        `disponibles-${num}`
-                                    )
-                                        ? "grey"
-                                        : "transparent",
-                                }}
-                            >
-                                {`${num} Disponibles`}
-                            </Dropdown.Item>
-                        ))}
-                        <Dropdown.Divider />
-                        <Dropdown.Item onClick={clearFilters}>
-                            Limpiar Filtros
-                        </Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-                <Form.Control
-                    type="text"
-                    placeholder="Filtrar por nombre"
-                    value={nameFilter}
-                    onChange={(e) => setNameFilter(e.target.value)}
-                    style={{ width: "200px", marginLeft: "10px" }}
-                />
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    <Form.Control
+                        type="text"
+                        placeholder="Filtrar por nombre"
+                        value={nameFilter}
+                        onChange={(e) => setNameFilter(e.target.value)}
+                        style={{ width: "200px", marginLeft: "10px" }}
+                    />
+                </div>
             </div>
             <div className="d-flex flex-row justify-content-center mb-3">
                 <Table
@@ -178,13 +132,8 @@ const ListMatches = () => {
                                     const availablePlayers =
                                         match.max_players - match.players;
                                     return (
-                                        (filters.length === 0 ||
-                                            filters.includes(
-                                                match.players.toString()
-                                            ) ||
-                                            filters.includes(
-                                                `disponibles-${availablePlayers}`
-                                            )) &&
+                                        (selectedFilter === "" ||
+                                            selectedFilter === `disponibles-${availablePlayers}`) &&
                                         match.name
                                             .toLowerCase()
                                             .startsWith(
@@ -208,6 +157,7 @@ const ListMatches = () => {
                                             selectedMatch &&
                                             selectedMatch.id === match.id
                                         }
+                                        isPrivate = {match.private}
                                     />
                                 ))
                         ) : (

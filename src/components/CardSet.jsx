@@ -1,12 +1,12 @@
 import "../styles/cards.css";
 import { Image, Container, Col, Row } from "react-bootstrap";
 import { onMouseEnter } from "react";
-import imgtest from "../styles/cards/fig01.svg";
 import { useContext, useEffect, useState } from "react";
 import { GameContext } from "../contexts/GameContext.jsx";
 import React from "react";
-import Fig02 from "../styles/cards/fig02.svg";
 import Fig01 from "../styles/cards/fig01.svg";
+import Back from "../styles/cards/back.svg";
+import Fig02 from "../styles/cards/fig02.svg";
 import Fig03 from "../styles/cards/fig03.svg";
 import Fig04 from "../styles/cards/fig04.svg";
 import Fig05 from "../styles/cards/fig05.svg";
@@ -32,6 +32,7 @@ import Fige06 from "../styles/cards/fige06.svg";
 import Fige07 from "../styles/cards/fige07.svg";
 
 const dictImg = {
+    back: Back,
     fig01: Fig01,
     fig02: Fig02,
     fig03: Fig03,
@@ -59,7 +60,7 @@ const dictImg = {
     fige07: Fige07,
 };
 
-function CardSwitcher({ imgsource, onSelect, isSelected }) {
+function CardSwitcher({ imgsource, onSelect, isSelected, isBlocked }) {
     return (
         <Container
             onClick={onSelect}
@@ -68,9 +69,9 @@ function CardSwitcher({ imgsource, onSelect, isSelected }) {
             }`}
         >
             <Row>
-                <Image src={imgsource} className="img-content" />
+                <Image src={isBlocked ? dictImg['back'] : imgsource} className="img-content" />
             </Row>
-        </Container>
+        </Container>    
     );
 }
 
@@ -96,10 +97,16 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
 
     useEffect(() => {
         const actualPlayer = infoPlayers.find((p) => p.id_user === idOwnsSet);
-        setActualCards(actualPlayer ? actualPlayer.figures_available : []);
-        console.log("ACTUALIZACIONNN");
-        if (actualPlayer && actualPlayer.figures_available) {
-            console.log(actualPlayer.figures_available);
+        if(actualPlayer){
+            const unblocked = actualPlayer.figures_available.map(
+                (fig) => ({name: fig, isBlocked: false})
+            )
+            const blocked = actualPlayer.figures_blocked.map(
+                (fig) => ({name: fig, isBlocked: true})
+            )
+            const figures_concat = blocked.concat(unblocked);
+        
+            setActualCards(actualPlayer ? figures_concat : []);
         }
     }, [infoPlayers]);
 
@@ -114,12 +121,13 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
         const infoSelectedCard = {
             idPlayer: idOwnsSet,
             offsetCard: idx,
-            nameFig: actualCards[idx],
+            nameFig: actualCards[idx].name,
+            isBlocked: actualCards[idx].isBlocked
         };
-        console.log(infoSelectedCard);
         setSelectedFigureCard(
             selectedFigureCard?.offsetCard == idx &&
-                selectedFigureCard?.idPlayer == idOwnsSet
+                selectedFigureCard?.idPlayer == idOwnsSet &&
+                !infoSelectedCard?.isBlocked
                 ? null
                 : infoSelectedCard
         );
@@ -127,7 +135,7 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
         setSelectedTiles([]);
     };
     return (
-        <Row>
+        <Row  className={`${idOwnsSet==idPlayer ? "is-my-set" : ""}`}>
             <Col
                 className={
                     isHorizontal ? "cardset-horizontal" : "cardset-vertical"
@@ -153,12 +161,13 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
                         {actualCards[0] && (
                             <CardSwitcher
                                 onSelect={() => handleClick(0)}
-                                imgsource={dictImg[actualCards[0]]}
+                                imgsource={dictImg[actualCards[0].name]}
                                 isSelected={
                                     selectedFigureCard &&
                                     selectedFigureCard.offsetCard == 0 &&
                                     selectedFigureCard.idPlayer == idOwnsSet
                                 }
+                                isBlocked={actualCards[0].isBlocked}
                             />
                         )}
                     </Col>
@@ -166,12 +175,13 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
                         {actualCards[1] && (
                             <CardSwitcher
                                 onSelect={() => handleClick(1)}
-                                imgsource={dictImg[actualCards[1]]}
+                                imgsource={dictImg[actualCards[1].name]}
                                 isSelected={
                                     selectedFigureCard &&
                                     selectedFigureCard.offsetCard == 1 &&
                                     selectedFigureCard.idPlayer == idOwnsSet
                                 }
+                                isBlocked={actualCards[1].isBlocked}
                             />
                         )}
                     </Col>
@@ -179,12 +189,13 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
                         {actualCards[2] && (
                             <CardSwitcher
                                 onSelect={() => handleClick(2)}
-                                imgsource={dictImg[actualCards[2]]}
+                                imgsource={dictImg[actualCards[2].name]}
                                 isSelected={
                                     selectedFigureCard &&
                                     selectedFigureCard.offsetCard == 2 &&
                                     selectedFigureCard.idPlayer == idOwnsSet
                                 }
+                                isBlocked={actualCards[2].isBlocked}
                             />
                         )}
                     </Col>
