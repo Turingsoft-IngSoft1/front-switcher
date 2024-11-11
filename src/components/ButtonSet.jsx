@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Container} from "react-bootstrap";
 import { GameContext } from "../contexts/GameContext";
 import ExitButton from "./ExitButton.jsx";
 import CancelMovementsButton from "./CancelMovementsButton.jsx";
@@ -113,6 +113,10 @@ export default function ButtonSet({ onPassTurn, onConfirmMovement }) {
 
     if (turnPlayer == idPlayer) {
         return (
+            <Container> 
+            <Row>
+                <Timer />
+            </Row>
             <Row className="justify-content-md-around p-3">
                 <CancelMovementsButton status={"enabled"} />
                 <ConfirmMovementButton
@@ -124,8 +128,8 @@ export default function ButtonSet({ onPassTurn, onConfirmMovement }) {
                     status={"enabled"}
                 />
                 <LeaveGameButton />
-                <Timer />
             </Row>
+            </Container>
         );
     } else {
         return (
