@@ -1,13 +1,15 @@
+
 import {useEffect, useState, useContext} from "react";
 import { Card, Container, Button, Row, Col, Image} from "react-bootstrap";
 import '../styles/Board.css'
 import { GameContext } from '../contexts/GameContext.jsx';
-import {useFigureCard} from '../services/cardServices.js';
+import {useFigureCard, blockFigureCard} from '../services/cardServices.js';
 import BlockedRed from '../styles/cards/A.svg'
 import BlockedBlue from '../styles/cards/D.svg'
 import BlockedGreen from '../styles/cards/C.svg'
 import BlockedYellow from '../styles/cards/B.svg'
 //import BlockedNone from '../styles/cards/x.svg'
+
 
 function Tile({ variant, onTileClick, selected, figureMatch }) {
     return (
@@ -43,22 +45,20 @@ export default function Board() {
     const [tilesToMatch, setTilesToMatch] = useState([]);
 
     async function checkAndFetchCompleteFigure(tileSelected, figureSelected) {
-        if (figuresOnBoard[figureSelected]) {
-            for (const color in figuresOnBoard[figureSelected]) {
-                const coordinatesList = figuresOnBoard[figureSelected][color];
+        const nameFig = figureSelected["nameFig"];
+        if (figuresOnBoard[nameFig]) {
+            for (const color in figuresOnBoard[nameFig]) {
+                const coordinatesList = figuresOnBoard[nameFig][color];
                 for (const coordinates of coordinatesList) {
                     for (const tuple of coordinates) {
                         if (
                             tuple[0] == Math.floor(tileSelected / 6) &&
                             tuple[1] == tileSelected % 6
                         ) {
-                            console.log(
-                                "FIGURA " + figureSelected + " FETCHEADA"
-                            );
                             const figureData = {
                                 id_game: idGame,
                                 id_player: idPlayer,
-                                name: figureSelected,
+                                name: nameFig,
                                 figure_pos: coordinates,
                             };
 
@@ -73,6 +73,33 @@ export default function Board() {
                                 }
                             }
                             setMovCards(newMovCards);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    async function checkAndFetchBlockFigure(tileSelected, figureSelected) {
+        const nameFig = figureSelected["nameFig"];
+        if (figuresOnBoard[nameFig]) {
+            for (const color in figuresOnBoard[nameFig]) {
+                const coordinatesList = figuresOnBoard[nameFig][color];
+                for (const coordinates of coordinatesList) {
+                    for (const tuple of coordinates) {
+                        if (
+                            tuple[0] == Math.floor(tileSelected / 6) &&
+                            tuple[1] == tileSelected % 6
+                        ) {
+                            const figureData = {
+                                id_game: idGame,
+                                id_caller: idPlayer,
+                                id_target: figureSelected["idPlayer"],
+                                figure_name: figureSelected["nameFig"],
+                                pos: coordinates,
+                            };
+
+                            const message = await blockFigureCard(figureData);
                         }
                     }
                 }
@@ -100,16 +127,21 @@ export default function Board() {
     }, [figuresOnBoard]);
 
     const handleTileClick = (index) => {
+        // TODO: AGREGAR BLOQUEO DE FIGURA!!!!
         if (idPlayer != turnPlayer) {
             console.log("Selección permitida solo en turno propio");
             return;
         }
-        if (selectedFigureCard) {
-            checkAndFetchCompleteFigure(index, selectedFigureCard["nameFig"]);
+        if (selectedFigureCard && idPlayer == selectedFigureCard["idPlayer"]) {
+            checkAndFetchCompleteFigure(index, selectedFigureCard);
             setFigureTile(figureTile == index ? null : index);
             setSelectedFigureCard(null);
             return;
         }
+        else if(selectedFigureCard && idPlayer != selectedFigureCard["idPlayer"]){
+                checkAndFetchBlockFigure(index, selectedFigureCard);
+                setSelectedFigureCard(null);
+            }
         setSelectedTiles((prevSelected) => {
             // Si la ficha ya está seleccionada, deseleccionarla
             if (prevSelected.includes(index)) {

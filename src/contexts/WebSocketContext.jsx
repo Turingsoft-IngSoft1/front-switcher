@@ -115,6 +115,13 @@ export const WebSocketProvider = ({ children }) => {
                     setBoard(newResponse.board);
                     setBlockedColor(newResponse.blocked_color);
                 });
+                getFiguresOnBoard(idGame, idPlayer).then(
+                    (newFiguresOnBoard) => {
+                        if (newFiguresOnBoard) {
+                            setFiguresOnBoard(newFiguresOnBoard);
+                        }
+                    }
+                );
             }
             if (lastMessage.data.includes("GAME_STARTED")) {
                 const [action, turnId] = lastMessage.data.split(" ");
@@ -148,6 +155,10 @@ export const WebSocketProvider = ({ children }) => {
                         }
                     }
                 );
+                getBoard(idGame).then((newResponse) => {
+                    setBoard(newResponse.board);
+                    setBlockedColor(newResponse.blocked_color);
+                });
             }
             if (lastMessage.data.includes("TURN")) {
                 const [action, turnPlayerId] = lastMessage.data.split(" ");
