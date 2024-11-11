@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { GameContext } from "../contexts/GameContext.jsx";
+import { getCookie } from "../utils/cookie.js";
 
 export default function CreateGame({ onCreateGame }) {
     const { namePlayer, setNamePlayer, setBlockedColor, setBoard } = useContext(GameContext);
@@ -13,6 +14,7 @@ export default function CreateGame({ onCreateGame }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const profile_id = getCookie("id");
         const gameData = {
             game_name: gameTitle,
             owner_name: username,
@@ -23,7 +25,7 @@ export default function CreateGame({ onCreateGame }) {
         setBlockedColor("default");
         setBoard(Array(36).fill("dark"));
         setNamePlayer(username);
-        onCreateGame(gameData);
+        onCreateGame(gameData, profile_id);
     };
 
     return (
