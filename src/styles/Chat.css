@@ -26,7 +26,9 @@
     max-width: 60%;
     word-wrap: break-word;
     white-space: pre-wrap;
-    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    
 }
 
 .message.sent {
@@ -42,7 +44,7 @@
     border: 1px solid #333;
     margin-right: auto;
     color: #d1d1d1;
-    text-align: right;
+    text-align: left;
 }
 
 .sender {
