@@ -2,6 +2,8 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { vi } from 'vitest';
 import { GameContext } from '../contexts/GameContext.jsx';
 import Lobby from './Lobby.jsx';
+import { ChatWebSocketContext, WebSocketContext } from '../contexts/WebSocketContext.jsx';
+import context from 'react-bootstrap/esm/AccordionContext.js';
 
 // Mock de las funciones y valores del contexto
 vi.mock('./Board.jsx', () => ({
@@ -14,6 +16,10 @@ vi.mock('./ExitButton.jsx', () => ({
 vi.mock('./PlayerBox.jsx', () => ({
     default: () => <div data-testid="mock-player-box"></div>,
   }));
+vi.mock('./Chat.jsx', () => ({
+    default: () => <div data-testid="mock-Chat"></div>,
+}))
+
 
 const mockContextValues = {
   setIdGame: vi.fn(),
@@ -35,16 +41,43 @@ const mockContextValues = {
   setPlayersNames: vi.fn(),
 };
 
+const mockWSContextValues = {
+  shouldConnect: true,
+  setShouldConnect: vi.fn()
+}
+
+const mockChatContextValues = {
+  setShouldConnectChat: vi.fn(),
+  shouldConnectChat: vi.fn()
+}
+
 const startGameMock = () => {
     mockContextValues.fase = "in-game";
 };
+beforeEach(() => {
+  // Crear un elemento root simulado en el DOM
+  const root = document.createElement('div');
+  root.id = 'root';
+  root.style = {}; // Mockear el objeto style para evitar el error
+  document.body.appendChild(root);
+});
+
+afterEach(() => {
+  // Eliminar el elemento root después de cada test
+  const root = document.getElementById('root');
+  if (root) document.body.removeChild(root);
+});
 
 describe('Lobby', () => {
   it('debe renderizar correctamente el lobby con un solo jugador', () => {
     
     render(
       <GameContext.Provider value={mockContextValues}>
-        <Lobby onStartGame={startGameMock} />
+        <WebSocketContext.Provider value={mockWSContextValues}>
+          <ChatWebSocketContext.Provider value={mockChatContextValues}>
+            <Lobby onStartGame={startGameMock} />
+          </ChatWebSocketContext.Provider>
+        </WebSocketContext.Provider>
       </GameContext.Provider>
     );
 
@@ -64,8 +97,12 @@ describe('Lobby', () => {
 
     render(
       <GameContext.Provider value={contextWithOwner}>
-        <Lobby onStartGame={startGameMock} />
-      </GameContext.Provider>
+      <WebSocketContext.Provider value={mockWSContextValues}>
+        <ChatWebSocketContext.Provider value={mockChatContextValues}>
+          <Lobby onStartGame={startGameMock} />
+        </ChatWebSocketContext.Provider>
+      </WebSocketContext.Provider>
+    </GameContext.Provider>
     );
 
     // Verifica que el botón de "Iniciar Partida" está presente
@@ -83,8 +120,12 @@ describe('Lobby', () => {
 
     render(
       <GameContext.Provider value={contextWithOwner}>
-        <Lobby onStartGame={onStartGameMock} />
-      </GameContext.Provider>
+      <WebSocketContext.Provider value={mockWSContextValues}>
+        <ChatWebSocketContext.Provider value={mockChatContextValues}>
+          <Lobby onStartGame={onStartGameMock} />
+        </ChatWebSocketContext.Provider>
+      </WebSocketContext.Provider>
+    </GameContext.Provider>
     );
 
     // Simula un clic en el botón "Iniciar Partida"
@@ -101,9 +142,13 @@ describe('Lobby', () => {
     };
 
     render(
-      <GameContext.Provider value={contextWithCancel}>
-        <Lobby onStartGame={vi.fn()} />
-      </GameContext.Provider>
+    <GameContext.Provider value={contextWithCancel}>
+      <WebSocketContext.Provider value={mockWSContextValues}>
+        <ChatWebSocketContext.Provider value={mockChatContextValues}>
+          <Lobby onStartGame={vi.fn()} />
+        </ChatWebSocketContext.Provider>
+      </WebSocketContext.Provider>
+    </GameContext.Provider>
     );
 
     // Verifica que se muestra el modal de cancelación
