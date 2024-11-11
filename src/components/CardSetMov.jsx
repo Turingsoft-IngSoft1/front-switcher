@@ -63,7 +63,6 @@ export default function CardSetMov({ requestNewCards }) {
             return;
         } else {
             const movKey = movCards[i][0];
-            console.log("MovKey " + movKey);
             setSelectedMovementCard([movKey, i]);
             setSelectedFigureCard(null);
             setFigureTile(null);

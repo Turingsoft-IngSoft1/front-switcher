@@ -19,7 +19,6 @@ export default function CardMovContainer() {
             // }
         };
         fetchMovementCards();
-        console.log("movCards " + movCards);
     }, [fase, turnPlayer]);
 
     return <CardSetMov />;

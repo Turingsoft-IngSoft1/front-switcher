@@ -171,3 +171,67 @@ export async function useFigureCard(figureData) {
         return null;
     }
 }
+
+/**
+ * Bloquea una carta de figura de un contrincante
+ *
+ * @param {number} id_game - ID del juego
+ * @param {number} id_caller - ID del jugador que acciona
+ * @param {number} id_target - ID del jugador objetivo
+ * @param {string} figure_name - nombre de la carta de figura objetivo
+ * @returns {Promise<Object>} - La respuesta del servidor en formato JSON.
+ * @throws {Error} - Si hay un problema al obtener las figuras formadas
+ */
+
+export async function blockFigureCard(figureData) {
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/block_figure`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(figureData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return response;
+    } catch (error) {
+        console.error("Error blocking figure: ", error);
+        return null;
+    }
+}
+
+export async function blockFigureCardMock(figureData){
+    const messageContent = "MOCK bloqueando carta de " + figureData["id_target"]
+    return {message: messageContent};
+}
+
+/**
+ * Desbloquea una carta de figura propia
+ *
+ * @param {number} id_game - ID del juego
+ * @param {number} id_player - ID del jugador
+ * @param {string} figure_name - nombre de la carta de figura objetivo
+ * @returns {Promise<Object>} - La respuesta del servidor en formato JSON.
+ * @throws {Error} - Si hay un problema al desbloquear figura
+ */
+
+export async function unlockFigureCard(figureData) {
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/unlock_figure`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(figureData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return response;
+    } catch (error) {
+        console.error("Error unlocking figure: ", error);
+        return null;
+    }
+}
