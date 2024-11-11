@@ -47,7 +47,7 @@ export default function NewProfileButton({ onNewProfile }) {
     };
 
     return (
-        <Button onClick={handleClick} variant="success">
+        <Button onClick={handleClick} variant="success" className="button-mainpage">
             {text}
         </Button>
     );

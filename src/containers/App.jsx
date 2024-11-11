@@ -60,13 +60,15 @@ const Main = () => {
             {fase === "crear" && (
                 <Col>
                     <Row md={12} className="mb-4">
-                        <MatchesList />
+                        <Col md={8}>
+                            <MatchesList />
+                        </Col>
+                        {!isInvited &&
+                            <Col md={4}>
+                                <ActiveList />
+                            </Col>
+                        }
                     </Row>
-                    {!isInvited &&
-                        <Row md={12} className="mb-4">
-                            <ActiveList />
-                        </Row>
-                    }
                     
                     <Row md={12}>
                         <div className="bg-dark text-white p-3 rounded">
