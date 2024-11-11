@@ -55,9 +55,6 @@ export default function Board() {
                             tuple[0] == Math.floor(tileSelected / 6) &&
                             tuple[1] == tileSelected % 6
                         ) {
-                            console.log(
-                                "FIGURA " + nameFig + " FETCHEADA"
-                            );
                             const figureData = {
                                 id_game: idGame,
                                 id_player: idPlayer,
@@ -94,9 +91,6 @@ export default function Board() {
                             tuple[0] == Math.floor(tileSelected / 6) &&
                             tuple[1] == tileSelected % 6
                         ) {
-                            console.log(
-                                "FIGURA " + nameFig + " BLOQUEADA"
-                            );
                             const figureData = {
                                 id_game: idGame,
                                 id_caller: idPlayer,
@@ -106,7 +100,6 @@ export default function Board() {
                             };
 
                             const message = await blockFigureCard(figureData);
-                            console.log(message.message);
                         }
                     }
                 }
@@ -140,8 +133,6 @@ export default function Board() {
             return;
         }
         if (selectedFigureCard && idPlayer == selectedFigureCard["idPlayer"]) {
-            console.log("jugando carta");
-            console.log(selectedFigureCard);
             checkAndFetchCompleteFigure(index, selectedFigureCard);
             setFigureTile(figureTile == index ? null : index);
             setSelectedFigureCard(null);
@@ -149,7 +140,6 @@ export default function Board() {
         }
         else if(selectedFigureCard && idPlayer != selectedFigureCard["idPlayer"]){
                 checkAndFetchBlockFigure(index, selectedFigureCard);
-                console.log("Bloqueando/desbloqueando figura");
                 setSelectedFigureCard(null);
             }
         setSelectedTiles((prevSelected) => {

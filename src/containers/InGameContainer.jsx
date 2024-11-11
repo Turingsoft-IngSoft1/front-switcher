@@ -44,8 +44,6 @@ export default function InGameContainer() {
         currentPlayer = (currentPlayer + 1) % players.length;
         //le pasamos el id del wachin al que le toca el siguiente turno
         setTurnPlayer(players[currentPlayer]);
-        console.log("index del jugador que tiene el turno:" + currentPlayer);
-        console.log("id del jugador: " + players[currentPlayer]);
     };
 
     const updateBoard = async () => {

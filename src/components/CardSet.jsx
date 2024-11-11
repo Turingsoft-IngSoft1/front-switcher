@@ -97,7 +97,6 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
 
     useEffect(() => {
         const actualPlayer = infoPlayers.find((p) => p.id_user === idOwnsSet);
-        console.log(actualPlayer);
         if(actualPlayer){
             const unblocked = actualPlayer.figures_available.map(
                 (fig) => ({name: fig, isBlocked: false})
@@ -108,13 +107,6 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
             const figures_concat = blocked.concat(unblocked);
         
             setActualCards(actualPlayer ? figures_concat : []);
-            console.log(figures_concat);
-        }
-        
-        
-        console.log("ACTUALIZACIONNN");
-        if (actualPlayer && actualPlayer.figures) {
-            console.log(actualPlayer.figures);
         }
     }, [infoPlayers]);
 
@@ -132,8 +124,6 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
             nameFig: actualCards[idx].name,
             isBlocked: actualCards[idx].isBlocked
         };
-        console.log(infoSelectedCard);
-        console.log(actualCards);
         setSelectedFigureCard(
             selectedFigureCard?.offsetCard == idx &&
                 selectedFigureCard?.idPlayer == idOwnsSet &&
