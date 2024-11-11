@@ -52,55 +52,58 @@ const ListMatches = () => {
 
     return (
         <div className="d-lg-flex flex-column">
-            <div className="d-flex flex-row justify-content-center mb-3">
-                <Dropdown>
-                    <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                        {selectedFilter === ""
-                            ? "Mostrar Filtros"
-                            : `${selectedFilter.split("-")[1]} ${
-                                  selectedFilter.split("-")[1] === "1"
-                                      ? "Lugar disponible"
-                                      : "Lugares disponibles"
-                              }`}
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        <Dropdown.Header>Lugares Disponibles</Dropdown.Header>
-                        {[1, 2, 3].map((num) => (
-                            <Dropdown.Item
-                                key={num}
-                                onClick={() =>
-                                    handleFilterChange(`disponibles-${num}`)
-                                }
-                                className={
-                                    selectedFilter === `disponibles-${num}`
-                                        ? "selected-filter"
-                                        : ""
-                                }
-                                style={{
-                                    backgroundColor:
-                                        selectedFilter === `disponibles-${num}`
-                                            ? "grey"
-                                            : "transparent",
-                                }}
-                            >
-                                {`${num} ${
-                                    num === 1 ? "Disponible" : "Disponibles"
+            <div className="d-flex justify-content-between align-items-center mb-3">
+                <h3 className="me-3">Partidas disponibles:</h3>
+                <div className="d-flex align-items-center">
+                    <Dropdown>
+                        <Dropdown.Toggle variant="primary" id="dropdown-basic">
+                            {selectedFilter === ""
+                                ? "Mostrar Filtros"
+                                : `${selectedFilter.split("-")[1]} ${
+                                    selectedFilter.split("-")[1] === "1"
+                                        ? "Lugar disponible"
+                                        : "Lugares disponibles"
                                 }`}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Dropdown.Header>Lugares Disponibles</Dropdown.Header>
+                            {[1, 2, 3].map((num) => (
+                                <Dropdown.Item
+                                    key={num}
+                                    onClick={() =>
+                                        handleFilterChange(`disponibles-${num}`)
+                                    }
+                                    className={
+                                        selectedFilter === `disponibles-${num}`
+                                            ? "selected-filter"
+                                            : ""
+                                    }
+                                    style={{
+                                        backgroundColor:
+                                            selectedFilter === `disponibles-${num}`
+                                                ? "grey"
+                                                : "transparent",
+                                    }}
+                                >
+                                    {`${num} ${
+                                        num === 1 ? "Disponible" : "Disponibles"
+                                    }`}
+                                </Dropdown.Item>
+                            ))}
+                            <Dropdown.Divider />
+                            <Dropdown.Item onClick={clearFilters}>
+                                Limpiar Filtros
                             </Dropdown.Item>
-                        ))}
-                        <Dropdown.Divider />
-                        <Dropdown.Item onClick={clearFilters}>
-                            Limpiar Filtros
-                        </Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-                <Form.Control
-                    type="text"
-                    placeholder="Filtrar por nombre"
-                    value={nameFilter}
-                    onChange={(e) => setNameFilter(e.target.value)}
-                    style={{ width: "200px", marginLeft: "10px" }}
-                />
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    <Form.Control
+                        type="text"
+                        placeholder="Filtrar por nombre"
+                        value={nameFilter}
+                        onChange={(e) => setNameFilter(e.target.value)}
+                        style={{ width: "200px", marginLeft: "10px" }}
+                    />
+                </div>
             </div>
             <div className="d-flex flex-row justify-content-center mb-3">
                 <Table
@@ -154,6 +157,7 @@ const ListMatches = () => {
                                             selectedMatch &&
                                             selectedMatch.id === match.id
                                         }
+                                        isPrivate = {match.private}
                                     />
                                 ))
                         ) : (
