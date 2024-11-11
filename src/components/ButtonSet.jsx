@@ -133,12 +133,17 @@ export default function ButtonSet({ onPassTurn, onConfirmMovement }) {
         );
     } else {
         return (
+            <Container>
+            <Row>
+                <Timer />
+            </Row>
             <Row className="justify-content-md-around p-3">
                 <CancelMovementsButton status={"disabled"} />
                 <ConfirmMovementButton status={"disabled"} />
                 <NextTurnButton status={"disabled"} />
                 <LeaveGameButton />
             </Row>
+            </Container>
         );
     }
 }

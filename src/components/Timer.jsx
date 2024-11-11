@@ -3,9 +3,8 @@ import { Image, Container, Col, Row } from "react-bootstrap";
 import { GameContext } from "../contexts/GameContext";
 
 export default function Timer (){
-    const [time, setTime] = useState(120); //2 minutos
     const [isRunning, setIsRunning] = useState(true);
-    const {turnPlayer} = useContext(GameContext)
+    const {time, setTime, turnPlayer} = useContext(GameContext)
     
 
     //cada vez que se cambie el turno del jugador, el timer se resetea
