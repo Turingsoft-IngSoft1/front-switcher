@@ -1,6 +1,6 @@
 import "../styles/cards.css";
 import { Image, Container, Col, Row } from "react-bootstrap";
-import { onMouseEnter } from "react";
+import { cloneElement, onMouseEnter } from "react";
 import { useContext, useEffect, useState } from "react";
 import { GameContext } from "../contexts/GameContext.jsx";
 import React from "react";
@@ -69,7 +69,7 @@ function CardSwitcher({ imgsource, onSelect, isSelected, isBlocked }) {
             }`}
         >
             <Row>
-                <Image src={isBlocked ? dictImg['back'] : imgsource} className="img-content" />
+            <Image src={isBlocked ? dictImg['back'] : imgsource} className="img-content" />
             </Row>
         </Container>    
     );
@@ -107,7 +107,9 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
             const figures_concat = blocked.concat(unblocked);
         
             setActualCards(actualPlayer ? figures_concat : []);
+            //setActualCards([]);
         }
+        console.log(infoPlayers);
     }, [infoPlayers]);
 
     if (currentPlayers.length > position && position != 0) {
@@ -135,70 +137,39 @@ export default function CardSetFig({ idOwnsSet, position, isHorizontal }) {
         setSelectedTiles([]);
     };
     return (
-        <Row  className={`${idOwnsSet==idPlayer ? "is-my-set" : ""}`}>
-            <Col
-                className={
-                    isHorizontal ? "cardset-horizontal" : "cardset-vertical"
-                }
-            >
+        <Row className={`${idOwnsSet==idPlayer ? "is-my-set" : ""}`}>
+            <Col className={isHorizontal ? "cardset-horizontal" : "cardset-vertical"}>
                 <Row className="justify-content-md-center">
-                    <h4
-                        className={
-                            turnPlayer == firstPlayer ? "has-turn" : "not-turn"
-                        }
-                    >
+                    <h4 className={turnPlayer == firstPlayer ? "has-turn" : "not-turn"}>
                         {position != 0
                             ? firstPlayer
-                                ? playersNames[
-                                      currentPlayers.indexOf(firstPlayer)
-                                  ]
+                                ? playersNames[currentPlayers.indexOf(firstPlayer)]
                                 : "Disconnected"
                             : ""}
                     </h4>
                 </Row>
-                <Row className="justify-content-md-center bg-cardset">
-                    <Col xs="auto" className="carta">
-                        {actualCards[0] && (
-                            <CardSwitcher
-                                onSelect={() => handleClick(0)}
-                                imgsource={dictImg[actualCards[0].name]}
-                                isSelected={
-                                    selectedFigureCard &&
-                                    selectedFigureCard.offsetCard == 0 &&
-                                    selectedFigureCard.idPlayer == idOwnsSet
-                                }
-                                isBlocked={actualCards[0].isBlocked}
-                            />
-                        )}
-                    </Col>
-                    <Col xs="auto" className="carta">
-                        {actualCards[1] && (
-                            <CardSwitcher
-                                onSelect={() => handleClick(1)}
-                                imgsource={dictImg[actualCards[1].name]}
-                                isSelected={
-                                    selectedFigureCard &&
-                                    selectedFigureCard.offsetCard == 1 &&
-                                    selectedFigureCard.idPlayer == idOwnsSet
-                                }
-                                isBlocked={actualCards[1].isBlocked}
-                            />
-                        )}
-                    </Col>
-                    <Col xs="auto" className="carta">
-                        {actualCards[2] && (
-                            <CardSwitcher
-                                onSelect={() => handleClick(2)}
-                                imgsource={dictImg[actualCards[2].name]}
-                                isSelected={
-                                    selectedFigureCard &&
-                                    selectedFigureCard.offsetCard == 2 &&
-                                    selectedFigureCard.idPlayer == idOwnsSet
-                                }
-                                isBlocked={actualCards[2].isBlocked}
-                            />
-                        )}
-                    </Col>
+                <Row className="justify-content-md-center bg-cardset" style={{
+                        height: isHorizontal ? '110px' : '330px',
+                        width: isHorizontal ? '350px' : '110px'
+                    }}>
+                    {[0, 1, 2].map((index) => (
+                        <Col key={index} xs="auto" className="carta " style={{
+                            padding: '10px'
+                        }}>
+                            {actualCards[index] && (
+                                <CardSwitcher
+                                    onSelect={() => handleClick(index)}
+                                    imgsource={dictImg[actualCards[index].name]}
+                                    isSelected={
+                                        selectedFigureCard &&
+                                        selectedFigureCard.offsetCard == index &&
+                                        selectedFigureCard.idPlayer == idOwnsSet
+                                    }
+                                    isBlocked={actualCards[index].isBlocked}
+                                />
+                            )}
+                        </Col>
+                    ))}
                 </Row>
             </Col>
         </Row>

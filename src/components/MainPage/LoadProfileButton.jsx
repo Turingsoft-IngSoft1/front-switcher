@@ -9,7 +9,7 @@ export default function LoadProfileButton() {
         setFase("crear");
     }
     return (
-        <Button onClick={handleClick}>
+        <Button onClick={handleClick} className="button-mainpage">
             {text}
         </Button>
     );
