@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState, onClik } from "react";
-import { Table, Button, Dropdown, Form, Container } from "react-bootstrap";
+import React, { useContext, useEffect, useState } from "react";
+import { Table, Button, Container } from "react-bootstrap";
 import { GameContext } from "../contexts/GameContext.jsx";
 import { obtainActiveGames } from "../utils/gameServices.js";
 import { getCookie } from "../utils/cookie.js";
-import {MatchItemActiveList} from "./match.jsx";
+import { MatchItemActiveList } from "./match.jsx";
 import JoinActiveGameButton from "./JoinActiveGameButton.jsx";
 import "../styles/list.css";
 
@@ -12,20 +12,18 @@ const ActiveList = () => {
     const [selectedMatch, setSelectedMatch] = useState(null);
     const [listGames, setListGames] = useState([]);
     const [isFirst, setIsFirst] = useState(true);
-    const {idProfile} = useContext(GameContext);
-    
 
     const fetchActiveGames = (profile_id) => {
         obtainActiveGames(profile_id)
-                .then((data) => {
-                    console.log(data);
-                    setListGames(data);
-                })
-                .catch((error) => {
-                    setError(error);
-                    console.error("Error fetching active games: ", error);
-                });
-    }
+            .then((data) => {
+                console.log(data);
+                setListGames(data);
+            })
+            .catch((error) => {
+                setError(error);
+                console.error("Error fetching active games: ", error);
+            });
+    };
 
     if(isFirst){
         fetchActiveGames(getCookie("id"));
@@ -34,8 +32,8 @@ const ActiveList = () => {
 
     return (
         <div className="d-lg-flex flex-column">
-            <div className="d-flex flex-row justify-content-left mb-3">
-                <h3>Partidas activas:</h3>
+            <div className="d-flex justify-content-between align-items-center mb-3">
+                <h3 className="me-3">Partidas activas:</h3>
             </div>
             <div className="d-flex flex-row justify-content-center mb-3">
                 <Table
@@ -47,8 +45,8 @@ const ActiveList = () => {
                     <thead>
                         <tr>
                             <th className="match-name">Sala</th>
-                            <th>Nombre de usuario</th>
-                            <th> Cantidad de jugadores</th>
+                            <th>Usuario</th>
+                            <th>Jugadores</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,18 +57,18 @@ const ActiveList = () => {
                                 </td>
                             </tr>
                         ) : listGames?.length > 0 ? (
-                            listGames
-                                .map((match) => (
-                                    <MatchItemActiveList
-                                    key={match.id} // Asegúrate de usar un identificador único
+                            listGames.map((match) => (
+                                <MatchItemActiveList
+                                    key={match.id}
+                                    id={match.id_game}
                                     gameName={match.game_name}
                                     playerName={match.user_name}
                                     numPlayers={match.players}
                                     max_players={match.max_players}
                                     onClick={() => setSelectedMatch(match)}
-                                    isSelected={selectedMatch && selectedMatch.id === match.id}
+                                    isSelected={selectedMatch && selectedMatch.id_game === match.id_game}
                                 />
-                                ))
+                            ))
                         ) : (
                             <tr>
                                 <td colSpan="3">No hay partidas</td>
@@ -81,12 +79,12 @@ const ActiveList = () => {
             </div>
             <div className="d-flex flex-row justify-content-around">
                 <JoinActiveGameButton selectedMatch={selectedMatch} />
-                <div className="d-flex flex-row justify-content-start">
-                    <Button id="refresh-btn" onClick={() => fetchActiveGames(getCookie("id"))}
-                    >
-                        Refrescar
-                    </Button>
-                </div>
+                <Button 
+                    id="refresh-btn" 
+                    onClick={() => fetchActiveGames(getCookie("id"))}
+                >
+                    Refrescar
+                </Button>
             </div>
         </div>
     );

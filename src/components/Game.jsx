@@ -51,6 +51,7 @@ export default function Game({ onPassTurn, onUpdateBoard, onConfirmMovement }) {
     const handleHide = () => {
         setFase("crear");
         setShouldConnect(false);
+        setFiguresOnBoard(null);
         setShouldConnectChat(false);
         setIsOwner(false);
         setIdPlayer(null);
@@ -74,7 +75,7 @@ export default function Game({ onPassTurn, onUpdateBoard, onConfirmMovement }) {
 
     return (
         <>
-            <Row> 
+                <Row> 
                 <Col xs={10}>
                     <Row className="justify-content-center">
                         <Col

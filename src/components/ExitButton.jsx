@@ -32,6 +32,7 @@ function ExitButton({ intext }) {
     const { setShouldConnectChat } = useContext(ChatWebSocketContext);
     function resetGameContext() {
         setFase("crear");
+        setFiguresOnBoard(null);
         setShouldConnectChat(false);
         setShouldConnect(false);
         setIsOwner(false);
