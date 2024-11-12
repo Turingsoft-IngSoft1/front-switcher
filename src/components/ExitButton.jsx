@@ -27,6 +27,7 @@ function ExitButton({ intext }) {
         setPlayersTurns,
         setWinner,
         isOwner,
+        setFiguresOnBoard
     } = useContext(GameContext);
     const { setShouldConnect } = useContext(WebSocketContext);
     const { setShouldConnectChat } = useContext(ChatWebSocketContext);
