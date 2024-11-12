@@ -1,22 +1,5 @@
 // GameContext.jsx
-/*
-Creación de GameContext para la organización general del juego. Se debe tener 
 
-    - una id de la partida asignada
-    - un id de jugador
-    - la cantidad de jugadores en la partida
-    - el turno actual
-    - la disposición del tablero
-    - las cartas de movimientos actuales
-    - las cartas de figuras actuales
-
-
-   Ej ----> infoPlayers: {
-                    id: 219,
-                    name: 'qsort',
-                    figCards: ['fig01', 'fige02', 'fig11'],
-                }
-*/
 import React, { createContext, useEffect, useState} from 'react';
 import defaultBackground from '../styles/backgrounds/default_background.jpg';
 import redBackground from '../styles/backgrounds/red_background.jpg';
@@ -51,6 +34,7 @@ export const GameProvider = ({ children }) => {
     const [selectedTiles, setSelectedTiles] = useState([]); //fichas seleccionadas por el jugador
     const [blockedColor, setBlockedColor] = useState('default'); //informacion sobre el color bloqueado (si no estamos in-game debe ser default)
     const [winner, setWinner] = useState('false'); // indicconsta si hay un ganador
+    const [time, setTime] = useState(120);
 
     const value = {
         fase,
@@ -96,6 +80,8 @@ export const GameProvider = ({ children }) => {
         setBlockedColor,
         winner,
         setWinner,
+        time,
+        setTime
     };
 
     //cambia el fondo de la app segun el color bloqueado

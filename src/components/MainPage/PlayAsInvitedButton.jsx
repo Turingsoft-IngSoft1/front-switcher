@@ -10,7 +10,7 @@ export default function PlayAsInvitedButton() {
         setFase("crear");
     }
     return (
-        <Button onClick={handleClick}>
+        <Button onClick={handleClick} className="button-mainpage">
             {text}
         </Button>
     );

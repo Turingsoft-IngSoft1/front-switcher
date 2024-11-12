@@ -72,6 +72,7 @@ export default function Lobby({ onStartGame }) {
     
     const handleHide = () => {
         setFase("crear");
+        setFiguresOnBoard(null);
         setShouldConnect(false);
         setShouldConnectChat(false);
         setIsOwner(false);
@@ -158,7 +159,7 @@ export default function Lobby({ onStartGame }) {
                     </Row>
                 </Col>
                 <Col xs={2}>
-                    <Chat />
+                        <Chat />
                 </Col>
             </Row>
             <NotifyCancel winner={winner} handleHide={handleHide} />
