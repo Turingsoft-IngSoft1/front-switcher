@@ -1,0 +1,40 @@
+.timer-container {
+    display: flex; /* Usar Flexbox */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    position: relative; /* Necesario para el posicionamiento absoluto de .time-left */
+    width: 90%;
+    height: auto;
+    transform: translate(0%, -25%);
+}
+
+.time-left {
+    font-size: 30px;
+    font-weight: bold;
+    color: #000000;
+    position: absolute;
+    z-index: 2;
+    top: 50%; /* Centra verticalmente */
+    left: 50%; /* Centra horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta el elemento para que esté perfectamente centrado */
+}
+
+.timer-svg {
+    width: 200px;
+    height: 200px;
+    transform: rotate(-90deg); /* Para que el círculo comience desde la parte superior */
+}
+
+.timer-background {
+    fill: rgba(0,0,0,0.25);
+    stroke: #ddd;
+    stroke-width: 4;
+}
+
+.timer-progress {
+    fill: none;
+    stroke: #000000; /* Color de la barra de progreso */
+    stroke-width: 4;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear;
+}

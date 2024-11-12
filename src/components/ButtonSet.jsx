@@ -1,8 +1,9 @@
 import { useContext, useState } from "react";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button, Container} from "react-bootstrap";
 import { GameContext } from "../contexts/GameContext";
 import ExitButton from "./ExitButton.jsx";
 import CancelMovementsButton from "./CancelMovementsButton.jsx";
+import Timer from './Timer.jsx';
 
 function ConfirmMovementButton({ status, onConfirmMovementClick }) {
     switch (status) {
@@ -112,6 +113,7 @@ export default function ButtonSet({ onPassTurn, onConfirmMovement }) {
 
     if (turnPlayer == idPlayer) {
         return (
+            <Container> 
             <Row className="justify-content-md-around p-3">
                 <CancelMovementsButton status={"enabled"} />
                 <ConfirmMovementButton
@@ -124,15 +126,18 @@ export default function ButtonSet({ onPassTurn, onConfirmMovement }) {
                 />
                 <LeaveGameButton />
             </Row>
+            </Container>
         );
     } else {
         return (
+            <Container>
             <Row className="justify-content-md-around p-3">
                 <CancelMovementsButton status={"disabled"} />
                 <ConfirmMovementButton status={"disabled"} />
                 <NextTurnButton status={"disabled"} />
                 <LeaveGameButton />
             </Row>
+            </Container>
         );
     }
 }
