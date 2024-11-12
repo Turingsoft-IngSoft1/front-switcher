@@ -63,8 +63,7 @@ export default function LobbyContainer() {
                 "No se puede iniciar la partida, no se cumple la capacidad minima"
             );
         }
-
-        setFase("in-game");
+        
         console.log("Partida iniciada con exito");
     };
 
