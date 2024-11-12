@@ -12,37 +12,43 @@
         "number_of_players": 2,
         "min_players": 1,
         "max_players": 3
-    },{
+    },
+    {
         "id": 3,
         "name": "Match 3",
         "number_of_players": 2,
         "min_players": 1,
         "max_players": 3
-    },{
+    },
+    {
         "id": 4,
         "name": "Match 4",
         "number_of_players": 2,
         "min_players": 1,
         "max_players": 3
-    },{
+    },
+    {
         "id": 5,
         "name": "Match 5",
         "number_of_players": 2,
         "min_players": 1,
         "max_players": 3
-    },{
+    },
+    {
         "id": 6,
         "name": "Match 6",
         "number_of_players": 2,
         "min_players": 1,
         "max_players": 3
-    },{
+    },
+    {
         "id": 7,
         "name": "Match 7",
         "number_of_players": 2,
         "min_players": 1,
         "max_players": 3
-    },{
+    },
+    {
         "id": 8,
         "name": "Match 8",
         "number_of_players": 2,

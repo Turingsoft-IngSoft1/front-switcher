@@ -1,0 +1,134 @@
+.chat {
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    width: 90vw;
+    max-width: 450px;
+    margin: 0 auto;
+    border: 1px solid #333;
+    border-radius: 16px;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.15);
+}
+
+.messages {
+    flex: 1 1 auto;
+    padding: 10px;
+    overflow-y: auto;
+    background-color: rgba(0,0,0,0.85);
+}
+
+.message {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 60%;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+
+.message.sent {
+    background-color: #056162;
+    align-self: flex-end;
+    margin-left: auto;
+    color: white;
+}
+
+.message.received {
+    background-color: #262d31;
+    align-self: flex-start;
+    border: 1px solid #333;
+    margin-right: auto;
+    color: #d1d1d1;
+    text-align: left;
+}
+
+.sender {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #25d366;
+}
+
+.text {
+    display: block;
+    color: #d1d1d1;
+}
+
+.input {
+    display: flex;
+    flex-shrink: 0;
+    padding: 10px;
+    border-top: 1px solid #333;
+    background-color: rgba(0,0,0,0.85);
+    box-sizing: border-box;
+}
+
+.input textarea {
+    flex: 0 0 60%;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    margin-right: 10px;
+    box-sizing: border-box;
+    background-color: rgba(0,0,0,0.85);
+    color: #d1d1d1;
+    resize: none;
+}
+
+.input button,
+.input .ascii-button,
+.ascii-button {
+    padding: 14px 16px;
+    height: 100%;
+    font-size: 16px; 
+    border: none;
+    border-radius: 4px;
+    background-color: #056162;
+    color: #fff;
+    cursor: pointer;
+    box-sizing: border-box;
+    margin-left: 5px;
+    transition: background-color 0.3s;
+}
+
+.input button:hover,
+.ascii-button:hover {
+    background-color: #075e54;
+}
+
+.ascii-art-selector {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #131c21;
+    border: 1px solid #333;
+    border-radius: 8px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.ascii-art-item {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #131c21;
+    border-radius: 4px;
+    color: #d1d1d1;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+    border: 1px solid #131c21;
+}
+
+.ascii-art-item:hover {
+    background-color: #056162;
+    color: #fff;
+}
+
+.ascii-art-popover {
+    background-color: #131c21;
+}

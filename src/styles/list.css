@@ -41,10 +41,8 @@
     flex: 1;
 }
 
-
 .table-fixed td.match-name {
     text-align: left;
     white-space: nowrap;
     overflow: scroll;
 }
-

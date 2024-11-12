@@ -1,34 +1,36 @@
-.card-switcher{
+.card-switcher {
     width: 90px;
     height: 90px;
     border-radius: 5%;
 }
 
-.img-content{
+.img-content {
     width: 90px;
     height: 90px;
 }
 
 .img-content-mov {
-    width: 100px; 
+    width: 100px;
     height: auto;
 }
 
 .bg-cardset {
-    background-color: silver;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .cardset-vertical {
     margin: 10% 35%;
 }
 
-.movement-card-switcher{
+.movement-card-switcher {
     transition: border 0.1s ease;
 }
+
 .movement-card-switcher.selected {
     border: 3px solid red;
     border-radius: 9%;
 }
+
 .has-turn {
     color: #000000; /* Color Negro */
     animation: vibrate 0.5s 1;
@@ -44,14 +46,31 @@
 }
 
 .is-selected-figure {
-    background-color: rgb(131, 142, 241)
+    background-color: rgba(10, 10, 10, 0.675);
+}
+
+.is-my-set {
+    margin-left: 0%;
+    margin-right: 20%;
 }
 
 @keyframes vibrate {
-    0% { transform: translate(0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(-2px, -2px); }
-    60% { transform: translate(2px, 2px); }
-    80% { transform: translate(2px, -2px); }
-    100% { transform: translate(0); }
+    0% {
+        transform: translate(0);
+    }
+    20% {
+        transform: translate(-2px, 2px);
+    }
+    40% {
+        transform: translate(-2px, -2px);
+    }
+    60% {
+        transform: translate(2px, 2px);
+    }
+    80% {
+        transform: translate(2px, -2px);
+    }
+    100% {
+        transform: translate(0);
+    }
 }
